@@ -1,0 +1,63 @@
+在 vite.config.js 文件中，可以使用 loadEnv 函数来获取 .env 文件中定义的环境变量：
+import { defineConfig, loadEnv } from 'vite';
+
+export default ({ mode }) => {
+const env = loadEnv(mode, process.cwd());
+
+return defineConfig({
+// 使用环境变量配置基础路径和代理
+base: env.VITE_APP_BASE_URL || '/',
+server: {
+proxy: {
+"/api": {
+target: env.VITE_APP_API1,
+changeOrigin: true,
+rewrite: (path) => path.replace(/^\/api/, ""),
+},
+},
+},
+// 其他配置
+});
+};
+
+
+前端浏览器作用域：
+localStorage 中的数据在关闭浏览器后不会丢失
+sessionStorage 关闭标签页或窗口后数据会丢失
+Cookies  通常用于保存用户会话信息或追踪用户行为。过期时间可设置，大小限制较小
+
+前端监听浏览器窗口大小变化：(echart视图变化)
+import emitter from './utils/emitter';
+App.vue
+onMounted(() => {
+    window.addEventListener('resize', () => {
+      emitter.emit('resize')   
+    })
+})
+let onReszie =  () => {
+  myChart.reszie()
+}
+onMounted(() => {
+  initChart()
+  emitter.on('reszie', onReszie)
+})
+onUnmounted(() => {
+  emitter.off('reszie', onReszie)
+})
+
+emitter.ts/js - >
+import mitt from "mitt";
+ 
+const emiter = mitt();
+ 
+export default emiter;
+
+vue3中清理函数
+onUnmounted(() => {
+  try {
+    cancelToken.abort();  // 取消请求
+    el.dispose();          // 清理对象
+  } catch (error) {
+    console.error("清理时出错", error);
+  }
+});

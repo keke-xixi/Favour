@@ -1,0 +1,2 @@
+elementPlus：
+pagination={{ position: ['bottomRight'],pageSize:5 }}  表格分页

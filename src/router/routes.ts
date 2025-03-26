@@ -1,0 +1,70 @@
+
+import { RouteRecordRaw } from 'vue-router';
+import Layout from '../views/home/index.vue'
+
+const routes: Array<RouteRecordRaw> = [
+    {
+        path: '/',
+        redirect: '/login'
+    },
+    {
+        path: '/login',
+        name: 'login',
+        component: () => import('@/views/login/index.vue')
+    }, 
+    {
+        path: '/home',
+        name: 'home',
+        component: Layout,
+        children:[
+            {
+                path: '',
+                name: 'main',
+                component: () => import('@/views/home/main.vue')
+            },
+            {
+                path: 'play',
+                name: 'play',
+                component: () => import('@/views/play/index.vue')
+            },
+            {
+                path: 'settings',
+                name: 'settings',
+                component: () => import('@/views/settings/index.vue')
+            }
+        ]
+    },
+    {
+        path: '/tank',
+        name: 'tank',
+        component: () => import('@/views/components/tank/index.vue')
+    },   
+    {
+        path: '/mouse',
+        name: 'mouse',
+        component: () => import('@/views/components/mouse/index.vue')
+    },  
+    {
+        path: '/mouseMain',
+        name: 'mouseMain',
+        component: () => import('@/views/components/mouse/main.vue')
+    },   
+    {
+        path: '/huaxian',
+        name: 'huaxian',
+        component: () => import('@/views/components/huaxian/index.vue')
+    },   
+    {
+        path: '/jijia',
+        name: 'jijia',
+        component: () => import('@/views/components/jijia/index.vue')
+    }, 
+    // 404页面
+    {
+        path: '/:catchAll(.*)',
+        name: '404',
+        component: () => import('@/views/404.vue')
+    }
+]
+
+export default routes

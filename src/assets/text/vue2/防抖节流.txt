@@ -1,0 +1,71 @@
+防抖（Debounce）
+防抖是一种在连续触发事件时，延迟执行函数，直到事件停止触发一定时间后才会执行一次。例如：搜索框输入时，
+只有在用户停止输入一段时间后才发送请求，避免每输入一个字符就发送请求。
+
+// 防抖函数实现
+function debounce(fn, delay) {
+  let timer;
+  return function (...args) {
+    if (timer) clearTimeout(timer);  // 清除上一次的定时器
+    timer = setTimeout(() => {
+      fn(...args);  // 延迟执行函数
+    }, delay);
+  };
+}
+
+<template>
+  <div>
+    <input v-model="searchQuery" @input="handleInput" placeholder="输入搜索内容..." />
+    <p>搜索内容：{{ searchQuery }}</p>
+  </div>
+</template>
+
+<script>
+export default {
+  data() {
+    return {
+      searchQuery: "",
+    };
+  },
+  methods: {
+    // 防抖处理方法
+    handleInput: debounce(function () {
+      console.log("搜索请求：", this.searchQuery);
+      // 可以发送请求
+    }, 500), // 500ms 的防抖
+  },
+};
+</script>
+
+2. 节流（Throttle）
+节流是控制函数在一定时间间隔内只能执行一次，无论事件触发多少次。
+适用于需要控制事件频率的场景，比如页面滚动、鼠标移动、窗口大小调整等
+// 节流函数实现
+function throttle(fn, delay) {
+  let last = 0;
+  return function (...args) {
+    const now = new Date().getTime();
+    if (now - last >= delay) {
+      last = now;
+      fn(...args);  // 执行函数
+    }
+  };
+}
+
+<template>
+  <div @scroll="handleScroll" style="height: 200px; overflow-y: scroll;">
+    <div style="height: 800px;">滚动查看内容</div>
+  </div>
+</template>
+
+<script>
+export default {
+  methods: {
+    // 节流处理方法
+    handleScroll: throttle(function () {
+      console.log("滚动位置：", window.scrollY);
+      // 你可以在这里进行滚动加载等操作
+    }, 300), // 300ms 的节流
+  },
+};
+</script>

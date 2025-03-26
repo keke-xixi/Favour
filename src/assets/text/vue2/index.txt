@@ -1,0 +1,14 @@
+  在 ESLint 配置文件中 :(关闭语法检查)
+  "rules": {
+    "vue/multi-word-component-names": "off"
+  }
+  "vue/multi-word-component-names": "off"
+  这一行代码的作用是禁用 ESLint 对 Vue 组件名称必须使用多个单词的规则。默认情况下，ESLint 会要求 Vue 组件名称必须使用多个单词，
+  以避免与 HTML 标签冲突。但是，如果你希望使用单个单词作为组件名称，可以通过将 "vue/multi-word-component-names" 规则设置为 "off" 来禁用这个规则。
+
+
+  v-html用于换行 字数太多
+
+  .gitignore git提交代码时候忽略上传文件
+
+  

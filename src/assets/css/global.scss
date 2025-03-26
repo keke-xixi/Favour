@@ -1,0 +1,148 @@
+// 留一个全局css样式，避免太多重复代码
+html, body {
+    margin: 0;
+    padding: 0;
+    overflow: hidden; 
+}
+.flex{
+    display: flex;
+}
+// 行flex
+.flex_l{
+    display: flex;
+    justify-content: center;
+}
+// 列flex
+.flex_c{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.text_s{
+    letter-spacing: 5px;
+}
+.over-font{
+    font-size: 14px;
+    cursor: pointer;
+}
+.over-font:hover{
+    text-decoration: underline; 
+}
+// 游戏区域
+.mainContainer{
+    width: 100vw;
+    height: 100vh;
+    position: relative;
+    background-color: #191919;
+    .back{
+        display: flex;
+        justify-content: right;
+        align-items: center;
+        .el-button{
+            margin: 30px;
+        }
+    }
+}
+.primary{
+    color: #fff;
+    border: 1px solid #127093;
+    background-color: #000b1f !important;
+    border-radius: 4px;
+}
+// 水平垂直居中
+.all_center{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+// 文字提示
+.el-popper {
+    background-color: #000 !important;
+    border: 1px solid #006699 !important;
+    padding: 0 !important;
+    min-width: 180px;
+    max-width: 400px;
+}
+// 下拉列表
+.el-dropdown-menu{
+    background-color: #000 !important;
+}
+// 下拉的小箭头
+.el-popper.is-light, .el-popper.is-light>.el-popper__arrow:before{
+    background-color: #000 !important;
+}
+.el-dropdown-menu__item{
+    color: #fff !important;
+    background-color: #000 !important;
+    &:hover{
+        background-color: #006699 !important;
+    }
+}
+// 弹窗
+.el-dialog{
+    background-color: rgba(197, 218, 252) !important;
+    border: 1px solid #006699 !important;
+    border-radius: 5px !important;
+}
+// 图片适应屏幕
+.img{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+.img-contain{
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+// 背景图片完全适应屏幕
+.bg-contain{
+    background-size: contain; /* 保持图片比例，不失真，完全适应屏幕 */
+    background-repeat: no-repeat; /* 不重复背景图片 */
+    background-position: center center; /* 图片居中显示 */
+    background-attachment: fixed; /* 固定背景，当滚动页面时背景保持不变 */
+}
+.bg-cover{
+    background-size: cover; /* 保持图片比例，不失真，完全覆盖屏幕 */
+    background-repeat: no-repeat; /* 不重复背景图片 */
+    background-position: center center; /* 图片居中显示 */
+}
+// 进度条 (鼠鼠突击)
+.progress{
+    .el-progress{
+        height: 20px !important;
+        border-radius: 10px !important;
+        .el-progress-bar{
+            // 进度条 内部阴影盒子
+            .el-progress-bar__outer{
+                border-radius: 10px !important;
+                background-color: #123f73 !important;
+                // 进度条
+                .el-progress-bar__inner{
+                    border-radius: 10px !important;
+                    .el-progress-bar__innerText{
+                        color: #d3e3fd !important;
+                    }
+                }
+            }
+        }
+        // 进度条文字
+        .el-progress__text{
+            color: #d3e3fd !important;
+            font-size: 14px !important;
+        }
+    }
+}
+// 怪物的血条 鼠鼠突击
+.monsterHP{
+    .el-progress{
+        height: 16px !important;
+        border-radius: 10px !important;
+        .el-progress-bar{
+            .el-progress-bar__outer{
+                border-radius: 10px !important;
+                background-color: transparent !important;
+            }
+        }
+    }
+}

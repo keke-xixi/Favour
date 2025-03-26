@@ -1,0 +1,99 @@
+git config --list  查看用户配置信息
+
+这将清除全局的用户名和邮箱配置
+git config --global --unset-all user.name
+git config --global --unset-all user.email
+
+输入以下命令来设置新的用户名和邮箱地址
+git config --global user.name "Your Username"
+git config --global user.email "your_email@example.com"
+
+克隆有访问令牌项目： 两种方式（目前第二种成功了）
+git clone https://<个人访问令牌>@codeup.aliyun.com/64099e9c6c0239cafbcf7b84/jtg/jtg-mom-web.git/
+
+git clone https://<用户名>:<密码>@codeup.aliyun.com/64099e9c6c0239cafbcf7b84/jtg/jtg-mom-web.git/
+git clone https://zhangguang:814448926z@codeup.aliyun.com/64099e9c6c0239cafbcf7b84/jtg/jtg-mom-web.git/
+
+vscode 查看当前自己的git信息：
+git config user.name            zhangguang@iipcloud.com
+git config user.email
+
+ // 飞书上传代码步骤  （git branch  保证自己目前是在自己的功能分支上开发）
+1---先用 vscode commit&push 提交代码
+2--- git checkout test  切换到dev分支
+3--- git pull origin test  从dev分支拉取代码到本地dev(解决冲突)
+4---git checkout feat/XTWQ-9  切换到自己的开发的功能分支
+5--- git merge test  合并dev分支（本地  解决冲突）
+6--- git push origin feat/XTWQ-9  把自己本地的代码上传到远程 feat/XTWQ-9
+7--- 然后就可以在飞书上发起合并请求了
+
+8----- git merge origin/dev-chen 合并远程的其它分支
+
+git branch -vv  查看远程分支和仓库地址
+
+// 撤回上一次提交的代码
+git reset HEAD^
+
+
+// 新建分支写代码 
+1，先在飞书上创建任务分支
+从远程仓库 origin 中获取最新的提交信息（包括新建的分支）
+git fetch origin
+将会检出名为 feat/XTWQ-11 的远程分支并将其作为当前工作分支
+git checkout feat/XTWQ-11
+
+
+git merge dev  是把本地的dev代码合并到feat/XTWQ-9（自己现在所选分支）
+自己的dev分支要和远程的dev分支保持一致，不要动它
+
+拉取远程 hotfix/XTWQ-15 分支的最新代码
+git pull origin hotfix/XTWQ-15
+
+删除本地的分支
+git branch -d branch_name
+
+查看当前的dev是跟踪的远程哪个分支
+git branch -vv 
+
+从dev拉取代码
+git pull origin dev
+
+# 丢弃所有本地未提交的修改
+git checkout .
+
+# 暂存到堆栈区
+git stash
+
+如果不想弹出内容，但仍然把stash内容应用到本地分支上：
+git stash apply
+
+
+要用到本地修改时，把stash内容应用到本地分支上：
+git stash pop
+
+
+# 查看stash内容
+git stash list
+
+git branch  查看自己当前分支
+
+拉取dev分支代码：
+git fetch origin dev
+
+git clone https://zhangguang:814448926z@codeup.aliyun.com/64099e9c6c0239cafbcf7b84/jtg/jtg-mom-web.git  日期：4-15
+
+开发还是基于自己的feat/XTWQ-9分支开发，提交到时候提交到feat/XTWQ-9的分支，再发起合并请求和dev分支
+
+
+git add src/api/baseClass/pricingElement.js
+git add src/api/baseClass/pricingElementPrice.js
+git add src/api/baseClass/pricingElementYield.js
+git add src/api/baseClass/pricing_bom.js
+git add src/api/baseClass/qcElement.js
+git add src/views/baseClass/qcElement.vue
+
+把自己本地的代码添加到暂存区，然后就可以提交了
+
+
+clone 项目失败
+git clone git@github.com:lyt-Top/vue-next-admin.git 

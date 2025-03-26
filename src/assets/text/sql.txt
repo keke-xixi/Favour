@@ -1,0 +1,53 @@
+前端的时间转成mysql数据库中时间
+new Date().toISOString()
+
+一分钟搞明白Join、Left Join、Right Join的区别
+https://blog.csdn.net/qq_41171409/article/details/125255204
+
+1.SELECT DISTINCT new_val  FROM issue_history;
+查询一个字段的所有种类
+
+1.传入的时间是2024-01-01这种
+a.updated BETWEEN STR_TO_DATE('2024-01-01', '%Y-%m-%d') AND STR_TO_DATE('2024-12-31', '%Y-%m-%d')
+
+2.传入时间是后端传过来的原格式2024-10-31T16:00:00.000Z
+a.updated ? and ?
+
+表一对多关系查询（versions 对多个 issues）------这样可以减少表的数量，提高查询速度
+FROM versions a
+JOIN issues b ON a.issue_id = b.issue_id
+
+select 
+        v.version_id
+  from 
+        issues i 
+  left join 
+        versions v 
+  on 
+        i.issue_id = v.issue_id 
+
+sql从数据库中查询的时间解析：
+ 1.不做解析：i.created 返回给前端是 2024-11-05T10:54:00.000Z
+（解析成 2001-01-01这种格式）：DATE_FORMAT(i.created, '%Y-%m-%d') as action_date
+（解析成 2001/01/01这种格式）：DATE_FORMAT(i.created, '%Y/%m/%d') as action_date
+
+2.前端传递时间:
+1.前端传递时间给后端：2024-01-01 对应sql这样写：
+  i.created between str_to_date(?,'%Y-%m-%d') and str_to_date(?,'%Y-%m-%d')
+2.前端传递时间给后端：2024-01-01 16:00:00 对应sql这样写：
+ i.created between str_to_date(?,'%Y-%m-%d %H:%i:%s') and str_to_date(?,'%Y-%m-%d %H:%i:%s') 
+
+3.前端传递时间给后端：2024-01-01T16:00:00.000Z 对应sql这样写：
+ i.created between ? and ?
+  
+前端传递后端（nodejs）时间:
+1.前端传递时间给后端：2024-01-01 对应sql这样写：
+  i.created between str_to_date(?,'%Y-%m-%d') and str_to_date(?,'%Y-%m-%d')
+2.前端传递时间给后端：2024-01-01 16:00:00 对应sql这样写：
+ i.created between str_to_date(?,'%Y-%m-%d %H:%i:%s') and str_to_date(?,'%Y-%m-%d %H:%i:%s') 
+
+ 后端（nodejs）传递前端时间:
+DATE_FORMAT(ih.updated, '%Y-%m-%d')  前端得到的是 2001-01-01这种格式
+DATE_FORMAT(ih.updated, '%Y-%m-%d %H:%i:%s')  前端得到的是 2001-01-01 00:00:00这种格式
+ih.updated  前端得到的是 2024-11-05T10:54:00.000Z这种格式
+

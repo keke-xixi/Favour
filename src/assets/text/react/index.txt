@@ -1,0 +1,84 @@
+react：
+flushSync 等待当前异步任务执行完成，再接下来执行  （常用）
+import { flushSync } from 'react-dom';
+
+useMount useEffect的异步  （常用）
+
+useSession   获取会话层数据（获取浏览器登陆存储值之类的）
+
+useContext  多级组件传参，父传子、子传孙
+
+useDebugValue   调试代码
+
+useId()  生成传递给无障碍属性的唯一 ID
+useImperativeHandle  向父组件暴露一个自定义的 ref 句柄（input、span、div）
+
+
+// react中可以直接这样适应屏幕变化大小
+    let [chartEl, setEl] = useState(null)
+    let size = useSize(() => document.documentElement);
+   
+    useEffect(() => {
+        if (chartEl) {
+            chartEl.resize()
+        }
+    }, [size])
+
+  // Promise.all  并行请求 需要等待所有请求完成
+  Promise.all([createFetch(statusKey), createFetch('traffic')]).then(res => {...})
+  .finally(() => {
+            setLoading(false)
+  }).catch(err => {
+        el.showLoading({
+            text: 'Empty Data',
+            showSpinner: false,    // 隐藏加载中的转圈动图
+            textColor: '#9d9d9d',
+            maskColor: 'rgba(255, 255, 255, 0)',
+            fontSize: '25px',
+        })
+  })
+
+// react中的清理函数 
+  useEffect(() => {
+    // 假设你在 useEffect 中做了一些异步操作，例如发起网络请求或创建事件监听器
+    const cancelToken = axios.CancelToken.source();
+    const el = someObject;
+
+    // 可能的一些操作
+
+    return () => {
+        // 组件卸载时执行清理操作
+        try {
+            cancelToken.abort();  // 取消请求
+            el && el.dispose();    // 释放资源
+        } catch (err) {
+            // 忽略错误
+        }
+    };
+}, []);
+
+// react中ref的用法
+    const [inputRef, setInputRef] = useState(null)
+    const [inputRef2, setInputRef2] = useState(null)
+
+    const handleFocus = () => {
+        if (inputRef) {
+            inputRef.focus();
+        }
+    }
+
+    const handleFocus2 = () => {
+        if (inputRef2) {
+            inputRef2.focus();
+        }
+    }
+
+    return (
+        <div>
+            <input ref={setInputRef} />
+            <button onClick={handleFocus}>Focus Input</button>
+            <input ref={setInputRef2} />    
+            <button onClick={handleFocus2}>Focus Input2</button>
+        </div>
+    )
+
