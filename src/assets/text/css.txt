@@ -1,0 +1,71 @@
+记事本：用于记录开发中学习的知识点
+
+color:
+background-color: #da5800,#86e3ce;
+圆形渐变
+background: radial-gradient(circle, #fff,#d9ecff,#c6e2ff, #79bbff,#5e60ce); 
+线性渐变 左上到右下
+background: linear-gradient(to bottom right, #ea4335, #7178dc);
+全局color样式使用 / 修改全局颜色
+:root{
+    --main-color: #2878ff;
+}
+var(--main-color)
+  data() {
+    return {
+      mainColor: '#3498db', // 默认颜色
+    };
+  },
+  methods: {
+    updateColor() {
+      document.documentElement.style.setProperty('--main-color', this.mainColor);
+    },
+  },
+  阴影斜体
+  text-shadow: 1px -1px #fff,-1px 1px #999,-10px 10px 10px #808080;
+// css类名中追加类
+  .login-alerts{
+    position: fixed;
+    width: 300px;
+    height: 180px;
+    z-index: 999;
+    ::after{
+        content: '';
+        position: absolute;
+        bottom: 5px;         /* 放置在底部 */
+        left: -9px;           /* 放置在左侧 */
+        width: 0;          /* 三角形的宽度 */
+        height: 0;         /* 三角形的高度 */
+        border-top: 10px solid transparent;    /* 上边透明 */
+        border-bottom: 10px solid transparent; /* 下边透明 */
+        border-right: 10px solid #292929;    
+    }
+}
+
+flex布局 :
+justify-items: start; 换行后从新行的起始位置开始（默认最左侧）
+align-items: center;  竖直方向居中
+gap: 10px;  /* 设置盒子之间的间隔 */
+.container {
+    display: flex;
+    flex-wrap: wrap; /* 允许换行 */
+    gap: 20px; /* 设置盒子之间的间隔 */
+}
+
+.box {
+    flex: 1 1 calc(33.33% - 20px); /* 每个盒子占据三分之一的宽度，减去间隔 */
+    background-color: lightblue; /* 仅供视觉效果 */
+    padding: 20px; /* 添加内边距 */
+    text-align: center; /* 内容居中 */
+}
+img{
+  // vmin: 取 vw和vh中较小的值
+  width: 100vmin;
+  height: 100vmnin;
+}
+
+在CSS中，filter属性用于对元素应用视觉效果，比如模糊、对比度、灰度等。filter: blur(5px); // 模糊效果
+
+transform: rotateY(360deg); // 旋转效果 左右旋转
+
+ transform: rotate(1440deg);  // 旋转效果 上下旋转

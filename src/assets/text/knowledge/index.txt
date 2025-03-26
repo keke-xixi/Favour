@@ -1,0 +1,37 @@
+连接别人数据库
+win+r
+cmd
+mysql -h  192.168.102.224 -P 3306 -u root -p
+输入密码：1234
+
+
+开发study:
+npm run 查看当前运行命令
+
+前端知识：
+this.name.split('(')[0]  取分割后的前面一部分  （之前
+align-content 控制flex布局的多行空隙
+npm config get registry   查看镜像
+npm config set registry <新的镜像源>   安装镜像
+
+ai链接：https://chat18.aichatos68.com/#/chat/1731287594669
+新ai链接：https://iai.aichatos8.com.cn/#/home
+
+ai:
+https://chat18.aichatos68.com/
+可视化大屏组件库：
+https://datav-vue3.netlify.app/Border/BorderBox1/BorderBox1.html
+elementPlus框架（vue）:
+https://element-plus.org/zh-CN/component/overview.html
+Ant框架（React）：
+https://ant.design/components/tag-cn
+tailwindcss样式（vue、react都可以用）:
+https://www.tailwindcss.cn/docs/fill
+el-admin框架地址：
+https://eladmin.vip/pages/010101/#%E9%A1%B9%E7%9B%AE%E7%AE%80%E4%BB%8B
+react的框架：
+https://pro.ant.design/zh-CN/docs/getting-started
+
+mysql数据库版本：8.0.17
+端口：3306
+密码：1234

@@ -1,0 +1,12 @@
+views 是写代码的文件   assests 是放静态文件的文件(图片，笔记，知识点)
+
+1.找到 /views/home/main.vue  修改path为 /xxx （shushu）
+
+2.找到 /views/components 新建文件夹  -> shushu -> index.vue (按vue3生成模板)
+
+3.找到 /router/routes.js 修改路由   (前端处理)
+
+4.找到 public/img/ 新建文件夹  -> shushu -> 所有图片放进去 (路径别搞中文)
+
+5.找到 /assests/text/other/ 新建文件夹  -> shushu -> 什么逻辑和笔记放进去
+

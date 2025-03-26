@@ -1,0 +1,474 @@
+@use "sass:math";
+// 独制的css样式  卡片动画
+.card {
+    width: 300px;
+    margin: 0 auto;
+    font-family: 'Courier New', Courier, monospace;
+    color: #333;
+    font-style: italic;
+    line-height: 1.8;
+    border-radius: 10px;
+    background: repeating-linear-gradient(
+        -45deg, 
+        #e43d30 0 10px,
+        #fff 10px 20px,
+        #000 20px 30px,
+        #fff 30px 40px
+    ) -20px -20px/ 200% 200%;
+    padding: 5px;
+    transition: transform 0.5s;  /* 加入平滑过渡 */
+}
+.card:hover {
+    background-position: 0 0;
+}
+.card-content {
+    background: #000;
+    color: #fff;
+    border-radius: inherit;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+
+// 独制的css样式  按钮动画
+.z-button{
+    width: 120px;
+    height: 60px;
+    color: #0ebeff;
+    font-size: 18px;
+    background: #000;
+    border: none;
+    outline: none;
+    z-index: 1;
+    border-radius: 10px;
+    // outline: 4px solid #fff;
+    position: relative;
+    overflow: hidden;
+    cursor: pointer;
+}
+.z-button::before{
+    content: '';
+    position: absolute;
+    width: 200px;
+    height: 200px;
+    background: #e33d30;
+    z-index: -2;
+    left: 50%;
+    top: 50%;
+    transform-origin: left top;
+    animation: rotation 1s linear infinite;
+
+}
+.z-button::after{
+    content: '';
+    position: absolute;
+    --w: 2px;
+    width: calc(100% - 2 * var(--w));
+    height: calc(100% - 2 * var(--w));
+    left: var(--w);
+    top: var(--w);
+    background: #000;
+    z-index: -1;
+    border-radius: inherit;
+
+}
+@keyframes rotation {
+    to{
+        transform: rotate(1turn);
+    }
+}
+
+// 独制的css样式  文字动画
+.z-text{
+    color: #cee7ed;
+    animation: colorChange 1s infinite ease-in-out alternate;
+}
+@keyframes colorChange {
+    to{
+        color: #c42b1c;
+    }
+}
+@for $i from 1 through 5 {
+    span:nth-child(#{$i}) {
+        animation-delay: ($i - 1) * 0.2s;
+    }
+}
+
+// 独制的css样式  卡片动画（需要写一定的js）
+.z-card{
+    position: relative;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    .pointer{
+        --l: 30px; /* 四角线框的长度 */
+        --t: 3px; /* 四角线框的粗细 */
+        --g: 15px; /* 四角线框和图片的间隔 */
+        --s: 240px; /* 图片的尺寸 */
+        --x: 0px; /* 图片左上角的横坐标 */
+        --y: 0px; /* 图片左上角的纵坐标 */
+        position: absolute;
+        width: calc(var(--s) + var(--g) * 2);
+        height: calc(var(--s) + var(--g) * 2);
+        border: var(--t) solid #fff;
+        left: calc(var(--x) - var(--g));
+        top: calc(var(--y) - var(--g));
+        transition: 0.2s;
+        mask: conic-gradient(
+            at var(--l) var(--l),
+            transparent 75%,
+            blue 75% 100%
+        ) 0 0 / calc(100% - var(--l)) calc(100% - var(--l)) repeat;
+    }
+}
+// .z-card-item img {} 选择器会选中 <div class="z-card-item"> 元素内部的 <img> 元素
+.z-card-item img{
+    width: 100px;
+    height: 100px;
+}
+
+// 独制的css样式  轮播图动画
+$size: 200px;
+$n: 6;
+$pDeg: math.div(360deg, $n); // 每个扇形的旋转角度
+$r: math.div($size, 2);; // 半径
+$R: math.div($r, math.sin(math.div($pDeg, 2))); // 半径
+$innerSize: $R * 2; 
+$u: math.div(1, $n) * 100%; // 动画每个阶段经历的时间百分比
+$rotateDuration: .3s; // 每张图片的旋转时间
+$stopDuration: 1s; // 每张图片停留的时间
+$duration: ($rotateDuration + $stopDuration) * $n; // 动画总时长
+$backPercent: math.div($stopDuration, ($rotateDuration + $stopDuration)) * $u; // 动画回退的时间百分比
+.z-carousel {
+    width: $size !important;
+    height: $size !important;
+    border-radius: 50%;
+    outline: 5px solid #fff;
+    margin: 50px auto;
+    display: flex;
+    justify-content: center;
+    overflow: hidden;
+    .inner{
+      width: $innerSize;
+      height: $innerSize;
+      border-radius: 50%;
+      flex-shrink: 0;
+      margin-top: $r;
+      position: relative;
+      animation: rotationCarousel $duration ease-in infinite;
+      img{
+        width: $size !important;
+        height: $size !important;
+        border-radius: 50%;
+        position: absolute;
+        left: 50%;
+        margin-left: -$r;
+        margin-top: -$r;
+        transform-origin: center #{$R + $r};
+        @for $i from 1 through $n {
+            &:nth-child(#{$i}) {
+                transform: rotate($pDeg * ($i - 1));
+            }
+        }
+      }
+    }
+}
+@keyframes rotationCarousel {
+    @for $i from 1 through $n {
+        $p: $u * $i - 1;
+        $deg: $pDeg * $i;
+        #{$p - $backPercent},
+        #{$p} {
+            transform: rotate(-$deg);
+        }
+    }
+}
+
+// 独制的css样式  旋转动画
+.z-rotate{
+    width: 300px;
+    height: 300px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(3, 1fr);
+    grid-template: 
+    "A A B"
+    "C D B"
+    "C E E";
+    gap: 5px;
+    --r: 360deg;
+    animation: rotationX 10s linear infinite;
+    .item{
+        overflow: hidden;
+        border: 2px solid #0dbc79;
+        display: flex;
+        justify-content: center;
+        align-items: center
+    }
+    .item img{
+        width: 260% !important;
+        height: 260% !important;
+        object-fit: cover;
+        --r: -360deg;
+        animation: rotationX 10s linear infinite;
+    }
+    .item:nth-child(1){
+        grid-area: A;
+    }
+    .item:nth-child(2){
+        grid-area: B;
+    }
+    .item:nth-child(3){
+        grid-area: C;
+    }
+    .item:nth-child(4){
+        grid-area: D;
+    }
+    .item:nth-child(5){
+        grid-area: E;
+    }
+    @keyframes rotationX {
+        to {
+            transform: rotate(var(--r));
+        }
+    }
+}
+
+// 独制的css样式  z-h1
+.z-h1{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 8vw;
+    color: transparent;
+    -webkit-text-stroke: 1px #fff;
+    background: url('/img/game/bg.jpg');
+    background-clip: text;
+    -webkit-background-clip: text;
+    transition: all 0.3s;
+}
+
+// 独制的css样式  3D翻转动画
+.z-3d{
+    position: relative;
+    width: 160px;
+    height: 160px;
+    transform-style: preserve-3d;
+    animation: rotate3D 20s linear infinite;
+    span{
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 90%;
+        transform: rotateY(calc(var(--i) * 45deg)) translateZ(300px);
+        -webkit-box-reflect: below -20px linear-gradient(transparent, #0008);
+        img{
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 90%;
+            object-fit: cover;
+        }
+    }
+
+}
+@keyframes rotate3D {
+    0%{
+        transform: perspective(1000px) rotateY(0deg);
+    }
+    100%{
+        transform: perspective(1000px) rotateY(360deg);
+    }
+}
+
+// 独制的css样式  段落擦除
+.z-paragraph{
+    width: 80%;
+    margin: 1em auto;
+    font-family: 'Courier New', Courier, monospace;
+    line-height: 2;
+    position: relative;
+    text-indent: 2em; 
+    color: #fff;
+    p{
+        position: absolute;
+        top: 0;
+        left: 0;
+    }
+    .eraser{
+        position: absolute;
+        top: 0;
+        left: 0;
+    }
+    .text{
+        --text: 5%;
+        background: linear-gradient(
+            to right,
+             #0000 var(--text),
+             #000 calc(var(--text) + 30px)
+        );
+        color: transparent !important;
+        animation: erase 5s forwards;
+    }
+    @keyframes erase {
+       to{
+           --text: 100%;
+       }
+    }
+}
+@property --text {
+    syntax: '<percentage>';
+    initial-value: 0%;
+    inherits: false;
+}
+
+// 独制的css样式  星空坠落
+.z-title{
+    -webkit-background-clip: text;
+    color: transparent;
+}
+@function getShadows($n) {
+     $result: '#{random(100)}vw #{random(100)}vh 0 #ccebee';
+    @for $i from 2 through $n {
+        $result: '#{$result}, #{random(100)}vw #{random(100)}vh 0 #ccebee';
+    }
+    @return unquote($result);
+}
+$durations: 40s;
+$r: 500;
+@for $i from 1 through 5 {
+    $duration: math.div($durations, 2);
+    $n: floor(math.div($r, 2));
+    .layer#{$i}{
+        $size: #{$i}px;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: $size;
+        height: $size;
+        border-radius: 50%;
+        box-shadow: getShadows($n);
+        animation: moveStartUp $duration ease-in-out infinite;
+        &::after{
+            content: '';
+            position: inherit;
+            left: 0;
+            top: 100vh;
+            width: inherit;
+            height: inherit;
+            border-radius: inherit;
+            box-shadow: inherit;
+        }
+    }
+}
+@keyframes moveStartUp {
+    to {
+        transform: translateY(-100vh);
+    }
+}
+
+
+// 火舞旋风动画  需要写在全局，不然动态渲染可能不生效
+@keyframes fire {
+    0% {
+        transform: rotate(0deg); /* 起始位置 */
+    }
+    100% {
+       transform: rotate(2880deg); /* 旋转 1440 度，相当于 4 圈 */
+    }
+}
+// 普攻
+@keyframes attackRight {
+    0% {
+        transform: rotate(-90deg); 
+    }
+    100% {
+       transform: rotate(0); 
+    }
+}
+@keyframes attackLeft {
+    0% {
+        transform: rotate(90deg); 
+    }
+    100% {
+       transform: rotate(0); 
+    }
+}
+
+// 开宝箱动画
+@keyframes openBX {
+     0% {
+        transform: rotate(10deg);
+      }
+      10% {
+        transform: rotate(-10deg); 
+      }
+      20% {
+        transform: rotate(10deg); 
+      }
+      30% {
+        transform: rotate(-10deg); 
+      }
+      40% {
+        transform: rotate(10deg); 
+      }
+      50% {
+        transform: rotate(-10deg); 
+      }
+      60% {
+        transform: rotate(10deg); 
+      }
+      70% {
+        transform: rotate(-10deg); 
+      }
+      80% {
+        transform: rotate(10deg); 
+      }
+      90% {
+        transform: rotate(-10deg);
+      }
+}
+// 怪物移动的动画
+@keyframes monsterMove {
+    0% {
+        transform: translateX(-2px) rotate(-2deg); 
+    }
+    50% {
+        transform: translateX(2px) rotate(2deg);
+    }
+    100% {
+       transform: translateX(2px) rotate(2deg);
+    }
+}
+
+// 怪物被攻击的动画 待完善
+@keyframes AttackedRight {
+    0% {
+        transform: rotate(0deg); 
+    }
+    100% {
+       transform: rotate(15deg);
+    }
+}
+@keyframes AttackedLeft {
+    0% {
+        transform: rotate(0deg); 
+    }
+    100% {
+       transform: rotate(-15deg);
+    }
+}
+
+
+// ease：默认值。先慢后快，再慢。
+// linear：匀速，过渡时间内每个时刻的速度相同。
+// ease-in：由慢到快。
+// ease-out：由快到慢。
+// ease-in-out：先慢后快，再慢。
+// cubic-bezier(x1, y1, x2, y2)：定义一个自定义的缓动曲线，x1, y1, x2, y2 是控制点。

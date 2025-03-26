@@ -1,0 +1,34 @@
+场景代码分析：
+const a = ref(1); // 创建一个响应式引用，初始值为 1
+let b = a;       // b 现在引用了同一个 ref 对象
+b.value = 455;  // 修改 b 的值，这也会影响 a，因为 b 和 a 指向同一个对象
+
+v-on:click.stop  // 阻止事件冒泡 相当于 event.stopPropagation() || @click.stop="()=>{}"
+
+
+vue3中，reactive()函数创建的响应式对象，不能直接赋值给另一个变量，否则会导致响应式失效。
+需要使用Object.assign()或展开运算符来更新响应式对象。
+const state = reactive({ count: 0 });
+
+// 使用 Object.assign 来更新 state 对象
+state = Object.assign({}, state, { count: 1 });
+
+// 或者使用展开运算符
+state = { ...state, count: 1 };
+
+Object.values(obj); // 获取对象的所有值 返回一个数组
+const valuesStr = Object.values(obj);.join(", ");  // 将数组中的值用逗号连接成一个字符串
+
+深度克隆对象：
+import cloneDeep from 'lodash/cloneDeep'; // 使用 lodash 库的 cloneDeep 函数来深度克隆对象
+ let _options = cloneDeep(options) // 一般使用场景：在需要修改原始数据时，不希望影响原始数据，这时候就需要深度克隆
+
+
+踩坑之 null 
+console.log(null - null); // 输出 0
+
+for(let i = 0; i < 10; i++) {
+   break; // 不会执行循环体中的代码 , 只会跳出循环
+}
+
+Math.floor(Math.random() * 4) + 1; // 生成1到4之间的随机整数  1, 2, 3, 4

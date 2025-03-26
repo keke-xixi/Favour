@@ -1,0 +1,2 @@
+可视化大屏不能有滚动条，否则会影响布局，所以需要隐藏滚动条
+dv-full-screen-container 需要用这个包裹主页，并且设置 overflow: hidden

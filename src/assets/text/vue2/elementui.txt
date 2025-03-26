@@ -1,0 +1,17 @@
+有些时候样式穿透不生效，可以试着在全局css样式上写（都不需要穿透） /assests/css/global.css
+
+// el-table表格  去掉默认颜色
+.el-table, .el-table__expanded-cell {
+  background-color: transparent !important;
+  border: none !important;
+}
+.el-table th, .el-table tr {
+  background-color: transparent !important;
+  border: none !important;
+}
+.el-table--enable-row-hover .el-table__body tr:hover > td {
+  background-color: transparent !important;
+}
+.el-table__body tr.current-row > td {
+  background-color: transparent !important;
+}

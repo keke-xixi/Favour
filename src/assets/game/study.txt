@@ -1,0 +1,16 @@
+1.Es6 的数组解构和对象解构
+
+2.css的flex布局 justify-content,align-items, flex:1 这三个属性会就行   补充一下(postion定位也要学下)
+
+3.数组的 forEach , map , filter ,find 方法
+
+4.ref 和reactive怎么用
+
+5.vue里面的v-for 和v-if怎么用
+
+6.vue里面的 :style用法
+
+后面的不怎么重要，看下就行
+7.看一下routes(路由用法)
+
+8.vue里面使用其它组件(.vue,.js,img)怎么用 (这个学的好vue就学的好了)

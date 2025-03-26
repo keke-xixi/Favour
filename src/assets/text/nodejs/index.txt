@@ -1,0 +1,18 @@
+pm2：防止nodejs写的接口崩溃
+  "dev": "pm2 start ./bin/index.js --max-restarts 100", // 重启次数100
+  "dev": "pm2 start ./bin/index.js", // 崩溃了自动重启
+
+
+pm2 logs  查看日志
+
+pm2 logs app.js 查看某个应用的日志
+
+pm2 flush 清空日志
+
+数据库掉线的时候，nodejs会自动退出，PM2 会自动重启
+pool.on('error', (err) => {
+    console.error('MySQL connection lost: ', err);
+    // 强制退出，PM2 会自动重启
+    process.exit(1);
+});
+
