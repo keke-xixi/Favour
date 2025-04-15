@@ -15,7 +15,7 @@ export const KEY = {
     // 技能2
     L: ['l','L']
 }
-// 正常键位
+// 鼠鼠键位
 export const MOUSE_KEY = {
     // 向上
     UP: ['w','W','ArrowUp'],

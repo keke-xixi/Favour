@@ -59,6 +59,11 @@ const routes: Array<RouteRecordRaw> = [
         name: 'jijia',
         component: () => import('@/views/components/jijia/index.vue')
     }, 
+    {
+        path: '/moonlight',
+        name: 'moonlight',
+        component: () => import('@/views/components/moonlight/index.vue')
+    }, 
     // 404页面
     {
         path: '/:catchAll(.*)',
