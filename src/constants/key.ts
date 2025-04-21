@@ -13,7 +13,9 @@ export const KEY = {
     // 技能1
     K: ['k','K'],
     // 技能2
-    L: ['l','L']
+    L: ['l','L'],
+    // 跳跃
+    JUMP: [' '],
 }
 // 鼠鼠键位
 export const MOUSE_KEY = {
