@@ -31,7 +31,7 @@ import { KEY } from '@/constants/key.ts';
 import cloneDeep from 'lodash/cloneDeep';
 
 // 帧数
-const FPS = ref(120)
+const FPS = ref(240)
 
 // 整个屏幕实例
 const content:any = ref(null)
@@ -59,11 +59,11 @@ const role = reactive<any>({
     timer: null, // 定时器
     speed: 8, // 左右移动速度
     moveXDistance: 1, // 左右移动距离
-    jumpTime: 1.5, // 跳跃时间 s
+    jumpTime: 1.2, // 跳跃时间 s
     jumpHeight: 3, // 跳跃高度 格
     jumpYSpeed: 12, // 跳跃时候上下方向速度 
     jumpXSpeed: 0, // 跳跃时候左右方向速度 默认是 0 跳跃的时候按 左 右 键会左右移动
-    jumpXSpeedValue: 5, // 跳跃时候左右方向每次移动距离  和 jumpYSpeed 数值类似
+    jumpXSpeedValue: 6, // 跳跃时候左右方向每次移动距离  和 jumpYSpeed 数值类似
     jumpYDirection: 'top', // 跳跃时候上下方向  top / down
     jumpXDirection: 'right', // 跳跃时候左右方向  left / right
 
