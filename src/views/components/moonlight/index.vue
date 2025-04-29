@@ -31,7 +31,7 @@ import { KEY } from '@/constants/key.ts';
 import cloneDeep from 'lodash/cloneDeep';
 
 // 帧数
-const FPS = ref(120)
+const FPS = ref(240)
 
 // 整个屏幕实例
 const content:any = ref(null)
@@ -57,6 +57,7 @@ const role = reactive<any>({
     method: 'ease', // 过渡效果  ease
     timer: null, // 定时器
     speed: 8, // 左右移动速度
+    moveXDistance: 1, // 左右移动距离
     jumpTime: 1.5, // 跳跃时间 s
     jumpHeight: 3, // 跳跃高度 格
     jumpYSpeed: 12, // 跳跃时候上下方向速度 
@@ -75,7 +76,8 @@ const handleKeyDown = (event:any) => {
     let originRole = cloneDeep(role)
     if(KEY['UP'].includes(event.key)){
         if(!role.jumpStatus) {
-            jump(originRole);
+            role.jumpYDirection = 'top';
+            !role.moveStatus && jump(originRole);
         }
     }else if(KEY['DOWN'].includes(event.key)){
         if(role.jumpStatus) {
@@ -111,7 +113,6 @@ const onKeyUp = (event:any) => {
     }else if(KEY['RIGHT'].includes(event.key)){
         role.jumpXDirection = 'right';
         role.jumpXSpeed = 0;
-        console.log('松开右键',role.jumpXSpeed)
         return;
     }else if(KEY['JUMP'].includes(event.key)){  // 跳跃
         
@@ -126,8 +127,8 @@ const jump = (originRole?:any) => {
     role.transition = role.jumpTime / FPS.value;
     role.timer = setInterval(() => {
         if(Math.abs(role.y - originRole.y) >= role.jumpHeight) {
-            role.jumpStatus = false;
-            clearInterval(role.timer)
+            clearInterval(role.timer);
+            down(originRole);
             return
         }
         // 同时修改 left 和 top 会触发 一次连贯动画  浏览器优化策略
@@ -138,14 +139,24 @@ const jump = (originRole?:any) => {
 
 // 下落
 const down = (originRole?:any) => {
-    
+    role.jumpYDirection = 'down';
+    role.timer = setInterval(() => {
+        if(role.y <= originRole.y) {
+            role.jumpStatus = false;
+            clearInterval(role.timer)
+            return
+        }
+        // 同时修改 left 和 top 会触发 一次连贯动画  浏览器优化策略
+        role.jumpYDirection === 'top' ? role.y += role.jumpYSpeed / FPS.value : role.y -= role.jumpYSpeed / FPS.value;
+        role.jumpXDirection === 'right' ? role.x += role.jumpXSpeed / FPS.value : role.x -= role.jumpXSpeed / FPS.value;
+    },role.jumpTime * 1000 / FPS.value)
 }
 
 // 左右移动
 const move = (originRole?:any) => {
     role.moveStatus = true;
     role.timer = setInterval(() => {
-        if(Math.abs(role.y - originRole.y) >= role.jumpHeight) {
+        if(Math.abs(role.x - originRole.x) >= role.moveXDistance) {
             role.moveStatus = false;
             clearInterval(role.timer)
             return
