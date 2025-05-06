@@ -41,7 +41,7 @@ const store = createStore({
     SET_FULLSCREEN(state, value) {
       state.isFullscreen = value;
     },
-    // 更新当前玩家信息 （金币、积分、钻石、信息）
+    // 更新当前玩家信息 （金币、积分、钻石、信息）传入一个userInfo对象 {username:xxx, money:xxx, score:xxx, level:xxx, name:xxx}
     updatePlayer(state, onLineUser) {
       let playerInfo = JSON.parse(localStorage.getItem('playerInfo') || '{}');
       let newPlayerInfo = playerInfo[onLineUser.username];
@@ -103,7 +103,7 @@ const store = createStore({
   },
   getters: {
     isFullscreen: (state) => state.isFullscreen,
-     // 获取当前在线玩家信息 （金币、积分、钻石、信息） 只能通过这种方式获取
+     // 获取当前在线玩家信息 （金币、积分、钻石、信息） 只能通过这种方式获取 返回一个对象
      getOnlineUser: (state) =>  { 
        return {
         ...state.playerInfo[state.userInfo.username],
