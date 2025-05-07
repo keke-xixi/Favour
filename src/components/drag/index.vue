@@ -6,23 +6,40 @@
       ref="draggableBox"
       @mousedown="startDrag"
       @touchstart="startDrag"
-      :style="{
-        position: 'absolute',
-        transform: `translate(${x}px, ${y}px)`,
-        cursor: 'move',
-        userSelect: 'none',
-        touchAction: 'none', // 禁止触摸默认行为（如滚动）
-        width: '100px',
-        height: '100px',
-        background: 'lightblue',
-      }"
+      :style="boxStyle"
     >
-      拖拽我（修复版）
+    <slot></slot>
     </div>
   </template>
   
   <script setup>
-  import { ref, onUnmounted } from "vue";
+  import { ref, onUnmounted,computed } from "vue";
+
+  const props = defineProps({
+      customStyle: {
+        type: Object,
+        default: () => ({
+            width: '100px',
+            height: '100px',
+            backgroundColor: 'red',
+        }),
+      }
+  })
+
+  // 样式计算
+  const boxStyle = computed(() => {
+    return {
+      position: 'absolute',
+      transform: `translate(${x.value}px, ${y.value}px)`,
+      cursor: 'move',
+      userSelect: 'none',
+      touchAction: 'none', // 禁止触摸默认行为（如滚动）
+      width: '100px',
+      height: '100px',
+      background: 'lightblue',
+      ...props.customStyle,
+    };
+  })
   
   const draggableBox = ref(null);
   const x = ref(0);
@@ -71,3 +88,7 @@
   // 组件卸载时清理事件
   onUnmounted(stopDrag);
   </script>
+
+<style lang="scss" scoped>
+
+</style>
