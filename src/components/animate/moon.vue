@@ -1,3 +1,6 @@
+<!-- 
+  月亮动画 
+-->
 <template>
   <div class="moon">
     <div class="small-moon"></div>

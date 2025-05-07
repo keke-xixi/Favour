@@ -61,7 +61,7 @@ const gameList = {
         {name:'花仙', path:'/huaxian',listId: 1,id: 1},
         {name:'组件', path:'/jijia',listId: 1,id: 2},
         {name:'月光蛊', path:'/moonlight',listId: 1,id: 3},
-        {name:'牛马蛊', path:'/4',listId: 1,id: 4},
+        {name:'牛马蛊', path:'/oxenHorses',listId: 1,id: 4},
         {name:'吗喽蛊', path:'/malou',listId: 1,id: 5},
       ],
   'gameRisk': [

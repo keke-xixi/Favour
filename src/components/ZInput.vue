@@ -16,7 +16,7 @@
   </div>
 </template>
 <script setup lang="ts">
-import { defineProps, withDefaults,onMounted, ref, watch } from 'vue';
+import { defineProps, withDefaults, ref, watch } from 'vue';
 import { Right } from '@element-plus/icons-vue';
 interface InputProps {
   type?: string;

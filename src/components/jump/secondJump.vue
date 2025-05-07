@@ -1,3 +1,7 @@
+<!-- 
+  盒子二段跳跃组件
+
+-->
 <template>
     <div class="content" ref="content">
   
@@ -31,7 +35,7 @@ import { KEY } from '@/constants/key.ts';
 import cloneDeep from 'lodash/cloneDeep';
 
 // 帧数
-const FPS = ref(240)
+const FPS = ref(120)
 
 // 整个屏幕实例
 const content:any = ref(null)
@@ -84,9 +88,10 @@ const handleKeyDown = (event:any) => {
             role.jumpYDirection = 'top';
             !role.moveStatus && jump(originRole);
         }else if(!role.jumpSecondStatus && initialRole.value){
+            clearInterval(role.timer);  // 清除上一次的定时器 一段跳跃
             role.jumpYDirection = 'top';
             role.jumpHeight = role.y + role.jumpHeight;
-            !role.moveStatus && jumpSecond(cloneDeep(initialRole.value));
+            !role.moveStatus && jumpSecond(initialRole.value);
         }
     }else if(KEY['DOWN'].includes(event.key)){
         if(role.jumpStatus) {
@@ -148,7 +153,6 @@ const jump = (originRole?:any) => {
 
 // 二段跳跃 最高距离是 role.y + role.jumpYSpeed
 const jumpSecond = (originRole?:any) => {
-    clearInterval(role.timer);  // 清除上一次的定时器 一段跳跃
     role.jumpStatus = true;
     role.jumpSecondStatus = true;
     role.timer = setInterval(() => {
