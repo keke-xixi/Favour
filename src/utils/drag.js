@@ -1,5 +1,5 @@
 /**
- * 使一个 div 可拖拽 (鼠标和触摸)
+ *  div 可拖拽方法 (鼠标和触摸)
  * @param {HTMLElement} div - 要拖拽的 div 元素  父盒子使用的是 position: relative;
  * const box = document.getElementById('your-div-id');
    makeDraggable(box);

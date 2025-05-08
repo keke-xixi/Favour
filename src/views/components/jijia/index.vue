@@ -118,10 +118,16 @@
         <span style="--i: 8;"><img src="/img/game/data/img8.png" alt="" /></span>
       </div>
     </div>
+    <!-- 爆炸效果 -->
+    <div class="line">
+      <div ref="explodingBox">点击我爆炸！💥</div>
+    </div>
+    
   </div>
 </template>
 <script setup lang="ts">
 import { ref, reactive, onMounted } from "vue"
+import { useExplosion  } from '@/utils/animateExplode.js';
 const imgs: any = ref([]);
 const pointer: any = ref(null);
 
@@ -131,7 +137,13 @@ const pointerStyle = ref({
   '--y': `${0}px`,
 });
 
-
+// 爆炸
+const explodingBox = ref(null);
+useExplosion(explodingBox, {
+  particleCount: 30,      // 粒子数量
+  duration: 1500,         // 动画持续时间（毫秒）
+  colors: ['#ff0000', '#ff9900', '#ffff00', '#ffffff'], // 粒子颜色
+});
 
 
 onMounted(() => {

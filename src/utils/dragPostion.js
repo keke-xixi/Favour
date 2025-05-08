@@ -1,11 +1,11 @@
 /*
-  直接把div的ref作为参数传过来，简单方便
+    直接把div的ref作为参数传过来，可以获取盒子实时的位置 （相对父盒子）
 
     <div ref="draggableBox" class="box">拖拽我！</div>
     <div>当前位置：left: {{ position.left }}, top: {{ position.top }}</div>
 
     import { useDraggable } from '@/utils/dragPostion.js';
-    
+
     const draggableBox = ref<any>(null);  // draggableBox.value 就是 DOM 元素
     const { position } = useDraggable(draggableBox); // 获取位置
 */
