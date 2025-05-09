@@ -136,147 +136,129 @@ export function useGachaEffect(elementRef, options = {}) {
     }, 1000);
   };
 
-  // 卡片翻转动画（支持自定义图片）
-  const createCardFlip = (x, y) => {
+
+ // 卡片动画（直接展示图片和星级）
+const createCardFlip = (x, y) => {
     const card = document.createElement('div');
     card.className = 'gacha-card';
-    const cardSize = config.rarity === 5 ? 120 : 
-                    config.rarity === 4 ? 110 : 100;
     
+    // 调整卡片尺寸为正方形
+    const cardSize = config.rarity === 5 ? 200 : 
+                    config.rarity === 4 ? 180 : 160;
+  
     card.style.cssText = `
       position: fixed;
       left: ${x - cardSize/2}px;
-      top: ${y - cardSize*1.5/2}px;
+      top: ${y - cardSize/2}px;
       width: ${cardSize}px;
-      height: ${cardSize * 1.5}px;
-      background: linear-gradient(135deg, #f5f7fa 0%, #e4e8eb 100%);
-      border-radius: 8px;
-      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+      height: ${cardSize}px;
+      background: rgba(255,255,255,0.1);
+      border-radius: 16px;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
       pointer-events: none;
       z-index: 10000;
       transform-style: preserve-3d;
-      animation: card-flip ${config.duration}ms ease-in-out forwards;
-    `;
-    
-    // 卡片正面
-    const cardFront = document.createElement('div');
-    cardFront.className = 'card-front';
-    cardFront.style.cssText = `
-      position: absolute;
-      width: 100%;
-      height: 100%;
-      backface-visibility: hidden;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      border-radius: 8px;
-      background: linear-gradient(135deg, #f5f7fa 0%, #e4e8eb 100%);
       overflow: hidden;
+      animation: card-reveal ${config.duration}ms cubic-bezier(0.4, 0, 0.2, 1) forwards;
+      border: 2px solid rgba(255,255,255,0.3);
     `;
-    
-    // 卡片背面
-    const cardBack = document.createElement('div');
-    cardBack.className = 'card-back';
-    cardBack.style.cssText = `
-      position: absolute;
-      width: 100%;
-      height: 100%;
-      backface-visibility: hidden;
-      transform: rotateY(180deg);
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      border-radius: 8px;
-      background: ${config.rarity === 5 ? 'linear-gradient(135deg, #ffd700 0%, #ff9800 100%)' : 
-                 config.rarity === 4 ? 'linear-gradient(135deg, #9c27b0 0%, #673ab7 100%)' :
-                 'linear-gradient(135deg, #a0a0a0 0%, #707070 100%)'};
-      color: white;
-      font-weight: bold;
-      overflow: hidden;
-    `;
-    
-    // 添加卡片图片（如果有）
-  if (config.cardImages[config.rarity]) {
-        const img = document.createElement('img');
-        img.src = config.cardImages[config.rarity]; // 确保使用配置的图片
-        
-        // 添加样式确保图片正确显示
-        img.style.cssText = `
+  
+    // 添加卡片图片
+    if (config.cardImages[config.rarity]) {
+      const img = document.createElement('img');
+      img.src = config.cardImages[config.rarity];
+      
+      // 图片样式
+      img.style.cssText = `
         width: 100%;
         height: 100%;
         object-fit: cover;
         position: absolute;
-        top: 0;
-        left: 0;
-        `;
-        
-        // 清空可能存在的旧图片
-        cardBack.innerHTML = '';
-        cardBack.appendChild(img);
-        
-        // 添加星级显示（放在图片上层）
-        const starContainer = document.createElement('div');
-        starContainer.style.cssText = `
+        filter: brightness(0.9);
+        transition: transform 0.3s;
+      `;
+      
+      // 添加光晕效果
+      const glow = document.createElement('div');
+      glow.style.cssText = `
         position: absolute;
-        bottom: 10px;
-        width: 100%;
-        text-align: center;
-        z-index: 2;
-        font-size: ${config.rarity === 5 ? '24px' : 
-                    config.rarity === 4 ? '20px' : '16px'};
-        color: ${config.rarity === 5 ? '#ffeb3b' : 
-                config.rarity === 4 ? '#e1bee7' : 'white'};
-        text-shadow: 0 0 5px rgba(0,0,0,0.8);
-        `;
-        starContainer.textContent = '★'.repeat(config.rarity);
-        cardBack.appendChild(starContainer);
+        width: 150%;
+        height: 150%;
+        background: radial-gradient(circle at center, 
+          ${config.rarity === 5 ? 'rgba(255,215,0,0.3)' : 
+           config.rarity === 4 ? 'rgba(156,39,176,0.3)' : 
+           'rgba(160,160,160,0.3)'} 0%, 
+          transparent 70%);
+        pointer-events: none;
+      `;
+      
+      card.appendChild(img);
+      card.appendChild(glow);
     }
-    
-    // 添加星级显示
+  
+    // 添加星级显示（居中悬浮效果）
     const starContainer = document.createElement('div');
     starContainer.style.cssText = `
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      z-index: 2;
       display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 30%;
-      font-size: ${config.rarity === 5 ? '24px' : 
-                 config.rarity === 4 ? '20px' : '16px'};
-      color: ${config.rarity === 5 ? '#ffeb3b' : 
-              config.rarity === 4 ? '#e1bee7' : 'white'};
-      text-shadow: 0 0 5px rgba(0,0,0,0.5);
+      gap: 8px;
+      font-size: ${config.rarity === 5 ? '42px' : 
+                 config.rarity === 4 ? '36px' : '30px'};
+      color: ${config.rarity === 5 ? 'rgba(255,235,59,0.9)' : 
+              config.rarity === 4 ? 'rgba(225,190,231,0.9)' : 
+              'rgba(255,255,255,0.9)'};
+      text-shadow: 0 2px 8px rgba(0,0,0,0.5);
+      animation: star-float 2s ease-in-out infinite;
     `;
-    starContainer.textContent = '★'.repeat(config.rarity);
-    cardBack.appendChild(starContainer);
     
-    card.appendChild(cardFront);
-    card.appendChild(cardBack);
-    
+    // 创建动态星星
+    '★'.repeat(config.rarity).split('').forEach((star, index) => {
+      const starElem = document.createElement('span');
+      starElem.textContent = star;
+      starElem.style.cssText = `
+        transform: rotate(${index * 12}deg);
+        display: inline-block;
+        transition: transform 0.3s;
+      `;
+      starContainer.appendChild(starElem);
+    });
+  
+    card.appendChild(starContainer);
+  
+    // 创建动画样式
     const animation = document.createElement('style');
     animation.textContent = `
-      @keyframes card-flip {
+      @keyframes card-reveal {
         0% {
-          transform: rotateY(0deg) scale(0.5);
+          transform: scale(0.5) rotate(-15deg);
           opacity: 0;
+          filter: blur(8px);
         }
-        20% {
-          opacity: 1;
-        }
-        50% {
-          transform: rotateY(90deg) scale(1);
+        80% {
+          transform: scale(1.05) rotate(5deg);
         }
         100% {
-          transform: rotateY(180deg) scale(1);
+          transform: scale(1) rotate(0deg);
           opacity: 1;
+          filter: blur(0);
         }
       }
+  
+      @keyframes star-float {
+        0%, 100% { transform: translate(-50%, -50%) scale(1); }
+        50% { transform: translate(-50%, -50%) scale(1.1); }
+      }
     `;
-    
+  
     document.head.appendChild(animation);
     document.body.appendChild(card);
     animationElements.push({ element: card, animation });
-    
-    // 动画结束后移除
+  
+    // 自动移除
     setTimeout(() => {
       card.remove();
       animation.remove();

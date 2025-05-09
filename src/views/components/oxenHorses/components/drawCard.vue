@@ -14,18 +14,19 @@
   <script setup>
   import { ref, onMounted } from 'vue';
   import { useGachaEffect } from '@/utils/drawCard.js';
-//   import threeStar from '@/assets/img/card/card1.png';
-  const threeStar = import.meta.env.BASE_URL + '/img/game/card1.png';
-  import fourStar from '@/assets/img/card/card1.png';
-  import fiveStar from '@/assets/img/card/card1.png';
+
   
+  const threeStar = '/img/game/card1.png';
+  const fourStar = '/img/game/kt.png';
+  const fiveStar = '/img/game/coco.png';
+
   const gachaButton = ref(null);
   const { triggerGacha, setRarity, setCardImage } = useGachaEffect(gachaButton, {
     effectRange: 400, // 扩大效果范围
     cardImages: {
         3: threeStar,
         4: fourStar,
-        5: fiveStar
+        5: fiveStar,
     }
   });
 
@@ -34,7 +35,7 @@
   onMounted(() => {
     [threeStar, fourStar, fiveStar].forEach(imgUrl => {
         const img = new Image();
-        img.src = imgUrl;
+        img.src = imgUrl
     });
   });
   
