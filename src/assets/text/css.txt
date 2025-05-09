@@ -69,3 +69,14 @@ img{
 transform: rotateY(360deg); // 旋转效果 左右旋转
 
  transform: rotate(1440deg);  // 旋转效果 上下旋转
+
+ // css遍历
+ @for $i from 1 through 4 {
+		.login-animation#{$i} {
+			opacity: 0;
+			animation-name: error-num;
+			animation-duration: 0.5s;
+			animation-fill-mode: forwards;
+			animation-delay: calc($i/10) + s;
+		}
+	}
