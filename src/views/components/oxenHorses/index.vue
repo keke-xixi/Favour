@@ -1,36 +1,56 @@
 <template>
-    <div class="oxenHorses">
-        <dragBox :customStyle="{}">
-            拖拽盒子
-        </dragBox>
-        <!-- <div ref="draggableBox" class="box">拖拽我！</div>
-        <div>当前位置：left: {{ position.left }}, top: {{ position.top }}</div>
-        <div ref="movingBox" class="box2">我会随机移动！</div> -->
-        <div ref="explodingBox" class="box3">点击我爆炸！💥</div>
+    <div class="components-container">
+       <div class="menu">
+            <div v-for="item in list" :key="item.id" class="item">
+                <div class="item-card">
+                    <el-card @click="changeComponent(item)" :style="item.id === activeId ? activeStyle : customstyle">
+                        {{ item.name }}
+                    </el-card>
+                </div>
+            </div>
+       </div>
+       <div v-if="activeComponent" class="content">
+            <component :is="activeComponent" />
+        </div>
     </div>
 </template>
 
 <script setup lang="ts">
-import { ref,onMounted,watch } from 'vue';
+import { ref,onMounted,shallowRef } from 'vue';
+import animateExplode from './components/animateExplode.vue'
+import dragPostion from './components/dragPostion.vue'
+import move from './components/move.vue'
+import crash from './components/crash.vue'
+import star from './components/star.vue'
 
-import dragBox from '@/components/drag/index.vue';
-import { useDraggable } from '@/utils/dragPostion.js';
-import { useRandomMove } from '@/utils/move.js';
-import { useExplosion  } from '@/utils/animateExplode.js';
+// 当前激活的组件
+const activeId = ref<number>(1)
+const activeComponent = ref<any>(animateExplode)
 
-// const draggableBox = ref<any>(null);  // draggableBox.value 就是 DOM 元素
-// const { position } = useDraggable(draggableBox); // 获取位置
+// 所有组件列表
+const list = ref<any>([
+    { path: 'animateExplode', name: '爆炸动画', component: shallowRef(animateExplode),id: 1 },
+    { path: 'dragPostion', name: '拖拽盒子', component: shallowRef(dragPostion) ,id: 2 },
+    { path: 'move', name: '随机移动', component: shallowRef(move) ,id: 3 },
+    { path: 'crash', name: '碰撞', component: shallowRef(crash) ,id: 4 },
+    { path: 'star', name: '流星', component: shallowRef(star) ,id: 5 },
+])
 
-// const movingBox = ref(null);
-// useRandomMove(movingBox, { interval: 200, speed: 0.16 }); // 随机移动 interval 每隔多少毫秒移动一次 speed 动画时长
+// 切换组件
+const changeComponent = (item: any) => {
+    activeId.value = item.id;
+    activeComponent.value = item.component;
+}
 
-const explodingBox = ref(null);
-useExplosion(explodingBox, {
-  particleCount: 30,      // 粒子数量
-  duration: 1500,         // 动画持续时间（毫秒）
-  colors: ['#ff0000', '#ff9900', '#ffff00', '#ffffff'], // 粒子颜色
-});
+const activeStyle = ref<any>({
+    backgroundColor: '#0078d4 !important',
+    color: '#edf2fa',
+})
 
+// 样式
+const customstyle = ref<any>({
+
+})
 
 onMounted(() => {
  
@@ -39,65 +59,31 @@ onMounted(() => {
 </script>
 
 <style scoped lang="scss">
-.oxenHorses {
-
-}
-.box {
-  width: 100px;
-  height: 100px;
-  background: #2ecc71;
-  color: white;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-.box2 {
-  width: 100px;
-  height: 100px;
-  background: #e74c3c;
-  color: white;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-}
-.box3 {
-  width: 80px;
-  height: 80px;
-  background: #3498db;
-  color: white;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%, -50%);
-  border-radius: 8px;
-  user-select: none;
-}
-
-.exploding-box {
-  width: 100px;
-  height: 100px;
-  background: linear-gradient(135deg, #3498db, #9b59b6);
-  color: white;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: 12px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-  user-select: none;
-  font-weight: bold;
-  transition: transform 0.2s;
-}
-
-.exploding-box:hover {
-  transform: scale(1.05);
-}
-
-.exploding-box:active {
-  transform: scale(0.95);
+.components-container {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    padding: 50px;
+    .menu {
+        .item {
+            width: 200px;
+            display: flex;
+            align-items: center;
+            .item-card {
+                margin: auto;
+                width: 80%;
+                height: 60px;
+                background-color: #faebd7;
+                cursor: pointer;
+            }
+            }
+    }
+    .content {
+        flex: 1;
+        height: 80%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
 }
 </style>

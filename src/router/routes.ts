@@ -69,6 +69,11 @@ const routes: Array<RouteRecordRaw> = [
         name: 'oxenHorses',
         component: () => import('@/views/components/oxenHorses/index.vue')
     }, 
+    {
+        path: '/malou',
+        name: 'malou',
+        component: () => import('@/views/components/malou/index.vue')
+    }, 
     // 404页面
     {
         path: '/:catchAll(.*)',

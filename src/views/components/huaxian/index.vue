@@ -1,19 +1,7 @@
 <template>
-  <div class="content">
-
-    <div class="layer1"></div>
-    <div class="layer2"></div>
-    <div class="layer3"></div>
-    <div class="layer4"></div>
-    <div class="layer5"></div>
-    <div class="z-title"></div>
-
-    <div class="role">
-        
+  <div class="boll circle">
+       <div class="suboll circle" style="background-color: red;border: 1px solid #000">子盒子</div>
     </div>
-    
-
-  </div>
 </template>
 <script setup lang="ts">
 import {ref,reactive} from "vue"
@@ -28,9 +16,29 @@ import {ref,reactive} from "vue"
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: #0883d8;
+    background-color: #fff;
+}
+.boll {
+  margin: 200px;
+  animation: moveX 2s linear infinite; /* 动画名称，动画时长，动画速度曲线，动画循环次数 */
+  background-color: #fff;
+}
+.suboll {
+  animation: moveY 2s cubic-bezier(0.5, -1 , 1 , 1) infinite;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
-
+@keyframes moveX {
+  to {
+    transform: translateX(200px); /* 动画结束时的位置 */
+  }
+}
+@keyframes moveY {
+  to {
+    transform: translateY(400px); /* 动画结束时的位置 */
+  }
+}
 
 </style>

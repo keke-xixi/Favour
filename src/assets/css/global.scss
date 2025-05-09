@@ -28,6 +28,28 @@ html, body {
 .over-font:hover{
     text-decoration: underline; 
 }
+// 盒子
+.box {
+    margin: auto;
+    width: 140px;
+    height: 140px;
+    color: #fff;
+    line-height: 140px;
+    border-radius: 5px;
+    text-align: center;
+    background-color: #0a52ca;
+    cursor: pointer;
+    &:hover { 
+        background-color: #3b64fc;
+    }
+}
+.circle {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    background-color: #0a52ca;
+    cursor: pointer;
+}
 // 游戏区域
 .mainContainer{
     width: 100vw;

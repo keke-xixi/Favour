@@ -103,4 +103,8 @@ export function useExplosion(elementRef, options = {}) {
       el.addEventListener('click', () => explode(el));
     }
   });
+  // 返回方法供外部调用
+  return {
+    explode,  // 手动触发爆炸
+  };
 }
