@@ -4,6 +4,7 @@
          <div class="suboll circle" style="background-color: red;border: 1px solid #000">子盒子</div>
       </div>
   </template>
+  
   <script setup lang="ts">
   import {ref,reactive} from "vue"
   
