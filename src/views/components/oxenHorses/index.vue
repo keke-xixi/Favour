@@ -26,6 +26,8 @@ import drawCard from './components/drawCard.vue'
 import rotate from './components/rotate.vue'
 import rotate2 from './components/rotate2.vue'
 import walk from './components/walk.vue'
+import muchDiv from './components/muchDiv.vue'
+import secondJump from './components/secondJump.vue'
 
 // 当前激活的组件
 const activeId = ref<number>(1)
@@ -42,6 +44,8 @@ const list = ref<any>([
     { path: 'rotate', name: '旋转', component: shallowRef(rotate) ,id: 7 },
     { path: 'rotate2', name: '周围旋转', component: shallowRef(rotate2) ,id: 8 },
     { path: 'walk', name: '走路', component: shallowRef(walk) ,id: 9 },
+    { path: 'muchDiv', name: '生成大量盒子', component: shallowRef(muchDiv) ,id: 10 },
+    { path: 'secondJump', name: '二段跳', component: shallowRef(secondJump) ,id: 11 },
 ])
 
 // 切换组件
