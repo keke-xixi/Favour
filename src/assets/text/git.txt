@@ -8,6 +8,10 @@ git config --global --unset-all user.email
 git config --global user.name "Your Username"
 git config --global user.email "your_email@example.com"
 
+在当前项目中设置用户名和邮箱地址
+git config user.name "Your Username"
+git config user.email "your_email@example.com"
+
 克隆有访问令牌项目： 两种方式（目前第二种成功了）
 git clone https://<个人访问令牌>@codeup.aliyun.com/64099e9c6c0239cafbcf7b84/jtg/jtg-mom-web.git/
 
