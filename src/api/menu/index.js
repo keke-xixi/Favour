@@ -2,7 +2,7 @@
 export default  [
     {
         path: '/home',
-        name: 'home',
+        name: '首页',
         children:[
             {
                 path: '/home/welcome',
@@ -12,19 +12,25 @@ export default  [
         id: 1
     },
     {
+        path: '/tool',
+        name: '组件',
+        children:[],
+        id: 2
+    },
+    {
         path: '/home/play',
-        name: 'shop',
+        name: '商城',
         children:[
             {
                 path: '/home/game',
                 name: 'game',
             }
         ],
-        id: 2
+        id: 6
     },
     {
         path: '/home/settings',
-        name: 'settings',
-        id: 3
+        name: '个人中心',
+        id: 7
     },
 ]

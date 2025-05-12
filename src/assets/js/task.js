@@ -1,7 +1,6 @@
 // 高任务优化  同时执行很多耗时任务，导致页面卡顿
 function _runTask(task, callback) {
     let startTime = Date.now(); // 记录任务开始时间
-    console.log('startTime', startTime);
     requestAnimationFrame(() => {
         // 检查本次执行是否超时（超过16ms）
         if (Date.now() - startTime < 16) {

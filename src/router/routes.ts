@@ -35,6 +35,11 @@ const routes: Array<RouteRecordRaw> = [
         ]
     },
     {
+        path: '/tool',
+        name: 'tool',
+        component: () => import('@/views/tool/index.vue')
+    },   
+    {
         path: '/tank',
         name: 'tank',
         component: () => import('@/views/components/tank/index.vue')

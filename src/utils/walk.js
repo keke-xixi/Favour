@@ -9,7 +9,7 @@ export function useCharacterAnimation(elementRef, options = {}) {
     frameWidth: 64,        // 单帧宽度
     frameHeight: 64,       // 单帧高度
     frameCount: 4,         // 行走动画帧数
-    fps: 10,               // 动画帧率
+    fps: 60,               // 动画帧率
     speed: 2,              // 移动速度(像素/帧)
     direction: 'right'     // 初始方向
   };
