@@ -23,6 +23,7 @@ import move from './components/move.vue'
 import crash from './components/crash.vue'
 import star from './components/star.vue'
 import drawCard from './components/drawCard.vue'
+import rotate from './components/rotate.vue'
 
 // 当前激活的组件
 const activeId = ref<number>(1)
@@ -36,6 +37,7 @@ const list = ref<any>([
     { path: 'crash', name: '碰撞', component: shallowRef(crash) ,id: 4 },
     { path: 'star', name: '流星', component: shallowRef(star) ,id: 5 },
     { path: 'drawCard', name: '抽卡', component: shallowRef(drawCard) ,id: 6 },
+    { path: 'rotate', name: '旋转', component: shallowRef(rotate) ,id: 7 },
 ])
 
 // 切换组件

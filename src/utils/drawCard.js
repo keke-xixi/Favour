@@ -1,3 +1,6 @@
+/*
+  抽卡动画
+*/
 import { onMounted, onUnmounted } from 'vue';
 
 export function useGachaEffect(elementRef, options = {}) {
