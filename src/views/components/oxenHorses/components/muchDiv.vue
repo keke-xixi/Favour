@@ -2,7 +2,6 @@
     <div style="display: flex;flex-wrap: wrap;overflow: auto;height: 100vh;" ref="divBox">
       <div style="position: fixed;top: 50%;left: 50%;z-index: 999;">
         <el-button type="danger" @click="updateDiv">生成100万个div</el-button>
-        <el-progress v-if="isGenerating" :percentage="progress" :format="formatProgress" />
       </div>
     </div>
   </template>
@@ -13,7 +12,7 @@
   
   const divBox = ref<any>(null)
   const isGenerating = ref(false)
-  const progress = ref(0)
+  const progress = ref(0) // 进度 0-100
   const totalCount = 1000000  // 100万
   
   // 生成元素的优化版本
@@ -27,7 +26,7 @@
       
       // 每批处理一定数量的元素，避免长时间阻塞
       while (currentIndex < totalCount && (performance.now() - startTime) < 16) {
-        const div = document.createElement('div')
+        const div:any = document.createElement('div')
         div.style = 'width: 100px;height: 100px;background-color: #ffcc3d;margin: 10px;'
         fragment.appendChild(div)
         currentIndex++
@@ -73,9 +72,6 @@
       })
   }
   
-  const formatProgress = (percentage) => {
-    return `${percentage}% (${Math.round(percentage * totalCount / 100)}/${totalCount})`
-  }
   </script>
   
   <style scoped lang="scss">
