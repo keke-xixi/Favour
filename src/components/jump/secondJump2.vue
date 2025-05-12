@@ -1,13 +1,8 @@
+<!-- 
+   使用动画帧实现人物二段跳跃  requestAnimationFrame
+-->
 <template>
     <div class="content" ref="content">
-  
-      <!-- <div class="layer1"></div>
-      <div class="layer2"></div>
-      <div class="layer3"></div>
-      <div class="layer4"></div>
-      <div class="layer5"></div>
-      <div class="z-title"></div> -->
-  
       <div class="role"  :style="{
             left:role.x * unitX + 'px',
             bottom:role.y * unitY + 'px',
@@ -223,15 +218,10 @@ onUnmounted(() => {
       display: flex;
       justify-content: center;
       align-items: center;
-    //   background-color: #0883d8;
       position: relative;
       .role{
         position: absolute;
-        // transition: all 0.3s ease;
       }
   }
-  
-  
-  
   </style>
   

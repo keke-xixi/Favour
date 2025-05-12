@@ -80,3 +80,18 @@ transform: rotateY(360deg); // 旋转效果 左右旋转
 			animation-delay: calc($i/10) + s;
 		}
 	}
+
+  requestAnimationFrame  // 请求动画帧，用于优化动画性能
+
+  // React 示例
+useEffect(() => {
+  let animationId;
+  const animate = () => {
+    // 动画逻辑
+    animationId = requestAnimationFrame(animate);
+  };
+  animate();
+  return () => cancelAnimationFrame(animationId);
+}, []);
+
+使用 performance.now() 替代 Date.now() 获取高精度时间戳，以优化性能。
