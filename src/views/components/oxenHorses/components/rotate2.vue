@@ -13,7 +13,7 @@
   import { useOrbitEffect } from '@/utils/rotate2.js';
   
   const container = ref(null);
-  const isPlaying = ref(true);
+  const isPlaying = ref(false);
   
   const { currentPosition, startAnimation, stopAnimation } = useOrbitEffect(container, {
     imageUrl: '/img/game/coco.png',

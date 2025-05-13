@@ -1,5 +1,5 @@
 <template>
-    <div style="display: flex;flex-wrap: wrap;overflow: auto;height: 100vh;" ref="divBox">
+    <div style="display: flex;flex-wrap: wrap;overflow: auto;height: 100vh;width: 80%;" ref="divBox">
       <div style="position: fixed;top: 50%;left: 50%;z-index: 999;">
         <el-button type="danger" @click="updateDiv">生成100万个div</el-button>
       </div>
