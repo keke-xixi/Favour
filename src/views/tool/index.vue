@@ -37,6 +37,7 @@ import secondJump from './components/secondJump.vue'
 import css from './components/css.vue'
 import walk2 from './components/walk2.vue'
 import translation from './components/translation.vue'
+import background from './components/background.vue'
 
 // 当前激活的组件
 const activeId = ref<number>(1)
@@ -58,6 +59,7 @@ const list = ref<any>([
     { path: 'css', name: 'css', component: shallowRef(css) ,id: 12 },
     { path: 'walk2', name: '移动盒子', component: shallowRef(walk2) ,id: 13 },
     { path: 'translation', name: '穿梭', component: shallowRef(translation) ,id: 14 },
+    { path: 'background', name: '背景', component: shallowRef(background) ,id: 15 },
 ])
 
 // 切换组件
