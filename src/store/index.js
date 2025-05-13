@@ -6,7 +6,19 @@ const store = createStore({
   state() {
     return {
       userInfo:JSON.parse(localStorage.getItem('onlineUser') || '{}'), // 当前登录在线的用户信息 只有账号密码
-      playerInfo:JSON.parse(localStorage.getItem('playerInfo') || '{}'),  // 存放 所有 玩家信息 （金币、积分、钻石、信息）对象形式  常用
+      playerInfo:JSON.parse(localStorage.getItem('playerInfo') || '{}'),  // 存放 所有 玩家信息 （金币、积分、钻石、信息）对象形式  常用 
+      /*
+         playerInfo: {
+           user1: {
+              "username": "1",
+              "password": "1",
+              "money": 100,
+              "score": 100,
+              "diam": 60,
+              ...otherInfo
+            }
+          }
+       */
       playList:[], // 存放所有登录玩家信息 数组形式（只是为了用户信息渲染）
       isFullscreen: false, // 是否全屏
       Number:1,
