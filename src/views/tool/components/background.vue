@@ -1,4 +1,4 @@
-<!-- 背景动画 -->
+<!-- 背景动画 : 自定义背景颜色 -->
 <template>
     <div class="dynamic-background" ref="canvasContainer">
       <canvas ref="canvas"></canvas>
@@ -164,7 +164,7 @@
     left: 0;
     width: 100vw;
     height: 100vh;
-    z-index: -1;
+    z-index: 1;
     /* background: linear-gradient(
       45deg,
       hsl(240, 50%, 8%),
