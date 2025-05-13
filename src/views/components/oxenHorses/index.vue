@@ -1,6 +1,6 @@
 <template>
     <div class="components-container">
-       <div class="menu">
+       <div class="menuItem">
             <div v-for="item in list" :key="item.id" class="item">
                 <div class="item-card">
                     <el-card @click="changeComponent(item)" :style="item.id === activeId ? activeStyle : customstyle">
@@ -76,7 +76,7 @@ onMounted(() => {
     width: 100%;
     display: flex;
     padding: 50px;
-    .menu {
+    .menuItem {
         .item {
             width: 200px;
             display: flex;

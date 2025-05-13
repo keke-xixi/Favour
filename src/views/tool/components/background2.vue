@@ -2,7 +2,6 @@
     <div ref="starfield" class="starfield-container"></div>
     <!-- 您的主内容 -->
     <main class="content">
-      <h1>星空背景示例</h1>
       <button @click="triggerStar">触发流星</button>
     </main>
   </template>

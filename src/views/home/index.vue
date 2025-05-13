@@ -1,7 +1,7 @@
 <template>
   <div class="homePage">
     <menu-card/>
-    <div class="content">
+    <div class="contents">
       <tab-card/>
       <router-view></router-view>
     </div>  
@@ -24,7 +24,7 @@ import TabCard from "./components/tabIndex.vue";
   height: 100vh;
   background-color: rgba(0, 0, 0, .9);
   display: flex;
-  .content{
+  .contents{
     flex: 1;
     height: 100vh;
   }

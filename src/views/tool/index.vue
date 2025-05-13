@@ -6,7 +6,7 @@
         <div class="layer4"></div>
         <div class="layer5"></div>
         <div class="z-title"></div>
-       <div class="menu">
+       <div class="menuItem">
             <div v-for="item in list" :key="item.id" class="item">
                 <div class="item-card">
                     <el-card @click="changeComponent(item)" :style="item.id === activeId ? activeStyle : customstyle">
@@ -94,7 +94,7 @@ onMounted(() => {
     background-color: #1d1624;
     padding: 50px;
     color: #fff;
-    .menu {
+    .menuItem {
         height: calc(100vh - 100px);
         overflow-y: scroll;
         overflow-x: hidden;
@@ -120,20 +120,20 @@ onMounted(() => {
         align-items: center;
     }
 }
-.menu::-webkit-scrollbar {
+.menuItem::-webkit-scrollbar {
   width: 10px;
 }
 
-.menu::-webkit-scrollbar-track {
+.menuItem::-webkit-scrollbar-track {
   background: #fff;  // 轨道颜色
 }
 
-.menu::-webkit-scrollbar-thumb {
+.menuItem::-webkit-scrollbar-thumb {
   background: #0077d4; // 滚动条颜色
   border-radius: 3px;
 }
 
-.menu::-webkit-scrollbar-thumb:hover {
+.menuItem::-webkit-scrollbar-thumb:hover {
   background: #fff;
 }
 </style>
