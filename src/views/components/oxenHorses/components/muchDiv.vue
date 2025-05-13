@@ -1,5 +1,5 @@
 <template>
-    <div style="display: flex;flex-wrap: wrap;overflow: auto;height: 100vh;width: 80%;" ref="divBox">
+    <div style="display: flex;flex-wrap: wrap;overflow: auto;height: 100vh;width: calc(100vw - 300px);" ref="divBox">
       <div style="position: fixed;top: 50%;left: 50%;z-index: 999;">
         <el-button type="danger" @click="updateDiv">生成100万个div</el-button>
       </div>
@@ -60,7 +60,7 @@
     }
     
     // 使用runTask执行拆分后的任务
-    runTask(generateElements())
+    runTask(generateElements)
       .then(() => {
         isGenerating.value = false
         progress.value = 100

@@ -1,5 +1,5 @@
 <template>
-    <div style="display: flex;flex-wrap: wrap;overflow: auto;height: 100vh;" ref="divBox">
+    <div class="divBox" ref="divBox">
       <div style="position: fixed;top: 50%;left: 50%;z-index: 999;">
         <el-button type="danger" @click="updateDiv">生成100万个div</el-button>
       </div>
@@ -75,15 +75,29 @@
   </script>
   
   <style scoped lang="scss">
-  .box2 {
-    width: 50px;
-    height: 50px;
-    margin: 20px;
-    transition: all 0.3s;
-    
-    &:hover {
-      transform: scale(1.1);
-      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-    }
+  .divBox {
+    display: flex;
+    flex-wrap: wrap;
+    overflow: auto;
+    height: 100vh;
+    width: 95%;
+    padding-top: 120px;
   }
+  .divBox::-webkit-scrollbar {
+  width: 16px;
+}
+
+.divBox::-webkit-scrollbar-track {
+  background: #fff;  // 轨道颜色
+}
+
+.divBox::-webkit-scrollbar-thumb {
+  background: #0077d4; // 滚动条颜色
+  border-radius: 3px;
+}
+
+.divBox::-webkit-scrollbar-thumb:hover {
+  background: #fff;
+}
+
   </style>
