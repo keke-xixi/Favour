@@ -1,11 +1,13 @@
 <template>
-    <div ref="galaxy" class="galaxy-container"></div>
-    <div class="controls">
-      <button @click="addBoxs">添加盒子</button>
-      <button @click="clearAll">清空</button>
-      <select v-model="selectedPath">
-        <option v-for="path in pathTypes" :value="path">{{ path }}</option>
-      </select>
+    <div class="galaxy-container">
+        <div ref="galaxy" style="height: 100%;background-color: transparent;border: none;"></div>
+        <div class="controls">
+        <button @click="addBoxs">添加盒子</button>
+        <button @click="clearAll">清空</button>
+        <select v-model="selectedPath">
+            <option v-for="path in pathTypes" :value="path">{{ path }}</option>
+        </select>
+        </div>
     </div>
   </template>
   
@@ -31,10 +33,10 @@
   <style>
   .galaxy-container {
     width: 100%;
-    height: 70vh;
+    height: 100vh;
     margin: 0 auto;
-    border: 1px solid #333;
-    background: radial-gradient(ellipse at center, #1a1a2e 0%, #0f0f1a 100%);
+    /* border: 1px solid #333; */
+    /* background: radial-gradient(ellipse at center, #1a1a2e 0%, #0f0f1a 100%); */
   }
   
   .controls {
@@ -67,6 +69,6 @@
     border-radius: 20px;
     background: #2c3e50;
     color: white;
-    border: 1px solid #a777e3;
+    /* border: 1px solid #a777e3; */
   }
   </style>
