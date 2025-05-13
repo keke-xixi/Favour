@@ -1,5 +1,22 @@
 计划：
 
-金币： 购买技能、装备、金币、背景
-钻石： 抽卡
-积分： 到达一定程度可以领取金币钻石  比例： 1：1000
+金币： 购买商品 （每个游戏都以金币和钻石商品作为货币 、 每个游戏商店可独立存在）
+钻石： 抽卡（卡池包含金币、积分、钻石）、购买稀有货品
+积分： 到达一定程度可以领取金币钻石  比例： 1：1000 、积分越高、等级越高、打怪越痛
+
+// 根据窗口大小调整位置计算
+const calcPosition = (percent) => {
+  const containerWidth = container.value.offsetWidth
+  const containerHeight = container.value.offsetHeight
+  return {
+    x: (percent[0] / 100) * containerWidth,
+    y: (percent[1] / 100) * containerHeight
+  }
+}
+
+// 添加暂停/继续功能
+const isPaused = ref(false)
+const toggleAnimation = () => {
+  isPaused.value = !isPaused.value
+  if (!isPaused.value) animate()
+}
