@@ -4,6 +4,9 @@
 钻石： 抽卡（卡池包含金币、积分、钻石）、购买稀有货品
 积分： 到达一定程度可以领取金币钻石  比例： 1：1000 、积分越高、等级越高、打怪越痛
 
+钻石：
+稀有角色只能靠钻石购买，游戏内掉落几率极低，但可以靠钻石抽卡获得
+
 // 根据窗口大小调整位置计算
 const calcPosition = (percent) => {
   const containerWidth = container.value.offsetWidth
