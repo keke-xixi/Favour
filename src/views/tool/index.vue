@@ -6,6 +6,9 @@
         <div class="layer4"></div>
         <div class="layer5"></div>
         <div class="z-title"></div>
+        <div style="position: fixed;top: 20px;right: 20px;">
+            <el-button type="primary" @click="router.go(-1)" style="width: 100px;z-index: 999;">返回</el-button>
+        </div>
        <div class="menuItem">
             <div v-for="item in list" :key="item.id" class="item">
                 <div class="item-card">
@@ -15,7 +18,7 @@
                 </div>
             </div>
        </div>
-       <div v-if="activeComponent" class="content">
+       <div v-if="activeComponent" class="content-box">
             <component :is="activeComponent" />
         </div>
     </div>
@@ -23,6 +26,7 @@
 
 <script setup lang="ts">
 import { ref,onMounted,shallowRef } from 'vue';
+import router from '../../router';
 import animateExplode from './components/animateExplode.vue'
 import dragPostion from './components/dragPostion.vue'
 import move from './components/move.vue'
@@ -37,8 +41,10 @@ import secondJump from './components/secondJump.vue'
 import css from './components/css.vue'
 import walk2 from './components/walk2.vue'
 import translation from './components/translation.vue'
+import translation2 from './components/translation2.vue'
 import background from './components/background.vue'
 import background2 from './components/background2.vue'
+
 
 // 当前激活的组件
 const activeId = ref<number>(1)
@@ -62,6 +68,7 @@ const list = ref<any>([
     { path: 'translation', name: '穿梭', component: shallowRef(translation) ,id: 14 },
     { path: 'background', name: '背景', component: shallowRef(background) ,id: 15 },
     { path: 'background2', name: '背景2', component: shallowRef(background2) ,id: 16 },
+    { path: 'translation2', name: '穿梭背景', component: shallowRef(translation2) ,id: 17 },
 ])
 
 // 切换组件
@@ -112,12 +119,13 @@ onMounted(() => {
             }
         }
     }
-    .content {
+    .content-box {
         flex: 1;
         height: 80%;
         display: flex;
         justify-content: center;
         align-items: center;
+        background-color: transparent;
     }
 }
 .menuItem::-webkit-scrollbar {
