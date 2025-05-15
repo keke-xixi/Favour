@@ -48,6 +48,8 @@ git checkout feat/XTWQ-11
 
 创建新本地分支并关联远程分支
 git checkout -b <本地分支名> origin/<远程分支名>
+创建新本地分支并关联远程分支
+git checkout -b <本地分支名> origin/<远程分支名>
 
 git merge dev  是把本地的dev代码合并到feat/XTWQ-9（自己现在所选分支）
 自己的dev分支要和远程的dev分支保持一致，不要动它

@@ -1,12 +1,12 @@
 <template>
     <div class="content" ref="content">
   
-      <!-- <div class="layer1"></div>
+      <div class="layer1"></div>
       <div class="layer2"></div>
       <div class="layer3"></div>
       <div class="layer4"></div>
       <div class="layer5"></div>
-      <div class="z-title"></div> -->
+      <div class="z-title"></div>
   
       <div class="role"  :style="{
             left:role.x * unitX + 'px',
@@ -50,7 +50,7 @@ const role = reactive<any>({
     x: 1, // 初始横坐标 1 格 
     y: 1, // 初始纵坐标 1 格
     w: 1, // 宽度 1 格
-    h: 2, // 高度 2 格
+    h: 3, // 高度 2 格
     jumpStatus: false, // 是否跳跃
     jumpSecondStatus: false, // 是否 二段 跳跃
     transition: 0.1, // 移动过渡效果
@@ -223,15 +223,10 @@ onUnmounted(() => {
       display: flex;
       justify-content: center;
       align-items: center;
-    //   background-color: #0883d8;
       position: relative;
       .role{
         position: absolute;
-        // transition: all 0.3s ease;
       }
   }
-  
-  
-  
   </style>
   

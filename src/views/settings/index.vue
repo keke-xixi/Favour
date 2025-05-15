@@ -102,7 +102,7 @@ const getData = () => {
   setTimeout(() => {
     tableData.value = data;
     loading.value = false
-  },2000)
+  },500)
    
 }
 onMounted(() => {

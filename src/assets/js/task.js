@@ -1,22 +1,15 @@
 // 高任务优化  同时执行很多耗时任务，导致页面卡顿
-function _runTask(task,callback) {
-    let startTime = Date.now();
-    requestAnimationFrame(()=>{
-        if(Date.now() - startTime < 16){
-             task();
-            callback();
-        }else{
-            _runTask(task,callback);
+function _runTask(task, callback) {
+    let startTime = Date.now(); // 记录任务开始时间
+    requestAnimationFrame(() => {
+        // 检查本次执行是否超时（超过16ms）
+        if (Date.now() - startTime < 16) {
+            task();      // 执行任务
+            callback();  // 触发完成回调
+        } else {
+            _runTask(task, callback); // 超时则递归拆分任务
         }
-    })
-    // requestIdleCallback((idle)=>{
-    //     if(idle.timeRemaining() > 0){
-    //         task();
-    //         callback(); // 任务执行完毕后，执行回调函数
-    //     }else{
-    //         _runTask(task,callback); // 如果时间片用完，则继续执行任务
-    //     }
-    // })
+    });
 }
 
 /*

@@ -1,13 +1,5 @@
 <template>
     <div class="content" ref="content">
-  
-      <!-- <div class="layer1"></div>
-      <div class="layer2"></div>
-      <div class="layer3"></div>
-      <div class="layer4"></div>
-      <div class="layer5"></div>
-      <div class="z-title"></div> -->
-  
       <div class="role"  :style="{
             left:role.x * unitX + 'px',
             bottom:role.y * unitY + 'px',
@@ -50,7 +42,7 @@ const role = reactive<any>({
     x: 1, // 初始横坐标 1 格 
     y: 1, // 初始纵坐标 1 格
     w: 1, // 宽度 1 格
-    h: 2, // 高度 2 格
+    h: 3, // 高度 3 格
     jumpStatus: false, // 是否跳跃
     jumpSecondStatus: false, // 是否 二段 跳跃
     transition: 0.1, // 移动过渡效果
@@ -61,7 +53,7 @@ const role = reactive<any>({
     speed: 8, // 左右移动速度
     moveXDistance: 1, // 左右移动距离
     jumpTime: 1.2, // 跳跃时间 s
-    jumpHeight: 3, // 跳跃高度 格
+    jumpHeight: 4, // 跳跃高度 格
     jumpYSpeed: 12, // 跳跃时候上下方向速度 
     jumpXSpeed: 0, // 跳跃时候左右方向速度 默认是 0 跳跃的时候按 左 右 键会左右移动
     jumpXSpeedValue: 6, // 跳跃时候左右方向每次移动距离  和 jumpYSpeed 数值类似
@@ -223,15 +215,10 @@ onUnmounted(() => {
       display: flex;
       justify-content: center;
       align-items: center;
-    //   background-color: #0883d8;
       position: relative;
       .role{
         position: absolute;
-        // transition: all 0.3s ease;
       }
   }
-  
-  
-  
   </style>
   

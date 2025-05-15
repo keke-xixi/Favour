@@ -6,8 +6,20 @@ const store = createStore({
   state() {
     return {
       userInfo:JSON.parse(localStorage.getItem('onlineUser') || '{}'), // 当前登录在线的用户信息 只有账号密码
-      playerInfo:JSON.parse(localStorage.getItem('playerInfo') || '{}'),  // 存放所有玩家信息 （金币、积分、钻石、信息）对象形式
-      playList:[], // 存放所有登录玩家信息 数组形式
+      playerInfo:JSON.parse(localStorage.getItem('playerInfo') || '{}'),  // 存放 所有 玩家信息 （金币、积分、钻石、信息）对象形式  常用 
+      /*
+         playerInfo: {
+           user1: {
+              "username": "1",
+              "password": "1",
+              "money": 100,
+              "score": 100,
+              "diam": 60,
+              ...otherInfo
+            }
+          }
+       */
+      playList:[], // 存放所有登录玩家信息 数组形式（只是为了用户信息渲染）
       isFullscreen: false, // 是否全屏
       Number:1,
       audio: null, // 存储音频对象
@@ -21,6 +33,7 @@ const store = createStore({
     moveUser(state) {
       state.userInfo = {};
     },
+    // 获取所有用户信息数组
     getPlayList(state) {
       const data = [];
       const playerInfo = JSON.parse(localStorage.getItem('playerInfo') || '{}');
@@ -41,12 +54,12 @@ const store = createStore({
     SET_FULLSCREEN(state, value) {
       state.isFullscreen = value;
     },
-    // 更新当前玩家信息 （金币、积分、钻石、信息）传入一个userInfo对象 {username:xxx, money:xxx, score:xxx, level:xxx, name:xxx}
-    updatePlayer(state, onLineUser) {
-      let playerInfo = JSON.parse(localStorage.getItem('playerInfo') || '{}');
-      let newPlayerInfo = playerInfo[onLineUser.username];
-      if(newPlayerInfo && newPlayerInfo.username === onLineUser.username && newPlayerInfo.password === onLineUser.password){
-        playerInfo[onLineUser.username] = onLineUser;
+    // 更新当前玩家信息 只提供者一个更新方法 （金币、积分、钻石、信息）传入一个userInfo对象 {username:xxx, money:xxx, score:xxx, level:xxx, name:xxx}
+    updatePlayer(state, userInfo) {
+      let playerInfo = JSON.parse(localStorage.getItem('playerInfo') || '{}');  // 获取所有用户信息
+      let oldPlayerInfo = playerInfo[userInfo.username];  // 获取要更新前的用户信息
+      if(oldPlayerInfo && oldPlayerInfo.username === userInfo.username && oldPlayerInfo.password === userInfo.password){
+        playerInfo[userInfo.username] = userInfo;
         localStorage.setItem('playerInfo', JSON.stringify(playerInfo));
         state.playerInfo = playerInfo;
       }
@@ -102,6 +115,7 @@ const store = createStore({
     },
   },
   getters: {
+    // 获取当前是否全屏
     isFullscreen: (state) => state.isFullscreen,
      // 获取当前在线玩家信息 （金币、积分、钻石、信息） 只能通过这种方式获取 返回一个对象
      getOnlineUser: (state) =>  { 

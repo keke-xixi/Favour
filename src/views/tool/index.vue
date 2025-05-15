@@ -1,5 +1,11 @@
 <template>
     <div class="components-container">
+        <div class="layer1"></div>
+        <div class="layer2"></div>
+        <div class="layer3"></div>
+        <div class="layer4"></div>
+        <div class="layer5"></div>
+        <div class="z-title"></div>
        <div class="menuItem">
             <div v-for="item in list" :key="item.id" class="item">
                 <div class="item-card">
@@ -28,6 +34,11 @@ import rotate2 from './components/rotate2.vue'
 import walk from './components/walk.vue'
 import muchDiv from './components/muchDiv.vue'
 import secondJump from './components/secondJump.vue'
+import css from './components/css.vue'
+import walk2 from './components/walk2.vue'
+import translation from './components/translation.vue'
+import background from './components/background.vue'
+import background2 from './components/background2.vue'
 
 // 当前激活的组件
 const activeId = ref<number>(1)
@@ -46,6 +57,11 @@ const list = ref<any>([
     { path: 'walk', name: '走路', component: shallowRef(walk) ,id: 9 },
     { path: 'muchDiv', name: '生成大量盒子', component: shallowRef(muchDiv) ,id: 10 },
     { path: 'secondJump', name: '二段跳', component: shallowRef(secondJump) ,id: 11 },
+    { path: 'css', name: 'css', component: shallowRef(css) ,id: 12 },
+    { path: 'walk2', name: '移动盒子', component: shallowRef(walk2) ,id: 13 },
+    { path: 'translation', name: '穿梭', component: shallowRef(translation) ,id: 14 },
+    { path: 'background', name: '背景', component: shallowRef(background) ,id: 15 },
+    { path: 'background2', name: '背景2', component: shallowRef(background2) ,id: 16 },
 ])
 
 // 切换组件
@@ -75,8 +91,13 @@ onMounted(() => {
     height: 100%;
     width: 100%;
     display: flex;
+    background-color: #1d1624;
     padding: 50px;
+    color: #fff;
     .menuItem {
+        height: calc(100vh - 100px);
+        overflow-y: scroll;
+        overflow-x: hidden;
         .item {
             width: 200px;
             display: flex;
@@ -87,8 +108,9 @@ onMounted(() => {
                 height: 60px;
                 background-color: #faebd7;
                 cursor: pointer;
+                z-index: 5;
             }
-            }
+        }
     }
     .content {
         flex: 1;
@@ -97,5 +119,21 @@ onMounted(() => {
         justify-content: center;
         align-items: center;
     }
+}
+.menuItem::-webkit-scrollbar {
+  width: 10px;
+}
+
+.menuItem::-webkit-scrollbar-track {
+  background: #fff;  // 轨道颜色
+}
+
+.menuItem::-webkit-scrollbar-thumb {
+  background: #0077d4; // 滚动条颜色
+  border-radius: 3px;
+}
+
+.menuItem::-webkit-scrollbar-thumb:hover {
+  background: #fff;
 }
 </style>
