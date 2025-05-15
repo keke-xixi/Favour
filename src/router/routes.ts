@@ -31,14 +31,19 @@ const routes: Array<RouteRecordRaw> = [
                 path: 'settings',
                 name: 'settings',
                 component: () => import('@/views/settings/index.vue')
-            }
+            },
+            {
+                path: 'wish',
+                name: 'wish',
+                component: () => import('@/views/wish/index.vue')
+            }, 
         ]
     },
     {
         path: '/tool',
         name: 'tool',
         component: () => import('@/views/tool/index.vue')
-    },   
+    }, 
     {
         path: '/tank',
         name: 'tank',

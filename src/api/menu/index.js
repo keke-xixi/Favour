@@ -18,6 +18,12 @@ export default  [
         id: 2
     },
     {
+        path: '/home/wish',
+        name: '抽卡',
+        children:[],
+        id: 3
+    },
+    {
         path: '/home/play',
         name: '商城',
         children:[
