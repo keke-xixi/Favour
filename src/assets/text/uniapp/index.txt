@@ -1,0 +1,17 @@
+生命周期钩子	说明
+onLoad	页面加载时触发（可接收 query 参数，如 onLoad(options)）
+onShow	页面显示时触发（每次进入页面都会触发）
+onReady	页面初次渲染完成时触发（DOM 已准备好）
+onHide	页面隐藏时触发（如跳转到其他页面或进入后台）
+onUnload	页面卸载时触发（如 uni.navigateBack 或关闭页面）
+onPullDownRefresh	监听用户下拉刷新（需在 pages.json 中配置 "enablePullDownRefresh": true）
+onReachBottom	页面滚动到底部时触发（常用于上拉加载更多）
+onPageScroll	页面滚动时触发（可获取滚动距离 scrollTop）
+onResize	窗口尺寸变化时触发（如旋转屏幕）
+onTabItemTap	点击当前 tab 时触发（适用于 tabBar 页面）
+
+类型	主要生命周期钩子
+应用生命周期	onLaunch, onShow, onHide, onError
+页面生命周期	onLoad, onShow, onReady, onUnload, onPullDownRefresh, onReachBottom
+组件生命周期	created, mounted, beforeDestroy
+特殊生命周期	onShareAppMessage（小程序）, onBackPress（App/H5）
