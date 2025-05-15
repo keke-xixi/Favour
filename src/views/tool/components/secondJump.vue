@@ -1,5 +1,5 @@
 <template>
-    <div class="content" ref="content">
+    <div class="controls-box" ref="content">
       <div class="role"  :style="{
             left:role.x * unitX + 'px',
             bottom:role.y * unitY + 'px',
@@ -13,8 +13,6 @@
         }">
          <img src="/img/moonlight/role.png" alt="" class="img">
       </div>
-      
-  
     </div>
   </template>
 <script setup lang="ts">
@@ -39,9 +37,9 @@ const unitY = computed(() => {
 
 // 角色
 const role = reactive<any>({
-    x: 1, // 初始横坐标 1 格 
-    y: 1, // 初始纵坐标 1 格
-    w: 1, // 宽度 1 格
+    x: 4, // 初始横坐标 1 格 
+    y: 4, // 初始纵坐标 1 格
+    w: 1.5, // 宽度 1 格
     h: 3, // 高度 3 格
     jumpStatus: false, // 是否跳跃
     jumpSecondStatus: false, // 是否 二段 跳跃
@@ -210,8 +208,9 @@ onUnmounted(() => {
   
   </script>
   <style lang="scss" scoped>
-  .content{
-      height: 100vh;
+  .controls-box{
+      width: 100%;
+      height: 100%;
       display: flex;
       justify-content: center;
       align-items: center;
