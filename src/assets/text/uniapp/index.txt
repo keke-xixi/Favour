@@ -47,3 +47,24 @@ console.log('这段代码只在安卓 App 环境执行');
 // 安卓专用代码
 plus.android.importClass('java.io.File');
 // #endif
+
+onLoad() {
+    this.initChart()
+
+    // 监听窗口尺寸变化
+    uni.onWindowResize((res) => {
+        this.windowWidth = res.size.windowWidth   // windowWidth 单位px 整个手机屏幕宽度
+        this.windowHeight = res.size.windowHeight  // windowHeight 单位px 整个手机屏幕高度 （包含头部标题）
+        console.log('窗口变化:', res.size)
+    })
+
+    // 初始获取一次窗口尺寸
+    uni.getWindowInfo((info) => {
+        this.windowWidth = info.windowWidth
+        this.windowHeight = info.windowHeight
+    })
+},
+onUnload() {
+    // 移除监听（避免内存泄漏）
+    uni.offWindowResize()
+},
