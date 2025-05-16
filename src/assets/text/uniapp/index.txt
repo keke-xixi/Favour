@@ -11,7 +11,39 @@ onResize	窗口尺寸变化时触发（如旋转屏幕）
 onTabItemTap	点击当前 tab 时触发（适用于 tabBar 页面）
 
 类型	主要生命周期钩子
-应用生命周期	onLaunch, onShow, onHide, onError
-页面生命周期	onLoad, onShow, onReady, onUnload, onPullDownRefresh, onReachBottom
+应用生命周期	onLaunch, onShow, onHide, onError  (App.vue)
+页面生命周期	onLoad, onShow, onReady, onUnload, onPullDownRefresh, onReachBottom  (pages/xxx/xxx.vue)
 组件生命周期	created, mounted, beforeDestroy
 特殊生命周期	onShareAppMessage（小程序）, onBackPress（App/H5）
+
+预处理指令	说明
+// #ifdef H5	仅 Web 浏览器环境
+// #ifdef APP-PLUS	App 端（安卓 + iOS）
+// #ifdef MP-WEIXIN	微信小程序环境
+// #ifdef MP-ALIPAY	支付宝小程序环境
+// #ifdef MP-BAIDU	百度小程序环境
+// #ifdef MP-TOUTIAO	字节跳动小程序环境
+// #ifdef MP-QQ	QQ 小程序环境
+// #ifdef MP-360	360 小程序环境
+// #ifdef MP	所有小程序环境
+// #ifdef H5 | MP-WEIXIN	Web 浏览器和小程序环境（微信小程序）
+// #endif	结束条件编译
+
+例子
+// #ifdef H5
+console.log('这段代码只在 H5 浏览器环境执行');
+// 使用 document 等浏览器 API
+const element = document.getElementById('myElement');
+// #endif
+
+// #ifdef APP-PLUS
+console.log('这段代码只在 App 环境执行（包括安卓和iOS）');
+// 使用 uni-app 的 APP 端 API
+plus.device.getInfo();
+// #endif
+
+// #ifdef APP-PLUS && OS_ANDROID
+console.log('这段代码只在安卓 App 环境执行');
+// 安卓专用代码
+plus.android.importClass('java.io.File');
+// #endif
