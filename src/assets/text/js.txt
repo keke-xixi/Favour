@@ -32,3 +32,12 @@ for(let i = 0; i < 10; i++) {
 }
 
 Math.floor(Math.random() * 4) + 1; // 生成1到4之间的随机整数  1, 2, 3, 4
+
+// 延迟回调
+const chartDom = chartCanvas.value;
+if (!chartDom.clientWidth) {
+   console.warn('DOM未渲染完成，延迟初始化');
+   setTimeout(initChart, 100);
+   return;
+}
+chartInstance = echarts.init(chartDom);
