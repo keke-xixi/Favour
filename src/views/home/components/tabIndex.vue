@@ -1,5 +1,5 @@
 <template>
-  <div class="tab" @click="searchStatus = false">
+  <div class="tab" @click="searchStatus = false" :style="{ backgroundColor: bgColor }">
      <div class="tab-input" >
        <ZInput placeholder="请输入搜索内容"  rightIcon :customStyle="{background:'#020203',color:'#fff'}"
         focus @focusChange="focusChange" @submit="submit"/>
@@ -49,7 +49,9 @@ const store = useStore();
 const searchStatus = ref(false);
 const status = ref(false)
 const searchList:any = reactive([])
+const bgColor = computed(() => store.state.bgColor ? store.state.bgColor : 'transparent')
 const userData = computed(() => store.state.userInfo)
+
 const leave = () => {
   localStorage.setItem('onlineUser','{}');
   router.push('/login')

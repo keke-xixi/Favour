@@ -24,6 +24,7 @@ const store = createStore({
       Number:1,
       audio: null, // 存储音频对象
       isPlaying: false, // 存储音频是否正在播放的状态
+      bgColor: null
     };
   },
   mutations: {
@@ -32,6 +33,10 @@ const store = createStore({
     },
     moveUser(state) {
       state.userInfo = {};
+    },
+    // 改变主题色
+    setBgColor(state, color) {
+      state.bgColor = color;
     },
     // 获取所有用户信息数组
     getPlayList(state) {
@@ -115,6 +120,8 @@ const store = createStore({
     },
   },
   getters: {
+    // 获取主题背景颜色
+    getBgColor: (state) => state.bgColor,
     // 获取当前是否全屏
     isFullscreen: (state) => state.isFullscreen,
      // 获取当前在线玩家信息 （金币、积分、钻石、信息） 只能通过这种方式获取 返回一个对象

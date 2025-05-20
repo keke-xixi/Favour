@@ -28,6 +28,20 @@ html, body {
 .over-font:hover{
     text-decoration: underline; 
 }
+// 按钮
+.z-button2 {
+    padding: 10px 20px;
+    background: rgba(255,255,255,0.2);
+    color: white;
+    border: 1px solid rgba(255,255,255,0.3);
+    border-radius: 20px;
+    cursor: pointer;
+    transition: all 0.3s;
+    cursor: pointer;
+}
+.z-button2:hover {
+background: rgba(255,255,255,0.3);
+}
 // 盒子
 .box {
     margin: auto;

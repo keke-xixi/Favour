@@ -98,7 +98,8 @@ onMounted(() => {
     height: 100%;
     width: 100%;
     display: flex;
-    background-color: #1d1624;
+    // background-color: #1d1624;
+    background: linear-gradient(#9b7ae7, #5e3e9e,#1d1624);
     padding: 50px;
     color: #fff;
     .menuItem {
