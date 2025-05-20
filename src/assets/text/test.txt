@@ -1,226 +1,29 @@
-{
-  "status": 200,
-  "message": "Success",
-  "data": {
-  "Epic": [
-      {
-        "issue_id": 217307,
-        "issue_name": "活动管家升级",
-        "issue_key": "NEOC-67752",
-        "priority": "Medium",
-        "parent_issue_key": "",
-        "status": "E2E",
-        "component_name": "交易中心,营销中心"
-      },
-      {
-        "issue_id": 218441,
-        "issue_name": "SOP礼品兑换专区推荐位达观撤除",
-        "issue_key": "NEOC-68105",
-        "priority": "Medium",
-        "parent_issue_key": "",
-        "status": "E2E",
-        "component_name": null
-      },
-      {
-        "issue_id": 219494,
-        "issue_name": "删单失败原因细化与员工订单取消按钮",
-        "issue_key": "NEOC-68356",
-        "priority": "Medium",
-        "parent_issue_key": "",
-        "status": "Budget Tracked",
-        "component_name": null
-      },
-      {
-        "issue_id": 220721,
-        "issue_name": "事业看板",
-        "issue_key": "NEOC-68580",
-        "priority": "Medium",
-        "parent_issue_key": "",
-        "status": "Budget Tracked",
-        "component_name": "需求文档,用户中心"
-      },
-      {
-        "issue_id": 221013,
-        "issue_name": "【需求】UC提供通过OpenId查询用户信息接口",
-        "issue_key": "NEOC-68610",
-        "priority": "Medium",
-        "parent_issue_key": "",
-        "status": "Budget Tracked",
-        "component_name": "用户中心"
-      },
-      {
-        "issue_id": 221074,
-        "issue_name": "云购支持鸿蒙搜索",
-        "issue_key": "NEOC-68655",
-        "priority": "Medium",
-        "parent_issue_key": "",
-        "status": "待办",
-        "component_name": null
-      },
-      {
-        "issue_id": 221599,
-        "issue_name": "加入",
-        "issue_key": "NEOC-68797",
-        "priority": "Medium",
-        "parent_issue_key": "",
-        "status": "Budget Tracked",
-        "component_name": "用户中心"
-      },
-      {
-        "issue_id": 222057,
-        "issue_name": "SOP补签有效期截止时间优化",
-        "issue_key": "NEOC-68867",
-        "priority": "Medium",
-        "parent_issue_key": "",
-        "status": "E2E",
-        "component_name": null
-      },
-      {
-        "issue_id": 222923,
-        "issue_name": "鸿蒙APP内嵌H5商城",
-        "issue_key": "NEOC-69077",
-        "priority": "Medium",
-        "parent_issue_key": "",
-        "status": "待办",
-        "component_name": null
-      },
-      {
-        "issue_id": 223377,
-        "issue_name": "【H5&微信小程序】优化批量查询开关接口逻辑，兼容接口超时情况",
-        "issue_key": "NEOC-69153",
-        "priority": "Medium",
-        "parent_issue_key": "",
-        "status": "处理中",
-        "component_name": "H5,微信小程序"
-      },
-      {
-        "issue_id": 223467,
-        "issue_name": "IDaaS 支持MSE的插件鉴权",
-        "issue_key": "NEOC-69188",
-        "priority": "Medium",
-        "parent_issue_key": "",
-        "status": "Budget Tracked",
-        "component_name": null
-      },
-      {
-        "issue_id": 224624,
-        "issue_name": "【前端H5重构】Next.js项目重构页面迁移【第1期】",
-        "issue_key": "NEOC-69321",
-        "priority": "Medium",
-        "parent_issue_key": "",
-        "status": "处理中",
-        "component_name": "H5"
-      },
-      {
-        "issue_id": 225005,
-        "issue_name": "鸿蒙APP内嵌H5商城-微信相关需求",
-        "issue_key": "NEOC-69376",
-        "priority": "Medium",
-        "parent_issue_key": "",
-        "status": "待办",
-        "component_name": null
-      },
-      {
-        "issue_id": 225144,
-        "issue_name": "续期",
-        "issue_key": "NEOC-69403",
-        "priority": "Medium",
-        "parent_issue_key": "",
-        "status": "待办",
-        "component_name": null
+function init2(dom, theme2, opts) {
+  var isClient = !(opts && opts.ssr);
+  if (isClient) {
+    if (true) {
+      if (!dom) {
+        throw new Error("Initialize failed: invalid dom.");
       }
-    ],
-    "Test": [
-      {
-        "epic_key": "NEOC-66537",
-        "count": 1
-      },
-      {
-        "epic_key": "NEOC-68867",
-        "count": 1
-      },
-      {
-        "epic_key": "NEOC-68105",
-        "count": 2
-      },
-      {
-        "epic_key": "NEOC-68356",
-        "count": 2
-      },
-      {
-        "epic_key": "NEOC-67752",
-        "count": 3
-      },
-      {
-        "epic_key": "NEOC-69321",
-        "count": 8
+    }
+    var existInstance = getInstanceByDom(dom);
+    if (existInstance) {
+      if (true) {
+        warn("There is a chart instance already initialized on the dom.");
       }
-     ],
-    // Story 和 Epic 全部关联
-    "Story": [
-      {
-        "epic_key": "NEOC-67752",
-        "count": 3
-      },
-      {
-        "epic_key": "NEOC-69321",
-        "count": 11
-      },
-      {
-        "epic_key": "NEOC-68356",
-        "count": 2
-      },
-      {
-        "epic_key": "NEOC-68105",
-        "count": 2
-      },
-      {
-        "epic_key": "NEOC-68867",
-        "count": 1
-      },
-      {
-        "epic_key": "NEOC-66537",
-        "count": 1
-      },
-      {
-        "epic_key": "NEOC-68797",
-        "count": 2
-      },
-      {
-        "epic_key": "NEOC-68610",
-        "count": 1
-      },
-      {
-        "epic_key": "NEOC-68580",
-        "count": 1
-      },
-      {
-        "epic_key": "NEOC-69403",
-        "count": 1
-      },
-      {
-        "epic_key": "NEOC-69376",
-        "count": 1
-      },
-      {
-        "epic_key": "NEOC-69077",
-        "count": 1
+      return existInstance;
+    }
+    if (true) {
+      if (isDom(dom) && dom.nodeName.toUpperCase() !== "CANVAS" && (!dom.clientWidth && (!opts || opts.width == null) || !dom.clientHeight && (!opts || opts.height == null))) {
+        warn("Can't get DOM width or height. Please check dom.clientWidth and dom.clientHeight. They should not be 0.For example, you may need to call this in the callback of window.onload.");
       }
-    ]
-    // 已经移测到未关联Epic的story
-    "Test2":
-      {
-        "epic_key": "",
-        "e2e_count1": 3
-      }
-    
-    // Story 和 Epic 未关联
-    "Story2":
-       {
-        "epic_key": "",
-        "e2e_count2": 3
-       },
-    e2e_count1 / e2e_count2 :最后一列
-    "-":其它列
+    }
   }
+  var chart = new ECharts(dom, theme2, opts);
+  chart.id = "ec_" + idBase++;
+  instances2[chart.id] = chart;
+  isClient && setAttribute(dom, DOM_ATTRIBUTE_KEY, chart.id);
+  enableConnect(chart);
+  lifecycle_default.trigger("afterinit", chart);
+  return chart;
 }
