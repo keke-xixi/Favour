@@ -18,7 +18,7 @@
   const { currentPosition, startAnimation, stopAnimation } = useOrbitEffect(container, {
     imageUrl: '/img/game/coco.png',
     radius: 60,
-    speed: 0.05,  // 旋转速度，越小速度越快
+    speed: 0.5,  // 旋转速度，越小速度越快
     centerX: 200,
     centerY: 200,
     autoStart: false,  // 是否默认开始动画

@@ -2,7 +2,7 @@
     <div ref="starfield" class="starfield-container"></div>
     <!-- 您的主内容 -->
     <main class="content">
-      <button @click="triggerStar">触发流星</button>
+      <button @click="triggerStar" class="z-button2">触发流星</button>
     </main>
   </template>
   
@@ -44,17 +44,4 @@
     padding-top: 20vh;
   }
   
-  button {
-    padding: 10px 20px;
-    background: rgba(255,255,255,0.2);
-    color: white;
-    border: 1px solid rgba(255,255,255,0.3);
-    border-radius: 20px;
-    cursor: pointer;
-    transition: all 0.3s;
-  }
-  
-  button:hover {
-    background: rgba(255,255,255,0.3);
-  }
   </style>
