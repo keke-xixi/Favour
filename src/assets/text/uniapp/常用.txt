@@ -1,0 +1,14 @@
+/* 使用vite创建uniapp项目，带src的 */
+# 使用 npx 执行 degit 创建项目（推荐）
+npx degit dcloudio/uni-preset-vue#vite my-uni-app
+
+# 进入项目目录
+cd my-uni-app
+
+# 安装依赖
+npm install
+
+
+accessToken (访问令牌)：用于访问需要授权的API接口，例如获取用户信息、发布文章等。
+
+refreshToken (刷新令牌) ：用于在accessToken过期时获取新的accessToken，避免用户需要重新登录，提高用户体验。有效期较长（通常几天到几周）

@@ -1,0 +1,87 @@
+const BASE_URL = process.env.BASE_URL || 'http://localhost:5005'  // 请求接口地址
+
+// 清除token
+const clearTokens = () => {
+  uni.removeStorageSync('accessToken')
+  uni.removeStorageSync('refreshToken')
+}
+
+// 拿refreshToken 刷新accessToken
+const refreshAccessToken = async () => {
+  const accessToken = uni.getStorageSync('accessToken'); // 拿新 token的时候，请求头还是旧token
+  const { data } = await uni.request({
+    url: `${BASE_URL}/api/sysAuth/refreshToken`,
+    method: 'GET',
+	header: {
+		'Authorization': `Bearer ${accessToken}`
+	},
+    data: {
+      accessToken: refreshToken
+    }
+  })
+  if (data.code === 200) {
+    uni.setStorageSync('accessToken', data.result)
+  } else {  
+    clearTokens()
+    gotoLogin()
+  }
+}
+
+// 重新发起原始请求
+const retryRequest = async (config) => {
+  await refreshAccessToken()
+  return uni.request(config)
+}
+
+// 跳转到登录页面
+const gotoLogin = () => {
+  uni.navigateTo({
+    url: '/pages/index/index'
+  })
+}
+
+const request = async (config) => {
+   const { method = 'GET', url, ...rest } = config;
+  // 从缓存读取 tokens
+  let accessToken = uni.getStorageSync('accessToken')
+  const refreshToken = uni.getStorageSync('refreshToken')
+
+  // 构造请求头
+  const headers = {
+    'Content-Type': 'application/json',
+    Authorization: `Bearer ${accessToken}`
+  }
+
+  // 发送请求
+  return new Promise((resolve, reject) => {
+    uni.request({
+      url: BASE_URL + url,
+      method,
+      header: headers,
+      ...rest,
+      success: async (res) => {
+        if (res.data?.code === 401 && refreshToken) {
+          // Token过期，尝试用 refreshToken 刷新
+          try {
+            const newTokens = await refreshAccessToken(refreshToken)
+            // 重新发起原始请求
+            const retryRes = await retryRequest(config, newTokens.accessToken)
+            resolve(retryRes)
+          } catch (err) {
+            // 刷新失败，跳转登录
+            clearTokens()
+            gotoLogin()
+            reject(err)
+          }
+        } else if (res.statusCode >= 200 && res.statusCode < 300) {
+          resolve(res)
+        } else {
+          reject(res)
+        }
+      },
+      fail: (err) => reject(err)
+    })
+  })
+}
+
+export default request
