@@ -20,15 +20,18 @@
 			this.initChart()
 
 			// 监听窗口尺寸变化
-			uni.onWindowResize((res) => {
-				this.chartInstance && this.renderChart()
-			})
+			uni.onWindowResize(this.resizeChart)
 		},
 		onUnload() {
 			// 移除监听（避免内存泄漏）
-			uni.offWindowResize()
+			uni.offWindowResize(this.resizeChart)
 		},
 		methods: {
+			// 适应大小变化
+			resizeChart(){
+				this.chartInstance && this.renderChart()
+			},
+			// 绘制echart
 			async initChart() {
 				try {
 					await this.$nextTick()
