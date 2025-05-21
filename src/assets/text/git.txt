@@ -105,3 +105,18 @@ git add src/views/baseClass/qcElement.vue
 
 clone 项目失败
 git clone git@github.com:lyt-Top/vue-next-admin.git 
+
+
+git上传项目到github:
+github项目创建并且关联：
+
+git init  本地创建.git文件
+
+git remote add origin https://github.com/keke-xixi/App.git   设置远程仓库地址
+
+git commit -m "描述你的更改"   首次提交
+
+git branch -a   查看所有分支
+
+git push -u origin master   如果显示的是 master 而非 main  就直接推送到 master
+ 
