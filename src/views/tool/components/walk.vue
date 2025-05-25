@@ -34,7 +34,7 @@
   };
   </script>
   
-  <style>
+  <style lang="scss" scoped>
   .game-character {
     position: absolute;
     left: 50%;

@@ -1,5 +1,5 @@
 /**
- *  穿梭动画
+ *  旋转 - 仅使用spiral运动方式
  */
 import { ref, onMounted, onUnmounted } from 'vue';
 
@@ -10,7 +10,6 @@ export function useGalacticBoxAnimation(containerRef, options = {}) {
     baseSpeed: 0.5,                // 基础移动速度
     sizeVariation: [15, 30],       // 盒子尺寸范围[最小,最大]
     palette: ['#7FDBFF', '#FFDC00', '#FF851B', '#B10DC9', '#2ECC40'],
-    paths: ['diagonal', 'spiral', 'zigzag', 'figure8'], // 内置路径类型
     enableTrails: true,            // 是否显示运动轨迹
     enableCollisions: false        // 是否启用碰撞检测
   };
@@ -26,29 +25,12 @@ export function useGalacticBoxAnimation(containerRef, options = {}) {
   const randomInRange = (min, max) => 
     Math.random() * (max - min) + min;
 
-  // 内置路径生成器
-  const pathGenerators = {
-    diagonal: (t) => ({
-      x: t,
-      y: t,
-      z: Math.sin(t * Math.PI * 2) * 50
-    }),
-    spiral: (t) => ({
-      x: Math.cos(t * Math.PI * 4) * t,
-      y: Math.sin(t * Math.PI * 4) * t,
-      z: t * 30
-    }),
-    zigzag: (t) => ({
-      x: t,
-      y: Math.abs(Math.sin(t * Math.PI * 4)) * 0.8,
-      z: 0
-    }),
-    figure8: (t) => ({
-      x: Math.sin(t * Math.PI * 2) * 0.8,
-      y: Math.cos(t * Math.PI * 4) * 0.4,
-      z: Math.sin(t * Math.PI * 2) * 20
-    })
-  };
+  // 仅保留spiral路径生成器
+  const pathGenerator = (t) => ({
+    x: Math.cos(t * Math.PI * 4) * t,
+    y: Math.sin(t * Math.PI * 4) * t,
+    z: t * 30
+  });
 
   // 初始化容器
   const initContainer = () => {
@@ -69,7 +51,6 @@ export function useGalacticBoxAnimation(containerRef, options = {}) {
     boxes.value = Array.from({ length: config.boxCount }).map((_, i) => {
       const size = randomInRange(...config.sizeVariation);
       const color = config.palette[i % config.palette.length];
-      const pathType = config.paths[i % config.paths.length];
       
       const box = document.createElement('div');
       box.className = 'galactic-box';
@@ -83,6 +64,7 @@ export function useGalacticBoxAnimation(containerRef, options = {}) {
         box-shadow: 0 0 ${size / 2}px ${color};
         filter: brightness(1.2);
         will-change: transform;
+        z-index: 5;
       `;
 
       containerRef.value.appendChild(box);
@@ -91,7 +73,6 @@ export function useGalacticBoxAnimation(containerRef, options = {}) {
         element: box,
         size,
         color,
-        pathType,
         progress: Math.random(),
         speed: config.baseSpeed * randomInRange(0.8, 1.2),
         position: { x: 0, y: 0, z: 0 },
@@ -103,8 +84,7 @@ export function useGalacticBoxAnimation(containerRef, options = {}) {
   // 更新盒子位置
   const updateBoxPosition = (box, deltaTime) => {
     const t = box.progress;
-    const generator = pathGenerators[box.pathType];
-    const { x, y, z } = generator(t);
+    const { x, y, z } = pathGenerator(t);
 
     // 转换为屏幕坐标
     box.position = {
@@ -265,7 +245,7 @@ export function useGalacticBoxAnimation(containerRef, options = {}) {
 
   return {
     // 添加新盒子
-    addBox: (pathType) => {
+    addBox: () => {
       const size = randomInRange(...config.sizeVariation);
       const color = config.palette[boxes.value.length % config.palette.length];
       
@@ -288,7 +268,6 @@ export function useGalacticBoxAnimation(containerRef, options = {}) {
         element: box,
         size,
         color,
-        pathType: pathType || config.paths[Math.floor(Math.random() * config.paths.length)],
         progress: Math.random(),
         speed: config.baseSpeed * randomInRange(0.8, 1.2),
         position: { x: 0, y: 0, z: 0 },

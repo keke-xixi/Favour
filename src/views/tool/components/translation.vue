@@ -30,13 +30,13 @@
   };
   </script>
   
-  <style>
+  <style lang="scss" scoped>
   .galaxy-container {
     width: 100%;
     height: 100vh;
     margin: 0 auto;
-    /* border: 1px solid #333; */
-    /* background: radial-gradient(ellipse at center, #1a1a2e 0%, #0f0f1a 100%); */
+    border: 1px solid #333;
+    background: radial-gradient(ellipse at center, #1a1a2e 0%, #0f0f1a 100%);
   }
   
   .controls {
