@@ -38,8 +38,8 @@ const { start, stop, isRunning } = usePersistentStreakAnimation(drawLine, {
 // 旋转
 const rotate = ref(null);
 const { addBox, clearAll } = useGalacticBoxAnimation(rotate, {
-  boxCount: 3,
-  palette: ['#FF2D75','#3B82F6', '#07bf61'],
+  boxCount: 1,
+  palette: ['#3B82F6','#8B5CF6', '#fdcd0d'],
   enableTrails: true
 })
 
