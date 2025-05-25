@@ -8,12 +8,13 @@
     <button class="z-button2" @click="drawLineMethod" style="z-index: 2;position: absolute;top: 20px;left: 20px;">
       开始
     </button>
-    <!-- 线条 -->
-    <!-- <div ref="drawLine" class="drawLine-container"></div> -->
     <!-- 旋转 -->
      <div class="rotate-container">
        <div ref="rotate" style="height: 100%;background-color: transparent;border: none;"></div>
      </div>
+    <!-- 线条 -->
+    <div ref="drawLine" class="drawLine-container"></div>
+    
 
   </div>
 </template>
@@ -46,7 +47,7 @@ const { addBox, clearAll } = useGalacticBoxAnimation(rotate, {
 // 启动动画
 const drawLineMethod = async () => {
   isRunning.value ? stop() : start(); // 线条动画
-  isRunning.value ? addBox('spiral') : clearAll(); // 旋转动画
+  isRunning.value ? addBox() : clearAll(); // 旋转动画
 }
 
 onMounted(() => {
@@ -77,7 +78,7 @@ onUnmounted(() => {
     width: 100%;
     height: 100vh;
     margin: 0 auto;
-    z-index: 2;
+    z-index: 1;
   }
 }
 </style>
