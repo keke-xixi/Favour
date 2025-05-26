@@ -95,3 +95,5 @@ useEffect(() => {
 }, []);
 
 使用 performance.now() 替代 Date.now() 获取高精度时间戳，以优化性能。
+
+给div 加上 draggable="true" 属性，使其可拖拽
