@@ -1,0 +1,15 @@
+import { ref } from 'vue'
+const count = ref(0)
+
+function update() {
+  count.value++;
+  requestAnimationFrame(update)  // 相当于一帧一帧的更新 count 每加一就渲染一个div
+}
+
+update()
+
+export function useDefer {
+    return function(n) {
+        return count.value >= n
+    }
+}

@@ -1,0 +1,53 @@
+<template>
+	<view class="container">
+         <view class="search-card">
+			 <uv-form labelPosition="left" :model="form" :rules="rules" ref="formRef">
+			 			<uv-form-item label="来煤类型" prop="batchType" >
+			 				 <uv-input placeholder="来煤类型" v-model="form.batchType" clearable ></uv-input>
+						</uv-form-item>
+						<uv-form-item label="运输方式" prop="transCode" >
+			 				 <uv-input placeholder="运输方式" v-model="form.transCode" clearable ></uv-input>
+						</uv-form-item>
+			 </uv-form>
+		 </view>
+		 <view class="form-card">
+			 <view class="form-item">
+				
+			 </view>
+		 </view>
+		 <view class="table-card">
+			 
+		 </view>
+	</view>
+</template>
+
+<script>
+	export default {
+		data() {
+			return {
+				form: {
+					batchType: ''
+				},
+				rules: {
+					batchType: {
+						required: true,
+						message: '请输入来煤类型',
+						trigger: 'blur'
+					}
+				}
+			}
+		},
+		methods: {
+			
+		},
+		onLoad() {
+			
+		}
+	}
+</script>
+
+<style scoped lang="scss">
+.sampling-container {
+	
+}
+</style>
