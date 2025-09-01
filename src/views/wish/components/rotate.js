@@ -1,5 +1,5 @@
 /**
- *  旋转 - 仅使用spiral运动方式
+ *  旋转 - 仅使用spiral(旋转)运动方式
  */
 import { ref, onMounted, onUnmounted } from 'vue';
 
@@ -8,7 +8,7 @@ export function useGalacticBoxAnimation(containerRef, options = {}) {
     boxCount: 5,                   // 盒子数量
     trailLength: 20,               // 运动轨迹长度
     baseSpeed: 0.5,                // 基础移动速度
-    sizeVariation: [15, 30],       // 盒子尺寸范围[最小,最大]
+    sizeVariation: [30, 30],       // 盒子尺寸范围[最小,最大]
     palette: ['#7FDBFF', '#FFDC00', '#FF851B', '#B10DC9', '#2ECC40'],
     enableTrails: true,            // 是否显示运动轨迹
     enableCollisions: false        // 是否启用碰撞检测

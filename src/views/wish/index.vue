@@ -9,11 +9,10 @@
       开始
     </button>
     <!-- 线条 -->
-    <!-- <div ref="drawLine" class="drawLine-container"></div> -->
-    <!-- 旋转 -->
-     <div class="rotate-container">
-       <div ref="rotate" style="height: 100%;background-color: transparent;border: none;"></div>
-     </div>
+    <div ref="drawLine" class="drawLine-container" v-if="showDrawLine"></div>
+     <!-- 旋转 -->
+    <div class="rotate-container" ref="rotate"></div>
+    
 
   </div>
 </template>
@@ -25,9 +24,13 @@ import { useGalacticBoxAnimation } from './components/rotate.js';
 import { useStore } from "vuex";
 
 const store = useStore()
+const firstTime = ref(500); // 第一段动画加载时间
+const secondTime = ref(1000); // 第二段动画加载时间
+const thirdTime = ref(1500); // 第三段动画加载时间
 
 // 线条
 const drawLine = ref(null);
+const showDrawLine = ref(false);
 const { start, stop, isRunning } = usePersistentStreakAnimation(drawLine, {
   maxStreaks: 500,
   spawnRate: 60,
@@ -43,10 +46,44 @@ const { addBox, clearAll } = useGalacticBoxAnimation(rotate, {
   enableTrails: true
 })
 
+// 延迟执行动画
+const runDelayedActions = async (tasks) => {
+  for (const task of tasks) {
+    await new Promise(resolve => {
+      setTimeout(() => {
+        task.action(); // 执行传入的方法
+        resolve();
+      }, task.delay);
+    });
+  }
+}
+
 // 启动动画
 const drawLineMethod = async () => {
-  isRunning.value ? stop() : start(); // 线条动画
-  isRunning.value ? addBox('spiral') : clearAll(); // 旋转动画
+        // 定义你的任务列表
+      const tasks = [
+        {
+          // 第一个任务：线条动画
+          action: () => {
+            isRunning.value ? stop() : start()
+          }, 
+          delay: firstTime.value,
+        },
+        {
+          // 第二个任务：旋转动画
+          action: () => isRunning.value ? addBox() : clearAll(), 
+          delay: secondTime.value,
+        },
+      ];
+
+      // 执行任务
+      runDelayedActions(tasks).then(() => {
+          console.log("所有动画执行完毕！");
+          if(isRunning.value) {
+              drawLineMethod()
+          }
+      });
+  
 }
 
 onMounted(() => {
@@ -62,7 +99,7 @@ onUnmounted(() => {
 .wish {
   position: relative;
   width: 100%;
-  height: 100%;
+  height: 100vh;
   background: linear-gradient(#9b7ae7, #5e3e9e, #1d1624, #000);
 
   .drawLine-container {
@@ -74,10 +111,11 @@ onUnmounted(() => {
     z-index: 1;
   }
   .rotate-container {
-    width: 100%;
-    height: 100vh;
-    margin: 0 auto;
-    z-index: 2;
+      position: absolute;
+      top: 20%;
+      left: 20%;
+      width: 60%;
+      height: 60%;
   }
 }
 </style>
