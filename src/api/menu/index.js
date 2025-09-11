@@ -13,19 +13,25 @@ export default  [
                 name: 'welcome',
             }
         ],
-        id: 1
+        id: 10
+    },
+    {
+        path: '/knowledge',
+        name: '知识点',
+        children:[],
+        id: 15
     },
     {
         path: '/tool',
         name: '组件',
         children:[],
-        id: 2
+        id: 20
     },
     {
         path: '/home/wish',
         name: '抽卡',
         children:[],
-        id: 3
+        id: 30
     },
     {
         path: '/home/play',
@@ -36,11 +42,11 @@ export default  [
                 name: 'game',
             }
         ],
-        id: 6
+        id: 60
     },
     {
         path: '/home/settings',
         name: '个人中心',
-        id: 7
+        id: 70
     },
 ]
