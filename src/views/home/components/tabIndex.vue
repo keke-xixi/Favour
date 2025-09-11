@@ -8,7 +8,7 @@
       <img src="/img/game/xx.png" alt="" style="width: 40px;height: 40px;cursor: pointer;">
       <el-dropdown :hide-on-click="false">
             <span class="dropdown-link">
-              玩家 {{ userData.username || '' }}<el-icon class="el-icon--right" ><arrow-down /></el-icon>
+              角色 {{ userData.username || '' }}<el-icon class="el-icon--right" ><arrow-down /></el-icon>
               </span>
               <template #dropdown>
                 <el-dropdown-menu>

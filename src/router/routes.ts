@@ -37,6 +37,11 @@ const routes: Array<RouteRecordRaw> = [
                 name: 'wish',
                 component: () => import('@/views/wish/index.vue')
             }, 
+            {
+                path: 'knowledge',
+                name: 'knowledge',
+                component: () => import('@/views/knowledge/index.vue')
+            }, 
         ]
     },
     {

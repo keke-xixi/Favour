@@ -1,7 +1,7 @@
 // 模拟后端成功返回的数据 (真实开发中,菜单这些数据应该从后端获取)
 
 /**
- *   不加前缀 /home 就是独立界面，不需要菜单栏  针对主要游戏进行的设计
+ *   不加前缀 /home 就是独立界面，不需要菜单栏  针对主要游戏进行的设计  加好菜单后可以直接到 routes 中配置
  */
 export default  [
     {
@@ -15,17 +15,17 @@ export default  [
         ],
         id: 10
     },
+    // {
+    //     path: '/tool',
+    //     name: '组件',
+    //     children:[],
+    //     id: 20
+    // },
     {
-        path: '/knowledge',
+        path: '/home/knowledge',
         name: '知识点',
         children:[],
-        id: 15
-    },
-    {
-        path: '/tool',
-        name: '组件',
-        children:[],
-        id: 20
+        id: 25
     },
     {
         path: '/home/wish',
