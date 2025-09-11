@@ -1,33 +1,189 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body onload="main()">
-    <canvas id="glcanvas" width="640" height="480">
-      你的浏览器似乎不支持或者禁用了 HTML5 <code>&lt;canvas&gt;</code> 元素。
-    </canvas>
-  </body>
-  <script>
-    // 从这里开始
-function main() {
-  const canvas = document.querySelector("#glcanvas");
-  // 初始化 WebGL 上下文
-  const gl = canvas.getContext("webgl");
-
-  // 确认 WebGL 支持性
-  if (!gl) {
-    alert("无法初始化 WebGL，你的浏览器、操作系统或硬件等可能不支持 WebGL。");
-    return;
-  }
-
-  // 使用完全不透明的黑色清除所有图像
-  gl.clearColor(0.0, 0.0, 0.0, 1.0);
-  // 用上面指定的颜色清除缓冲区
-  gl.clear(gl.COLOR_BUFFER_BIT);
-}
-
-  </script>
-</html>
+function(t, e, d) {
+  var html =  `<style>
+  .font0
+    {color:#000000;
+    font-size:11.0pt;
+    font-family:宋体;
+    font-weight:400;
+    font-style:normal;
+    text-decoration:none;}
+  .font1
+    {color:#000000;
+    font-size:20.0pt;
+    font-family:宋体;
+    font-weight:400;
+    font-style:normal;
+    text-decoration:none;}
+  br
+    {mso-data-placement:same-cell;}
+  td
+    {padding-top:1px;
+    padding-left:1px;
+    padding-right:1px;
+    mso-ignore:padding;
+    color:#000000;
+    font-size:11.0pt;
+    font-weight:400;
+    font-style:normal;
+    text-decoration:none;
+    mso-generic-font-family:auto;
+    mso-font-charset:134;
+    mso-number-format:General;
+    border:none;
+    mso-background-source:auto;
+    mso-pattern:auto;
+    text-align:general;
+    vertical-align:middle;
+    mso-rotate:0;
+    mso-protection:locked visible;
+      line-break: anywhere;
+      width: 120px;}
+  .et2
+    {mso-generic-font-family:auto;
+    mso-font-charset:134;
+    text-align:center;}
+  .et3
+    {font-size:20.0pt;
+    mso-generic-font-family:auto;
+    mso-font-charset:134;
+    text-align:center;}
+  .et5
+    {mso-generic-font-family:auto;
+    mso-font-charset:134;
+    text-align:left;}
+  .et6
+    {mso-generic-font-family:auto;
+    mso-font-charset:134;
+    border:.5pt solid #000000;
+    text-align:center;}
+  .et7
+    {mso-generic-font-family:auto;
+    mso-font-charset:134;
+    border:.5pt solid #000000;
+    text-align:left;}
+  .et8
+    {mso-generic-font-family:auto;
+    mso-font-charset:134;
+    border-top:.5pt solid #000000;
+    border-right:.5pt solid #000000;
+    border-bottom:none;
+    border-left:.5pt solid #000000;
+    text-align:center;}
+  .et9
+    {mso-generic-font-family:auto;
+    mso-font-charset:134;
+    border-top:none;
+    border-right:.5pt solid #000000;
+    border-bottom:none;
+    border-left:.5pt solid #000000;
+    text-align:center;}
+  .et10
+    {mso-generic-font-family:auto;
+    mso-font-charset:134;
+    border-top:none;
+    border-right:.5pt solid #000000;
+    border-bottom:.5pt solid #000000;
+    border-left:.5pt solid #000000;
+    text-align:center;}
+  .et11
+    {mso-generic-font-family:auto;
+    mso-font-charset:134;
+    border-top:.5pt solid #000000;
+    border-right:none;
+    border-bottom:.5pt solid #000000;
+    border-left:.5pt solid #000000;
+    text-align:left;}
+  .et12
+    {mso-generic-font-family:auto;
+    mso-font-charset:134;
+    border-top:.5pt solid #000000;
+    border-right:none;
+    border-bottom:.5pt solid #000000;
+    border-left:none;
+    text-align:left;}
+  .et13
+    {mso-generic-font-family:auto;
+    mso-font-charset:134;
+    border-top:.5pt solid #000000;
+    border-right:.5pt solid #000000;
+    border-bottom:.5pt solid #000000;
+    border-left:none;
+    text-align:left;}
+  </style>
+  </head>
+  <body>
+  <table border=0 cellpadding=0 cellspacing=0 style='border-collapse:collapse;width:100%;'>
+   <col width=161 style='width:80.50pt;'>
+   <col width=161 style='width:80.50pt;'>
+   <col width=161 style='width:80.50pt;'>
+   <col width=161 style='width:80.50pt;'>
+   <col width=161 style='width:80.50pt;'>
+   <col width=161 style='width:80.50pt;' span=2>
+   <tr height=100 style='height:50.00pt;'>
+    <td colspan=7 class=et3 height=100 width=1127 x:str style='height:50.00pt;width:563.50pt;'>入职信息登记表</td>
+   </tr>
+   <tr height=40 style='height:20.00pt;'>
+    <td colspan=7 class=et5 height=40 x:str style='height:20.00pt;'>入职部门：\${d.department}<span style='mso-spacerun:yes'></span>入职岗位：\${d.position}<span style='mso-spacerun:yes'></span>填表时间：\${d.form_date}</td>
+   </tr>
+   <tr height=48 style='height:24.00pt;'>
+    <td class=et6 height=48 x:str style='height:24.00pt;'>姓名</td>
+    <td class=et7 x:str>\${d.pInfo.name}</td>
+    <td class=et6 x:str>性别</td>
+    <td class=et7 x:str>\${d.pInfo.gender}</td>
+    <td class=et6 x:str>出生年月</td>
+    <td class=et7 x:str>\${d.pInfo.birth_date}</td>
+    <td rowspan=4 class=et8 x:str style='border-bottom:.5pt solid #000000;'>贴照片处</td>
+   </tr>
+   <tr height=48 style='height:24.00pt;'>
+    <td class=et6 height=48 x:str style='height:24.00pt;'>籍贯</td>
+    <td class=et7 x:str>\${d.pInfo.place_of_birth}</td>
+    <td class=et6 x:str>民族</td>
+    <td class=et7 x:str>\${d.pInfo.ethnicity}</td>
+    <td class=et6 x:str>政治面貌</td>
+    <td class=et7 x:str>\${d.pInfo.political_affiliation}</td>
+   </tr>
+   <tr height=48 style='height:24.00pt;'>
+    <td class=et6 height=48 x:str style='height:24.00pt;'>文化程度</td>
+    <td class=et7 x:str>\${d.pInfo.education_level}</td>
+    <td class=et6 x:str>专业</td>
+    <td class=et7 x:str>\${d.pInfo.major}</td>
+    <td class=et6 x:str>毕业时间</td>
+    <td class=et7 x:str>\${d.pInfo.graduation_year}</td>
+   </tr>
+   <tr height=48 style='height:24.00pt;'>
+    <td class=et6 height=48 x:str style='height:24.00pt;'>身高</td>
+    <td class=et7 x:str>\${d.pInfo.height}</td>
+    <td class=et6 x:str>体重</td>
+    <td class=et7 x:str>\${d.pInfo.weight}</td>
+    <td class=et6 x:str>血型</td>
+    <td class=et7 x:str>\${d.pInfo.blood_type}</td>
+   </tr>
+   <tr height=48 style='height:24.00pt;'>
+    <td class=et6 height=48 x:str style='height:24.00pt;'>家庭住址</td>
+    <td colspan=6 class=et11 x:str style='border-right:.5pt solid #000000;'>\${d.pInfo.address}</td>
+   </tr>
+   <tr height=48 style='height:24.00pt;'>
+    <td class=et6 height=48 x:str style='height:24.00pt;'>联系电话</td>
+    <td colspan=2 class=et11 x:str style='border-right:.5pt solid #000000;'>\${d.pInfo.phone}</td>
+    <td class=et6 x:str>电子邮箱</td>
+    <td colspan=3 class=et11 x:str style='border-right:.5pt solid #000000;'>\${d.pInfo.email}</td>
+   </tr>
+   <tr height=48 style='height:24.00pt;'>
+    <td class=et6 height=48 x:str style='height:24.00pt;'>期望薪资</td>
+    <td colspan=2 class=et11 x:str style='border-right:.5pt solid #000000;'>\${d.pInfo.expected_salary}</td>
+    <td class=et6 x:str>到岗时间</td>
+    <td colspan=3 class=et11 x:str style='border-right:.5pt solid #000000;'>\${d.pInfo.availability}</td>
+   </tr>
+   <tr height=48 style='height:24.00pt;'>
+    <td rowspan=2 class=et6 height=96 x:str style='height:48.00pt;'>语言能力</td>
+    <td class=et6 x:str>普通话</td>
+    <td colspan=2 class=et11 x:str style='border-right:.5pt solid #000000;'>\${d.pInfo.mandarin_level}</td>
+    <td class=et6 x:str>外语</td>
+    <td colspan=2 class=et11 x:str style='border-right:.5pt solid #000000;'>\${d.pInfo.foreign_language_level}</td>
+   </tr>
+   <tr height=48 style='height:24.00pt;'>
+    <td class=et6 x:str>其他</td>
+    <td colspan=5 class=et11 style='border-right:.5pt solid #000000;'></td>
+   </tr>
+  </table>
+  
