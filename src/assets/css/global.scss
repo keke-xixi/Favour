@@ -18,6 +18,11 @@ html, body {
     justify-content: center;
     align-items: center;
 }
+// flex布局，左右分布
+.flex-between {
+   display: flex;
+   justify-content: space-between;
+}
 .text_s{
     letter-spacing: 5px;
 }

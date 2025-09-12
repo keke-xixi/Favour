@@ -6,32 +6,34 @@
           <i class="fas fa-search"></i>
           <el-input type="text" v-model="searchQuery" placeholder="搜索分类..."/>
         </div>
+
         <!-- 渲染左侧数据 -->
         <div class="category-list">
           <li v-for="(category, index) in filteredCategories" :key="index" class="category-item1" 
-              :class="{ active: selectedCategory === category }">
+              :class="{ active: selectedCategory === category }" @click.stop="handleClickMenu(category, 1)">
             <a class="category-link" @click="selectCategory(category)">
               <span>{{ category.name }}</span>
               <i v-if="category.children.length" class="fas" 
                  :class="isExpanded(category) ? 'fa-chevron-down' : 'fa-chevron-right'" 
                  @click.stop="toggleCategory(category)"></i>
+                 <el-icon :style="{ transform: category.active ? 'rotate(-90deg)' : 'rotate(0deg)', transition: 'transform 0.5s' }"><ArrowUp /></el-icon>
             </a>
-            
             <ul v-if="category.children.length" class="category-children" 
                 :class="{ expanded: isExpanded(category) }">
               <li v-for="(child, childIndex) in category.children" :key="childIndex" class="category-item2" 
-                  :class="{ active: selectedCategory === child }">
+                  :class="{ active: selectedCategory === child }" @click.stop="handleClickMenu(child, 2)">
                 <a class="category-link" @click="selectCategory(child)">
                   <span>{{ child.name }}</span>
                   <i v-if="child.children.length" class="fas" 
                      :class="isExpanded(child) ? 'fa-chevron-down' : 'fa-chevron-right'" 
                      @click.stop="toggleCategory(child)"></i>
+                  <el-icon :style="{ transform: child.active ? 'rotate(-90deg)' : 'rotate(0deg)', transition: 'transform 0.5s' }"><ArrowUp /></el-icon>
                 </a>
                 
                 <ul v-if="child.children.length" class="category-children" 
                     :class="{ expanded: isExpanded(child) }">
                   <li v-for="(grandChild, grandIndex) in child.children" :key="grandIndex" class="category-item3" 
-                      :class="{ active: selectedCategory === grandChild }">
+                      :class="{ active: selectedCategory === grandChild }" @click.stop="handleClickMenu(grandChild, 3)">
                     <a class="category-link" @click="selectCategory(grandChild)">
                       <span>{{ grandChild.name }}</span>
                     </a>
@@ -42,6 +44,7 @@
           </li>
         </div>
       </div>
+
       <!-- 内容区域 -->
       <div class="content-panel">
         <div class="content-header">
@@ -76,130 +79,97 @@
 </template>
 
 <script setup lang="ts">
-import { ref, reactive, computed } from "vue"
+import { ref, reactive, computed,nextTick } from "vue"
+import { ArrowUp } from "@element-plus/icons-vue"
+import { transform } from "typescript"
 
 // 知识点清单
 interface KnowledgeItem {
   name: string
   url: string
+  level: number  // 第几级菜单
+  active?: boolean  // 是否激活
   children: KnowledgeItem[]
 }
 
 const knowledgeList = ref<KnowledgeItem[]>([
   {
     name: 'hiprint',
-    url: "",
+    url: "hiprint",
+    level: 1,
     children: [
       {
         name: '合并单元格',
         url: "",
+        level: 2,
         children: [
-          { name: '基本合并技巧', url: "#", children: [] },
-          { name: '复杂表格合并', url: "#", children: [] }
+          { name: '基本合并技巧', url: "#",level: 3, children: [] },
+          { name: '复杂表格合并', url: "#",level: 3, children: [] }
         ]
       },
       {
         name: '多列合并',
         url: "",
+        level: 2,
         children: [
-          { name: '列合并原理', url: "#", children: [] },
-          { name: '实战应用', url: "#", children: [] }
+          { name: '列合并原理', url: "#",level: 3, children: [] },
+          { name: '实战应用', url: "#",level: 3, children: [] }
         ]
       },
       {
         name: '打印设置',
         url: "",
+        level: 2,
         children: [
-          { name: '页面设置', url: "#", children: [] },
-          { name: '打印预览', url: "#", children: [] }
+       
         ]
       }
     ]
   },
   {
     name: 'vxeTable',
-    url: "",
+    url: "vxeTable",
+    level: 1,
     children: [
       {
         name: 'tableMethods',
         url: "",
+        level: 2,
         children: [
-          { name: '常用方法', url: "#", children: [] },
-          { name: '高级技巧', url: "#", children: [] }
+          { name: '常用方法', url: "#",level: 3, children: [] },
+          { name: '高级技巧', url: "#",level: 3, children: [] }
         ]
       },
-      {
-        name: '开发常用',
-        url: "",
-        children: [
-          { name: '基础配置', url: "#", children: [] },
-          { name: '实战案例', url: "#", children: [] }
-        ]
-      },
-      {
-        name: '高级功能',
-        url: "",
-        children: [
-          { name: '自定义列', url: "#", children: [] },
-          { name: '性能优化', url: "#", children: [] }
-        ]
-      }
     ]
   },
   {
     name: 'Vue 3',
-    url: "",
-    children: [
-      {
-        name: 'Composition API',
-        url: "",
-        children: [
-          { name: 'ref 和 reactive', url: "#", children: [] },
-          { name: '生命周期', url: "#", children: [] },
-          { name: '自定义Hooks', url: "#", children: [] }
-        ]
-      },
-      {
-        name: '性能优化',
-        url: "",
-        children: [
-          { name: '编译优化', url: "#", children: [] },
-          { name: '运行时优化', url: "#", children: [] }
-        ]
-      }
-    ]
-  },
-  {
-    name: 'Vue 3',
-    url: "",
-    children: [
-      {
-        name: 'Composition API',
-        url: "",
-        children: [
-          { name: 'ref 和 reactive', url: "#", children: [] },
-          { name: '生命周期', url: "#", children: [] },
-          { name: '自定义Hooks', url: "#", children: [] }
-        ]
-      },
-      {
-        name: '性能优化',
-        url: "",
-        children: [
-          { name: '编译优化', url: "#", children: [] },
-          { name: '运行时优化', url: "#", children: [] }
-        ]
-      }
-    ]
+    url: "Vue 3",
+    level: 1,
+    children: []
   },
 ])
 
-const expandedCategories = ref<Set<KnowledgeItem>>(new Set())
-const selectedCategory = ref<KnowledgeItem | null>(null)
-const searchQuery = ref<string>('')
+const expandedCategories = ref<Set<KnowledgeItem>>(new Set())  // 展开的分类
+const searchQuery = ref<string>('')  // 搜索查询
 
 // 计算展开的分类数量
-const expandedCount = computed(() => expandedCategories.value.size)
+const expandedCount = computed(() => expandedCategories.value.size);
+
+const selectedCategory = ref<KnowledgeItem | null>(null);   // 当前选中的分类
+
+const lastClickedCategory = ref<KnowledgeItem | null>(null); // 上次点击的分类
+
+// 点击分类
+const handleClickMenu = (category: KnowledgeItem, level: number) => {
+  if(lastClickedCategory.value === category) {  // 如果上次点击的分类和当前点击的分类相同
+    category.active = !category.active;  
+    toggleCategory(category);  // 切换分类的展开状态
+  }
+  nextTick(() => {
+    lastClickedCategory.value = category; // 更新上次点击的分类
+  })
+}
 
 // 过滤分类
 const filteredCategories = computed(() => {

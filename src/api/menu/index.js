@@ -27,23 +27,23 @@ export default  [
         children:[],
         id: 25
     },
-    {
-        path: '/home/wish',
-        name: '抽卡',
-        children:[],
-        id: 30
-    },
-    {
-        path: '/home/play',
-        name: '商城',
-        children:[
-            {
-                path: '/home/game',
-                name: 'game',
-            }
-        ],
-        id: 60
-    },
+    // {
+    //     path: '/home/wish',
+    //     name: '抽卡',
+    //     children:[],
+    //     id: 30
+    // },
+    // {
+    //     path: '/home/play',
+    //     name: '商城',
+    //     children:[
+    //         {
+    //             path: '/home/game',
+    //             name: 'game',
+    //         }
+    //     ],
+    //     id: 60
+    // },
     {
         path: '/home/settings',
         name: '个人中心',
