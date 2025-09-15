@@ -85,6 +85,7 @@ import { transform } from "typescript"
 
 // 知识点清单
 interface KnowledgeItem {
+  id?: number
   name: string
   url: string
   level: number  // 第几级菜单
@@ -92,8 +93,10 @@ interface KnowledgeItem {
   children: KnowledgeItem[]
 }
 
+// 所有分类
 const knowledgeList = ref<KnowledgeItem[]>([
   {
+    id: 1,
     name: 'hiprint',
     url: "hiprint",
     level: 1,
@@ -127,22 +130,25 @@ const knowledgeList = ref<KnowledgeItem[]>([
     ]
   },
   {
+    id: 2,
     name: 'vxeTable',
     url: "vxeTable",
     level: 1,
     children: [
       {
+        id: 21,
         name: 'tableMethods',
         url: "",
         level: 2,
         children: [
-          { name: '常用方法', url: "#",level: 3, children: [] },
-          { name: '高级技巧', url: "#",level: 3, children: [] }
+          { name: '常用方法', url: "#",level: 3, children: [],id: 211 },
+          { name: '高级技巧', url: "#",level: 3, children: [],id: 212 }
         ]
       },
     ]
   },
   {
+    id: 3,
     name: 'Vue 3',
     url: "Vue 3",
     level: 1,
@@ -160,11 +166,10 @@ const selectedCategory = ref<KnowledgeItem | null>(null);   // 当前选中的�
 
 const lastClickedCategory = ref<KnowledgeItem | null>(null); // 上次点击的分类
 
-// 点击分类
+// 点击分类 111
 const handleClickMenu = (category: KnowledgeItem, level: number) => {
   if(lastClickedCategory.value === category) {  // 如果上次点击的分类和当前点击的分类相同
-    category.active = !category.active;  
-    toggleCategory(category);  // 切换分类的展开状态
+    category.active = category.active ? false : true;
   }
   nextTick(() => {
     lastClickedCategory.value = category; // 更新上次点击的分类
