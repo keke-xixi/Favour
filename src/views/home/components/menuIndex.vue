@@ -2,7 +2,7 @@
   <div class="menu">
     <div class="logo">
        <img src="/img/menu/logo.png" alt=""  style="width: 60px;height: 50px;"/>
-       <h2 style="color: #fff;margin-left: 10px;">GAME</h2>
+       <h2 style="color: #fff;margin-left: 10px;">STUDY</h2>
     </div>
 
     <ul class="ul-box">

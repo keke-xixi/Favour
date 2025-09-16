@@ -18,7 +18,7 @@
                  @click.stop="toggleCategory(category)"></i>
                  <el-icon :style="{ transform: category.active ? 'rotate(-90deg)' : 'rotate(0deg)', transition: 'transform 0.5s' }"><ArrowUp /></el-icon>
             </a>
-            <ul v-if="category.children.length" class="category-children" 
+            <ul v-if="category.children.length && category.active" class="category-children" 
                 :class="{ expanded: isExpanded(category) }">
               <li v-for="(child, childIndex) in category.children" :key="childIndex" class="category-item2" 
                   :class="{ active: selectedCategory === child }" @click.stop="handleClickMenu(child, 2)">
@@ -30,7 +30,7 @@
                   <el-icon :style="{ transform: child.active ? 'rotate(-90deg)' : 'rotate(0deg)', transition: 'transform 0.5s' }"><ArrowUp /></el-icon>
                 </a>
                 
-                <ul v-if="child.children.length" class="category-children" 
+                <ul v-if="child.children.length && child.active" class="category-children" 
                     :class="{ expanded: isExpanded(child) }">
                   <li v-for="(grandChild, grandIndex) in child.children" :key="grandIndex" class="category-item3" 
                       :class="{ active: selectedCategory === grandChild }" @click.stop="handleClickMenu(grandChild, 3)">
@@ -81,7 +81,7 @@
 <script setup lang="ts">
 import { ref, reactive, computed,nextTick } from "vue"
 import { ArrowUp } from "@element-plus/icons-vue"
-import { transform } from "typescript"
+import { Knowledge_List } from './knowledge.js'
 
 // 知识点清单
 interface KnowledgeItem {
@@ -94,67 +94,7 @@ interface KnowledgeItem {
 }
 
 // 所有分类
-const knowledgeList = ref<KnowledgeItem[]>([
-  {
-    id: 1,
-    name: 'hiprint',
-    url: "hiprint",
-    level: 1,
-    children: [
-      {
-        name: '合并单元格',
-        url: "",
-        level: 2,
-        children: [
-          { name: '基本合并技巧', url: "#",level: 3, children: [] },
-          { name: '复杂表格合并', url: "#",level: 3, children: [] }
-        ]
-      },
-      {
-        name: '多列合并',
-        url: "",
-        level: 2,
-        children: [
-          { name: '列合并原理', url: "#",level: 3, children: [] },
-          { name: '实战应用', url: "#",level: 3, children: [] }
-        ]
-      },
-      {
-        name: '打印设置',
-        url: "",
-        level: 2,
-        children: [
-       
-        ]
-      }
-    ]
-  },
-  {
-    id: 2,
-    name: 'vxeTable',
-    url: "vxeTable",
-    level: 1,
-    children: [
-      {
-        id: 21,
-        name: 'tableMethods',
-        url: "",
-        level: 2,
-        children: [
-          { name: '常用方法', url: "#",level: 3, children: [],id: 211 },
-          { name: '高级技巧', url: "#",level: 3, children: [],id: 212 }
-        ]
-      },
-    ]
-  },
-  {
-    id: 3,
-    name: 'Vue 3',
-    url: "Vue 3",
-    level: 1,
-    children: []
-  },
-])
+const knowledgeList = ref<KnowledgeItem[]>(Knowledge_List)
 
 const expandedCategories = ref<Set<KnowledgeItem>>(new Set())  // 展开的分类
 const searchQuery = ref<string>('')  // 搜索查询
@@ -317,6 +257,7 @@ if (knowledgeList.value.length > 0) {
   height: calc(100% - 100px);
   overflow-y: scroll;
   padding-right: 30px;
+  transition: all 0.3s ease;
 }
 .category-list::-webkit-scrollbar {
   transform: translateX(60px) translateY(0px);
@@ -393,7 +334,7 @@ if (knowledgeList.value.length > 0) {
   margin-top: 5px;
   max-height: 0;
   overflow: hidden;
-  transition: max-height 0.3s ease;
+  transition: all 1s ease !important;
   
   &.expanded {
     max-height: 1000px;
@@ -479,5 +420,4 @@ if (knowledgeList.value.length > 0) {
     color: #bdc3c7;
   }
 }
-
 </style>
