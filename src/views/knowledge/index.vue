@@ -74,14 +74,18 @@
           <p>当前分类没有可显示的内容</p>
         </div>
       </div>
+
+      <!--  -->
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import { ref, reactive, computed,nextTick } from "vue"
+import { ref, reactive, computed,nextTick,onMounted } from "vue"
 import { ArrowUp } from "@element-plus/icons-vue"
 import { Knowledge_List } from './knowledge.js'
+
+// 子组件
 
 // 知识点清单
 interface KnowledgeItem {
@@ -92,6 +96,7 @@ interface KnowledgeItem {
   active?: boolean  // 是否激活
   children: KnowledgeItem[]
 }
+
 
 // 所有分类
 const knowledgeList = ref<KnowledgeItem[]>(Knowledge_List)
@@ -106,7 +111,7 @@ const selectedCategory = ref<KnowledgeItem | null>(null);   // 当前选中的�
 
 const lastClickedCategory = ref<KnowledgeItem | null>(null); // 上次点击的分类
 
-// 点击分类 111
+// 点击分类 
 const handleClickMenu = (category: KnowledgeItem, level: number) => {
   if(lastClickedCategory.value === category) {  // 如果上次点击的分类和当前点击的分类相同
     category.active = category.active ? false : true;
