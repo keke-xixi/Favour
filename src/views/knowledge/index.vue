@@ -110,6 +110,8 @@ const lastClickedCategory = ref<KnowledgeItem | null>(null); // 上次点击的�
 const handleClickMenu = (category: KnowledgeItem, level: number) => {
   if(lastClickedCategory.value === category) {  // 如果上次点击的分类和当前点击的分类相同
     category.active = category.active ? false : true;
+  }else {
+    category.active = true;
   }
   nextTick(() => {
     lastClickedCategory.value = category; // 更新上次点击的分类
