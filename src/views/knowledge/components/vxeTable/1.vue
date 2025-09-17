@@ -1,7 +1,7 @@
 <template>
     <div class="container">
  
-        hiprint
+        vxeTable1
     </div>
   </template>
   <script setup lang="ts">

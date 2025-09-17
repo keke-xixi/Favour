@@ -18,7 +18,7 @@ export const Knowledge_List = [
         level: 1,
         active: false,
         children: [
-            { name: '清空表格数据', url: "/vxeTable/1",level: 2, children: [], active: false,id: 12 },
+            { name: '清空表格数据', url: "./components/vxeTable/1",level: 2, children: [], active: false,id: 12 },
         ]
     },
     {

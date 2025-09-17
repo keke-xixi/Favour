@@ -75,7 +75,10 @@
         </div>
       </div>
 
-      <!--  -->
+      <!-- 代码界面 -->
+      <div class="content-panel">
+        <component :is="components['1']" />
+      </div>
     </div>
   </div>
 </template>
@@ -97,6 +100,17 @@ interface KnowledgeItem {
   children: KnowledgeItem[]
 }
 
+// 子组件
+const components:any = ref({})
+
+onMounted(async () => {
+    const modules = import.meta.glob('./components/hiprint/*.vue');  // hiprint目录下的所有组件(对象)
+    for (const path in modules) {
+      const module:any = await modules[path]()
+      components.value[path] = module.default
+    }
+
+})
 
 // 所有分类
 const knowledgeList = ref<KnowledgeItem[]>(Knowledge_List)
@@ -372,12 +386,14 @@ if (knowledgeList.value.length > 0) {
   gap: 20px;
 }
 
+// 卡片样式
 .knowledge-card {
   border-radius: 10px;
   box-shadow: 0 3px 15px rgba(0, 0, 0, 0.08);
   padding: 20px;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
   border-left: 4px solid #3498db;
+  cursor: pointer;
   
   &:hover {
     transform: translateY(-5px);
