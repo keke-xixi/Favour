@@ -1,7 +1,7 @@
 <template>
     <div class="container">
  
-        hiprint
+        hiprint1
     </div>
   </template>
   <script setup lang="ts">
@@ -17,7 +17,6 @@
   .container{
     width: 100%;
     height: 100%;
-    background-color: #684b4b;
   }
   
   

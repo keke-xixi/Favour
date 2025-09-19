@@ -9,7 +9,7 @@
 
         <!-- 渲染左侧数据 -->
         <div class="category-list">
-          <li v-for="(category, index) in filteredCategories" :key="index" class="category-item1" 
+          <li v-for="(category, index) in filteredCategories" :key="index" class="category-item2" 
               :class="{ active: selectedCategory === category }" @click.stop="handleClickMenu(category, 1)">
             <a class="category-link" @click="selectCategory(category)">
               <span>{{ category.name }}</span>
@@ -18,18 +18,20 @@
                  @click.stop="toggleCategory(category)"></i>
                  <el-icon :style="{ transform: category.active ? 'rotate(-90deg)' : 'rotate(0deg)', transition: 'transform 0.5s' }"><ArrowUp /></el-icon>
             </a>
+            <!-- 二级菜单 -->
             <ul v-if="category.children.length && category.active" class="category-children" 
                 :class="{ expanded: isExpanded(category) }">
-              <li v-for="(child, childIndex) in category.children" :key="childIndex" class="category-item2" 
+              <li v-for="(child, childIndex) in category.children" :key="childIndex" class="category-item3" 
                   :class="{ active: selectedCategory === child }" @click.stop="handleClickMenu(child, 2)">
                 <a class="category-link" @click="selectCategory(child)">
                   <span>{{ child.name }}</span>
                   <i v-if="child.children.length" class="fas" 
                      :class="isExpanded(child) ? 'fa-chevron-down' : 'fa-chevron-right'" 
                      @click.stop="toggleCategory(child)"></i>
-                  <el-icon :style="{ transform: child.active ? 'rotate(-90deg)' : 'rotate(0deg)', transition: 'transform 0.5s' }"><ArrowUp /></el-icon>
+                  <!-- <el-icon :style="{ transform: child.active ? 'rotate(-90deg)' : 'rotate(0deg)', transition: 'transform 0.5s' }"><ArrowUp /></el-icon> -->
                 </a>
                 
+                <!-- 三级菜单  一般情况不需要 -->
                 <ul v-if="child.children.length && child.active" class="category-children" 
                     :class="{ expanded: isExpanded(child) }">
                   <li v-for="(grandChild, grandIndex) in child.children" :key="grandIndex" class="category-item3" 
@@ -76,8 +78,9 @@
       </div>
 
       <!-- 代码界面 -->
-      <div class="content-panel">
-        <component :is="components['1']" />
+      <div class="content-daima">
+        <el-button type="primary" @click="copyComponent" class="copy-button">复制</el-button>
+        <component :is="components[activeComponentName]" ref="activeComponentRef" />
       </div>
     </div>
   </div>
@@ -102,14 +105,27 @@ interface KnowledgeItem {
 
 // 子组件
 const components:any = ref({})
+const activeComponentRef = ref(null)
+
+// 当前激活的子组件名
+const activeComponentName = ref('')
+
+// 复制
+const copyComponent = () => {
+  console.log(activeComponentRef.value)
+}
 
 onMounted(async () => {
     const modules = import.meta.glob('./components/hiprint/*.vue');  // hiprint目录下的所有组件(对象)
     for (const path in modules) {
       const module:any = await modules[path]()
-      components.value[path] = module.default
+      components.value[path.slice(0, -4)] = module.default
     }
-
+    const modules2 = import.meta.glob('./components/vxeTable/*.vue');  // vxeTable目录下的所有组件(对象)
+    for (const path in modules2) {
+      const module:any = await modules2[path]()
+      components.value[path.slice(0, -4)] = module.default
+    }
 })
 
 // 所有分类
@@ -131,6 +147,12 @@ const handleClickMenu = (category: KnowledgeItem, level: number) => {
     category.active = category.active ? false : true;
   }else {
     category.active = true;
+  }
+  console.log('点击的分类', category,level);
+  if(level === 2) {  // 如果是二级分类
+    activeComponentName.value = category.url;
+  }else {
+    activeComponentName.value = '';
   }
   nextTick(() => {
     lastClickedCategory.value = category; // 更新上次点击的分类
@@ -367,6 +389,43 @@ if (knowledgeList.value.length > 0) {
   padding: 25px;
   background: #ebf0fa;
   border: 2px solid #167f5d;
+}
+.content-daima {
+  flex: 1;
+  background: #ebf0fa;
+  border: 2px solid #167f5d;
+  margin-right: 30px;
+  position: relative;
+  .copy-button {
+    position: absolute;
+    top: 10px;
+    right: 30px;
+    padding: 6px 12px;
+    background: #02e16e;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    transition: all 0.3s ease;
+    
+    &:hover {
+      background: #0056b3;
+      transform: translateY(-1px);
+    }
+    
+    &:active {
+      transform: translateY(0);
+    }
+    
+    svg {
+      width: 14px;
+      height: 14px;
+    }
+  }
 }
 
 .content-header {

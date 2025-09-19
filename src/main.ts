@@ -7,6 +7,7 @@ import './assets/css/table.scss'
 import './assets/css/form.scss';
 import './assets/css/color.scss'   
 import './assets/css/unit.scss';  // 自制css样式
+import './assets/css/other.scss';  // 其他css样式
 import ElementPlus from 'element-plus';
 import 'element-plus/dist/index.css';
 import ZInput from './components/ZInput.vue';

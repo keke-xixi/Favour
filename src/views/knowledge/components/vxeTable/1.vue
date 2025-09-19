@@ -1,7 +1,7 @@
 <template>
     <div class="container">
- 
-        vxeTable1
+      let { fullData } = xGrid.value ? xGrid.value.getTableData() : { fullData: [] }; 
+      xGrid.value?.remove(fullData);
     </div>
   </template>
   <script setup lang="ts">
@@ -17,7 +17,6 @@
   .container{
     width: 100%;
     height: 100%;
-    background-color: #684b4b;
   }
   
   
