@@ -18,7 +18,9 @@ export const Knowledge_List = [
         level: 1,
         active: false,
         children: [
-            { name: '清空表格数据', url: "./components/vxeTable/1",level: 2, children: [], active: false,id: 12 },
+            { name: '清空表格数据', url: "./components/vxeTable/1",level: 2, children: [], active: false,id: 11 },
+            { name: '工具栏配置', url: "./components/vxeTable/2",level: 2, children: [], active: false,id: 12 },
+            { name: '时间', url: "./components/vxeTable/3",level: 2, children: [], active: false,id: 13 },
         ]
     },
     {
@@ -36,5 +38,25 @@ export const Knowledge_List = [
         level: 1,
         active: false,
         children: [],
+    },
+    {
+        id: 4,
+        name: 'element',
+        url: "/element",
+        level: 1,
+        active: false,
+        children: [
+            { name: '输入框', url: "./components/element/1",level: 2, children: [], active: false,id: 41 },
+        ],
+    },
+    {
+        id: 5,
+        name: 'vue',
+        url: "/vue",
+        level: 1,
+        active: false,
+        children: [
+            { name: '样式', url: "./components/vue/1",level: 2, children: [], active: false,id: 51 },
+        ],
     }
 ]

@@ -9,8 +9,18 @@
   const containerRef = ref(null)
 
   const text = ref(`
-      let { fullData } = xGrid.value ? xGrid.value.getTableData() : { fullData: [] }; 
-      xGrid.value?.remove(fullData);
+   样式穿透：
+    :deep(img) {
+		margin: auto;
+	}
+    :deep(.el-input),
+    :deep(.el-select),
+    :deep(.el-input-number) {
+        width: 100%;
+    }
+    :deep(.el-slider .el-input-number){
+        width: auto;
+    }   
   `)
  
   onMounted(() => {
@@ -25,10 +35,6 @@
    defineExpose({ text });
   </script>
   <style lang="scss" scoped>
-  .container{
-    width: 100%;
-    height: 100%;
-  }
   
   
   

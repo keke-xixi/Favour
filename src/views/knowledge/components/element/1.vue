@@ -9,8 +9,13 @@
   const containerRef = ref(null)
 
   const text = ref(`
-      let { fullData } = xGrid.value ? xGrid.value.getTableData() : { fullData: [] }; 
-      xGrid.value?.remove(fullData);
+     下拉框：
+      <el-select v-model="field" placeholder="请选择" filterable clearable>
+        <el-option v-for="item in dl('001')" :key="item.value" :value="item.value" :label="item.label"></el-option>
+     </el-select>
+
+     数字框：
+     <el-input-number v-model="field" :min="0" :max="999999999" controls-position="right" :precision="4" placeholder="请输入"  />
   `)
  
   onMounted(() => {
@@ -25,11 +30,6 @@
    defineExpose({ text });
   </script>
   <style lang="scss" scoped>
-  .container{
-    width: 100%;
-    height: 100%;
-  }
-  
   
   
   </style>

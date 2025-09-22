@@ -48,7 +48,7 @@
       </div>
 
       <!-- 内容区域 -->
-      <div class="content-panel">
+      <div class="content-panel" v-show="!activeComponentName">
         <div class="content-header">
           <h2>{{ selectedCategory ? selectedCategory.name : '请选择分类' }}</h2>
           <p v-if="selectedCategory">{{ selectedCategory.children.length }}个子分类，{{ getContentCount(selectedCategory) }}个知识点</p>
@@ -56,7 +56,7 @@
         
         <div v-if="selectedCategory && getContentItems(selectedCategory).length">
           <div class="content-grid">
-            <div v-for="(item, index) in getContentItems(selectedCategory)" :key="index" class="knowledge-card">
+            <div v-for="(item, index) in getContentItems(selectedCategory)" :key="index" class="knowledge-card" @click="selectCard(item)">
               <h3>{{ item.name }}</h3>
               <p>这里是关于"{{ item.name }}"的详细说明和知识点内容。</p>
               <div class="card-footer">
@@ -78,7 +78,7 @@
       </div>
 
       <!-- 代码界面 -->
-      <div class="content-daima">
+      <div class="content-daima" v-show="activeComponentName">
         <el-button type="primary" @click="copyComponent" class="copy-button">复制</el-button>
         <component :is="components[activeComponentName]" ref="activeComponentRef" />
       </div>
@@ -126,6 +126,21 @@ onMounted(async () => {
       const module:any = await modules2[path]()
       components.value[path.slice(0, -4)] = module.default
     }
+    const modules3 = import.meta.glob('./components/hiprint/*.vue');  // hiprint
+    for (const path in modules3) {
+      const module:any = await modules3[path]()
+      components.value[path.slice(0, -4)] = module.default
+    }
+    const modules4 = import.meta.glob('./components/element/*.vue');  // element
+    for (const path in modules4) {
+      const module:any = await modules4[path]()
+      components.value[path.slice(0, -4)] = module.default
+    }
+    const modules5 = import.meta.glob('./components/vue/*.vue');  // vue
+    for (const path in modules5) {
+      const module:any = await modules5[path]()
+      components.value[path.slice(0, -4)] = module.default
+    }
 })
 
 // 所有分类
@@ -140,6 +155,12 @@ const expandedCount = computed(() => expandedCategories.value.size);
 const selectedCategory = ref<KnowledgeItem | null>(null);   // 当前选中的分类
 
 const lastClickedCategory = ref<KnowledgeItem | null>(null); // 上次点击的分类
+
+// 点击内容卡片
+const selectCard = (category: KnowledgeItem) => {
+  selectCategory(category)
+  handleClickMenu(category, 2)
+}
 
 // 点击分类 
 const handleClickMenu = (category: KnowledgeItem, level: number) => {

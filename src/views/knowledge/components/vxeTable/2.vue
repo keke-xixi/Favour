@@ -8,10 +8,7 @@
 
   const containerRef = ref(null)
 
-  const text = ref(`
-      let { fullData } = xGrid.value ? xGrid.value.getTableData() : { fullData: [] }; 
-      xGrid.value?.remove(fullData);
-  `)
+  const text = ref('toolbarConfig: { export: false, refresh: false, print: false, custom: false, zoom: false },')
  
   onMounted(() => {
     
@@ -20,16 +17,11 @@
   onUnmounted(() => {
     
   });
-
-   //将属性或者函数暴露给父组件
-   defineExpose({ text });
+  
+  //将属性或者函数暴露给父组件
+  defineExpose({ text });
   </script>
   <style lang="scss" scoped>
-  .container{
-    width: 100%;
-    height: 100%;
-  }
-  
   
   
   </style>
