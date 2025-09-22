@@ -58,13 +58,13 @@
           <div class="content-grid">
             <div v-for="(item, index) in getContentItems(selectedCategory)" :key="index" class="knowledge-card" @click="selectCard(item)">
               <h3>{{ item.name }}</h3>
-              <p>这里是关于"{{ item.name }}"的详细说明和知识点内容。</p>
+              <p>{{ item.description || '暂无描述' }}</p>
               <div class="card-footer">
                 <a :href="item.url || '#'" class="url-link" v-if="item.url">
                   <i class="fas fa-external-link-alt"></i> 查看详情
                 </a>
                 <span v-else class="url-link">暂无链接</span>
-                <span class="date">2023-08-15</span>
+                <span class="date"></span>
               </div>
             </div>
           </div>
@@ -100,6 +100,7 @@ interface KnowledgeItem {
   url: string
   level: number  // 第几级菜单
   active?: boolean  // 是否激活
+  description?: string  // 描述
   children: KnowledgeItem[]
 }
 
@@ -139,6 +140,11 @@ onMounted(async () => {
     const modules5 = import.meta.glob('./components/vue/*.vue');  // vue
     for (const path in modules5) {
       const module:any = await modules5[path]()
+      components.value[path.slice(0, -4)] = module.default
+    }
+    const modules6 = import.meta.glob('./components/work/*.vue');  // work
+    for (const path in modules6) {
+      const module:any = await modules6[path]()
       components.value[path.slice(0, -4)] = module.default
     }
 })

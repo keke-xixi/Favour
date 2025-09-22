@@ -9,15 +9,13 @@
   const containerRef = ref(null)
 
   const text = ref(`
-        // 工具栏
-        toolbarConfig: { export: false, refresh: false, print: false, custom: false, zoom: false },
-
-        // 分页设置
-        pagerConfig: { enabled: false },
+      表格更新：
+      xGrid.value?.loadData([]);  // 加载表格数据  
+      xGrid.value?.loadColumn([]); // 加载表头
   `)
- 
-  //将属性或者函数暴露给父组件
-  defineExpose({ text });
+
+   //将属性或者函数暴露给父组件
+   defineExpose({ text });
   </script>
   <style lang="scss" scoped>
   

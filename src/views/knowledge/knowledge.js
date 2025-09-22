@@ -18,9 +18,11 @@ export const Knowledge_List = [
         level: 1,
         active: false,
         children: [
-            { name: '清空表格数据', url: "./components/vxeTable/1",level: 2, children: [], active: false,id: 11 },
+            { name: '清空表格数据', url: "./components/vxeTable/1",level: 2, children: [], active: false,id: 11,description: '用于表格联动时，清空表格数据'  },
             { name: '工具栏配置', url: "./components/vxeTable/2",level: 2, children: [], active: false,id: 12 },
             { name: '时间', url: "./components/vxeTable/3",level: 2, children: [], active: false,id: 13 },
+            { name: '单选多选', url: "./components/vxeTable/4",level: 2, children: [], active: false,id: 14 },
+            { name: '更新', url: "./components/vxeTable/5",level: 2, children: [], active: false,id: 15 },
         ]
     },
     {
@@ -29,7 +31,11 @@ export const Knowledge_List = [
         url: "/work",
         level: 1,
         active: false,
-        children: [],
+        children: [
+            { name: '字典', url: "./components/work/1",level: 2, children: [], active: false,id: 21 },
+            { name: '请求', url: "./components/work/2",level: 2, children: [], active: false,id: 22 },
+            { name: '常用笔记', url: "./components/work/3",level: 2, children: [], active: false,id: 23 },
+        ],
     },
     {
         id: 3,
