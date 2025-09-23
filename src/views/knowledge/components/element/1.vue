@@ -1,6 +1,6 @@
 <template>
     <div class="container" ref="containerRef">
-        <el-input type="textarea" v-model="text" :rows="36" class="container-input"/>
+        <el-input type="textarea" v-model="text" :rows="36" class="container-input" spellcheck="false"/>
     </div>
   </template>
   <script setup lang="ts">
@@ -16,6 +16,9 @@
 
      数字框：
      <el-input-number v-model="field" :min="0" :max="999999999" controls-position="right" :precision="4" placeholder="请输入"  />
+
+     输入框禁用语法检查：
+     spellcheck="false"
 
      日期选择器： 
      default-time 选择时间时候设置默认时间后缀  value-format 设置选择时间后返回时间格式

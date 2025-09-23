@@ -1,6 +1,6 @@
 <template>
     <div class="container" ref="containerRef">
-        <el-input type="textarea" v-model="text" :rows="36" class="container-input"/>
+        <el-input type="textarea" v-model="text" :rows="36" class="container-input" spellcheck="false"/>
     </div>
   </template>
   <script setup lang="ts">
