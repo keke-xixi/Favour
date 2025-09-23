@@ -171,6 +171,11 @@ onMounted(async () => {
       const module:any = await modules6[path]()
       components.value[path.slice(0, -4)] = module.default
     }
+    const modules7 = import.meta.glob('./components/js/*.vue');  // js
+    for (const path in modules7) {
+      const module:any = await modules7[path]()
+      components.value[path.slice(0, -4)] = module.default
+    }
 })
 
 // 所有分类

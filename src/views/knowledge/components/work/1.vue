@@ -11,6 +11,8 @@
   const text = ref(`
       字典：
       import { getDictDataItem as di,getDictLabelByVal as dv, getDictDataList as dl } from '/@/utils/dict-utils';
+
+      {{ di('SX05', row.gasType)?.name }}
   `)
 
    //将属性或者函数暴露给父组件

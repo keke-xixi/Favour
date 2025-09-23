@@ -71,5 +71,15 @@ export const Knowledge_List = [
         children: [
             { name: '样式', url: "./components/vue/1",level: 2, children: [], active: false,id: 51 },
         ],
+    },
+    {
+        id: 6,
+        name: 'js',
+        url: "/js",
+        level: 1,
+        active: false,
+        children: [
+            { name: '数组和字符串转换', url: "./components/js/1",level: 2, children: [], active: false,id: 61 },
+        ],
     }
 ]
