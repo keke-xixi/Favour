@@ -87,6 +87,7 @@
 </template>
 
 <script setup lang="ts">
+import { ElMessageBox, ElMessage,ElLoading } from "element-plus";
 import { ref, reactive, computed,nextTick,onMounted } from "vue"
 import { ArrowUp } from "@element-plus/icons-vue"
 import { Knowledge_List } from './knowledge.js'
@@ -106,15 +107,38 @@ interface KnowledgeItem {
 
 // 子组件
 const components:any = ref({})
-const activeComponentRef = ref(null)
+const activeComponentRef = ref<any>(null)
 
 // 当前激活的子组件名
 const activeComponentName = ref('')
 
 // 复制
-const copyComponent = () => {
-  console.log(activeComponentRef.value)
+const copyComponent = async () => {
+  const text = activeComponentRef.value?.text;  // 获取子组件中的text 属性值
+  await navigator.clipboard.writeText(text);
+  showCopySuccess();
 }
+
+// 显示复制成功提示
+const showCopySuccess = () => {
+  const btn = document.querySelector('.copy-button')
+  if (btn) {
+    const originalText = btn.innerHTML
+    btn.innerHTML = '✓ 已复制'
+    ElMessage({
+      message: '已复制',
+      type: 'success',
+      duration: 1500
+    })
+    btn.style.backgroundColor = '#4caf50'
+    
+    setTimeout(() => {
+      btn.innerHTML = originalText
+      btn.style.backgroundColor = ''
+    }, 1500)
+  }
+}
+
 
 onMounted(async () => {
     const modules = import.meta.glob('./components/hiprint/*.vue');  // hiprint目录下的所有组件(对象)
@@ -428,7 +452,7 @@ if (knowledgeList.value.length > 0) {
     top: 10px;
     right: 30px;
     padding: 6px 12px;
-    background: #02e16e;
+    background: #4caf50;
     color: white;
     border: none;
     border-radius: 4px;
@@ -438,7 +462,7 @@ if (knowledgeList.value.length > 0) {
     align-items: center;
     gap: 4px;
     transition: all 0.3s ease;
-    
+    z-index: 999;
     &:hover {
       background: #0056b3;
       transform: translateY(-1px);
