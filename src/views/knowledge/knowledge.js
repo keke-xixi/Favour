@@ -81,5 +81,34 @@ export const Knowledge_List = [
         children: [
             { name: '数组和字符串转换', url: "./components/js/1",level: 2, children: [], active: false,id: 61 },
         ],
+    },
+    {
+        id: 7,
+        name: 'echart',
+        url: "/echart",
+        level: 1,
+        active: false,
+        children: [
+            { name: 'echart组件模板', url: "./components/echart/1",level: 2, children: [], active: false,id: 71, description: 'echart组件模板示例' },
+        ],
+    },
+    {
+        id: 8,
+        name: 'study',
+        url: "/study",
+        level: 1,
+        active: false,
+        children: [
+            { name: '去掉字符串中的元素标记', url: "./components/study/1",level: 2, children: [], active: false,id: 81, description: '去掉字符串中的元素标记 返回纯文本' },
+            { name: '将颜色灰度化', url: "./components/study/2",level: 2, children: [], active: false,id: 82, description: '' },
+            { name: '知识点3', url: "./components/study/3",level: 2, children: [], active: false,id: 83, description: '' },
+            { name: '知识点4', url: "./components/study/4",level: 2, children: [], active: false,id: 84, description: '' },
+            { name: '知识点5', url: "./components/study/5",level: 2, children: [], active: false,id: 85, description: '' },
+            { name: '知识点6', url: "./components/study/6",level: 2, children: [], active: false,id: 86, description: '' },
+            { name: '知识点7', url: "./components/study/7",level: 2, children: [], active: false,id: 87, description: '' },
+            { name: '知识点8', url: "./components/study/8",level: 2, children: [], active: false,id: 88, description: '' },
+            { name: '知识点9', url: "./components/study/9",level: 2, children: [], active: false,id: 89, description: '' },
+            { name: '知识点10', url: "./components/study/10",level: 2, children: [], active: false,id: 90, description: '' },
+        ],
     }
 ]

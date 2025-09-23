@@ -141,7 +141,7 @@ const showCopySuccess = () => {
 
 
 onMounted(async () => {
-    const modules = import.meta.glob('./components/hiprint/*.vue');  // hiprint目录下的所有组件(对象)
+    const modules = import.meta.glob('./components/study/*.vue');  // study目录下的所有组件(对象)
     for (const path in modules) {
       const module:any = await modules[path]()
       components.value[path.slice(0, -4)] = module.default
@@ -176,6 +176,11 @@ onMounted(async () => {
       const module:any = await modules7[path]()
       components.value[path.slice(0, -4)] = module.default
     }
+    const modules8 = import.meta.glob('./components/echart/*.vue');  // echart
+    for (const path in modules8) {
+      const module:any = await modules8[path]()
+      components.value[path.slice(0, -4)] = module.default
+    }
 })
 
 // 所有分类
@@ -204,7 +209,6 @@ const handleClickMenu = (category: KnowledgeItem, level: number) => {
   }else {
     category.active = true;
   }
-  console.log('点击的分类', category,level);
   if(level === 2) {  // 如果是二级分类
     activeComponentName.value = category.url;
   }else {
