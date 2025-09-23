@@ -43,7 +43,14 @@ export const Knowledge_List = [
         url: "/hiprint",
         level: 1,
         active: false,
-        children: [],
+        children: [
+            { name: '表格单元头样式修改', url: "./components/hiprint/1", level: 2, children: [], active: false,id: 31,description: '改变表头单元格样式' },
+            { name: '表格内容渲染函数', url: "./components/hiprint/2", level: 2, children: [], active: false,id: 32,description: '用于动态渲染表格' },
+            { name: '底部聚合格式化函数', url: "./components/hiprint/3", level: 2, children: [], active: false,id: 33,description: '用于合计、统计' },
+            { name: '表格样式函数', url: "./components/hiprint/4", level: 2, children: [], active: false,id: 34,description: '用于改变表格整体样式、行高、列宽、颜色、字体等其它属性' },
+            { name: '行/列合并函数', url: "./components/hiprint/5", level: 2, children: [], active: false,id: 35,description: '用于合并单元格(内容)' },
+            { name: 'html模板', url: "./components/hiprint/6", level: 2, children: [], active: false,id: 36,description: '直接把html代码复制到字符串中，可直接渲染' },
+        ],
     },
     {
         id: 4,
