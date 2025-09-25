@@ -41,3 +41,17 @@ if (!chartDom.clientWidth) {
    return;
 }
 chartInstance = echarts.init(chartDom);
+
+
+
+Promise A+ 规范：
+&.ajax()
+
+ES6 Promise
+const promise = new Promise()
+
+promise.then()
+promise.catch()
+promise.finally()
+
+async/await

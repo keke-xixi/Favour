@@ -99,3 +99,11 @@ useEffect(() => {
 给div 加上 draggable="true" 属性，使其可拖拽
 
 给div 加上 v-loading 属性，使其可加载
+
+
+img {
+  /* vmin： 取视口最短边 */
+  /* vmaxn： 取视口最长边 */
+  width: 100vmin;
+  height: 100vmin;
+}

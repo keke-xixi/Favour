@@ -9,7 +9,7 @@
   const containerRef = ref(null)
 
   const text = ref(`
-      // 去掉字符串中的元素标记
+      // 去掉字符串中的元素标记 （返回纯文本）
       const removeTar = (fragment) => {
           new DOMParser().parseFromString(fragment, 'text/html').body.textContent || "";
 
