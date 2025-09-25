@@ -50,6 +50,10 @@ export const Knowledge_List = [
             { name: '表格样式函数', url: "./components/hiprint/4", level: 2, children: [], active: false,id: 34,description: '用于改变表格整体样式、行高、列宽、颜色、字体等其它属性' },
             { name: '行/列合并函数', url: "./components/hiprint/5", level: 2, children: [], active: false,id: 35,description: '用于合并单元格(内容)' },
             { name: 'html模板', url: "./components/hiprint/6", level: 2, children: [], active: false,id: 36,description: '直接把html代码复制到字符串中，可直接渲染' },
+            { name: '打印时候自定义样式', url: "./components/hiprint/7", level: 2, children: [], active: false,id: 37,description: '调整<style></style>标签中的样式 改变样式' },
+            { name: '多报表预览', url: "./components/hiprint/8", level: 2, children: [], active: false,id: 38,description: 'newHtml[0] 是div元素' },
+            { name: '文档', url: "./components/hiprint/9", level: 2, children: [], active: false,id: 39,description: '' },
+            { name: '格式化函数', url: "./components/hiprint/10", level: 2, children: [], active: false,id: 310,description: '普通文本框使用自定义字段计算时候，需要格式化函数' },
         ],
     },
     {
