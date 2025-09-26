@@ -22,6 +22,19 @@
                     </el-select>
                 </el-form-item>
         </el-col>
+
+        import { ApprovalResult } from '/@/types/enum';
+        <template #row_confirmStatus="{ row }">
+            <span v-if="row.confirmStatus === null || row.confirmStatus === undefined || row.confirmStatus === ''"></span>
+            <el-tag v-else> {{ ApprovalResult.find((item:any) => item.value === row.confirmStatus)?.name }}</el-tag>
+        </template>
+
+        import { ApprovalResult,CoalList } from '/@/types/enum';
+        <el-form-item label="煤种" prop="goodsName">
+            <el-select v-model="state.queryParams.goodsName" placeholder="煤种" filterable clearable>
+                <el-option v-for="(item,index) in CoalList" :key="item.label" :value="item.label" :label="item.label" />
+            </el-select>
+        </el-form-item>
   `)
 
    //将属性或者函数暴露给父组件

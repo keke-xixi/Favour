@@ -10,6 +10,7 @@
 
   const text = ref(`
       多报表预览： 
+        let newDiv = document.createElement('div');
         const newHtml = hiprintTemplate.getHtml(reportData);
         newDiv.innerHTML = newHtml[0].outerHTML  + newHtml[0].outerHTML;
         templateRef?.appendChild(newDiv);

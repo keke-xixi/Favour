@@ -55,3 +55,9 @@ promise.catch()
 promise.finally()
 
 async/await
+
+
+判断奇数：
+function isOdd(n) {
+   return n % 2 === 1 || n % 2 === -1
+}

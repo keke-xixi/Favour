@@ -51,3 +51,4 @@ DATE_FORMAT(ih.updated, '%Y-%m-%d')  前端得到的是 2001-01-01这种格式
 DATE_FORMAT(ih.updated, '%Y-%m-%d %H:%i:%s')  前端得到的是 2001-01-01 00:00:00这种格式
 ih.updated  前端得到的是 2024-11-05T10:54:00.000Z这种格式
 
+select * form user_table where url = 'https://www.fufugal.com/'
