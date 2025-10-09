@@ -108,7 +108,7 @@ export const Knowledge_List = [
             { name: '将颜色灰度化', url: "./components/study/2",level: 2, children: [], active: false,id: 82, description: '' },
             { name: '给fetch 添加超时功能', url: "./components/study/3",level: 2, children: [], active: false,id: 83, description: '请求接口数据时候、设置超时时间' },
             { name: '不规则文字', url: "./components/study/4",level: 2, children: [], active: false,id: 84, description: '' },
-            { name: '知识点5', url: "./components/study/5",level: 2, children: [], active: false,id: 85, description: '' },
+            { name: '同源策略和跨域处理', url: "./components/study/5",level: 2, children: [], active: false,id: 85, description: '' },
             { name: '知识点6', url: "./components/study/6",level: 2, children: [], active: false,id: 86, description: '' },
             { name: '知识点7', url: "./components/study/7",level: 2, children: [], active: false,id: 87, description: '' },
             { name: '知识点8', url: "./components/study/8",level: 2, children: [], active: false,id: 88, description: '' },

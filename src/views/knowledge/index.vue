@@ -60,9 +60,7 @@
               <h3>{{ item.name }}</h3>
               <p>{{ item.description || '暂无描述' }}</p>
               <div class="card-footer">
-                <a :href="item.url || '#'" class="url-link" v-if="item.url">
-                  <i class="fas fa-external-link-alt"></i> 查看详情
-                </a>
+                <el-link type="primary" v-if="item.url">查看详情</el-link>
                 <span v-else class="url-link">暂无链接</span>
                 <span class="date"></span>
               </div>
@@ -141,6 +139,8 @@ const showCopySuccess = () => {
 
 
 onMounted(async () => {
+    const token = localStorage.getItem('testToken')
+    console.log('token', token)
     const modules = import.meta.glob('./components/study/*.vue');  // study目录下的所有组件(对象)
     for (const path in modules) {
       const module:any = await modules[path]()
