@@ -35,6 +35,23 @@
                 <el-option v-for="(item,index) in CoalList" :key="item.label" :value="item.label" :label="item.label" />
             </el-select>
         </el-form-item>
+
+        import { getDictDataItem as di,getDictLabelByVal as dv, getDictDataList as dl } from '/@/utils/dict-utils';
+        
+        <el-col :xs="24" :sm="12" :md="5" :lg="5" :xl="5" class="mb5">
+            <el-form-item label="班次" prop="teamCode">
+                <el-select v-model="state.queryParams.teamCode" placeholder="班次" filterable clearable>
+                    <el-option v-for="(item,index) in dl('StoveBatchByTeam')" :key="item.code" :value="item.code" :label="item.name" />
+                </el-select>
+            </el-form-item>
+        </el-col>
+        <el-col :xs="24" :sm="12" :md="5" :lg="5" :xl="5" class="mb5">
+            <el-form-item label="机组" prop="groupCode">
+                <el-select v-model="state.queryParams.groupCode" placeholder="机组" filterable clearable>
+                    <el-option v-for="(item,index) in dl('StoveBatchByGroup')" :key="item.code" :value="item.code" :label="item.name" />
+                </el-select>
+            </el-form-item>
+        </el-col>
   `)
 
    //将属性或者函数暴露给父组件
