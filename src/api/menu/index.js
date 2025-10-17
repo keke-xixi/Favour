@@ -4,17 +4,17 @@
  *   不加前缀 /home 就是独立界面，不需要菜单栏  针对主要游戏进行的设计  加好菜单后可以直接到 routes 中配置
  */
 export default  [
-    // {
-    //     path: '/home',
-    //     name: '首页',
-    //     children:[
-    //         {
-    //             path: '/home/welcome',
-    //             name: 'welcome',
-    //         }
-    //     ],
-    //     id: 10
-    // },
+    {
+        path: '/home',
+        name: '首页',
+        children:[
+            {
+                path: '/home/welcome',
+                name: 'welcome',
+            }
+        ],
+        id: 10
+    },
     // {
     //     path: '/tool',
     //     name: '组件',

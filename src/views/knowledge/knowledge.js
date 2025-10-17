@@ -64,6 +64,7 @@ export const Knowledge_List = [
         active: false,
         children: [
             { name: '输入框', url: "./components/element/1",level: 2, children: [], active: false,id: 41 },
+            { name: '小特效', url: "./components/element/2",level: 2, children: [], active: false,id: 42 },
         ],
     },
     {
