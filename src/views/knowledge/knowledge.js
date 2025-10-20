@@ -54,6 +54,7 @@ export const Knowledge_List = [
             { name: '多报表预览', url: "./components/hiprint/8", level: 2, children: [], active: false,id: 38,description: 'newHtml[0] 是div元素' },
             { name: '文档', url: "./components/hiprint/9", level: 2, children: [], active: false,id: 39,description: '' },
             { name: '格式化函数', url: "./components/hiprint/10", level: 2, children: [], active: false,id: 310,description: '普通文本框使用自定义字段计算时候，需要格式化函数' },
+            { name: '自定义文本字段显示', url: "./components/hiprint/11", level: 2, children: [], active: false,id: 311,description: '一般用于文本框' },
         ],
     },
     {

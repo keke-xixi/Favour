@@ -1,0 +1,9 @@
+开发平台链接：
+    https://developers.weixin.qq.com/console/index?tab1=business&tab2=dev
+
+广告投放：
+   https://support.e.qq.com/detail?cid=4585&pid=2064
+
+
+步骤：
+1 开通流量主  2.创建广告位 3.集成广告组件 4.提价审核与发布 5.获得广告收益
