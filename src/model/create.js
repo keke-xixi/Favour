@@ -1,5 +1,5 @@
 // 传入 总数 等级数 最低等级概率
-function calculateLevelDistribution(total, levels, minProbability) {
+export function calculateLevelDistribution(total, levels, minProbability) {
     const result = [];
     
     // 计算等比数列的公比
@@ -70,7 +70,7 @@ function calculateLevelDistribution(total, levels, minProbability) {
 }
   
   // 使用示例
-  const distribution = calculateLevelDistribution(100, 7, 0.01);
+  const distribution = calculateLevelDistribution(45, 7, 0.01);
   console.log('等级分布:',distribution);
   distribution.forEach(item => {
     console.log(`等级 ${item.level}: 概率 ${item.probability.toFixed(2)}%, 数量 ${item.count}`);
