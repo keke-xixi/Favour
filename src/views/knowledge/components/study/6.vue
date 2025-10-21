@@ -9,7 +9,7 @@
   const containerRef = ref(null)
 
   const text = ref(`
-      
+      node test.js  //执行test.js文件
   `)
 
    //将属性或者函数暴露给父组件
