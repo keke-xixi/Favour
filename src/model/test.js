@@ -6,28 +6,53 @@ const type_map = {
     5: { name: '钻石', color: '#B9F2FF', price: 5 },
 }
 
-// x (0 -4) y (0 - 9)   加载 x、y
-function generateArray(xMax = 5, yMax = 9, maxType = 5) {
-    let arr = [];
-    for (let x = 0; x < xMax; x++) {
-        for (let y = 0; y < yMax; y++) {
-            
-            arr.push({ 
-                x,
-                y,
-            });
+// 区块信息
+function getRange(y) {
+    /*
+      min、max区间范围  rate: 珍品概率，其它随机   level: 区间等级
+    */
+    const ranges = [
+        { min: 9000, max: 10000, label: '9000-10000',rate: 0.1 },
+        { min: 7000, max: 9000, label: '7000-9000' },
+        { min: 5000, max: 7000, label: '5000-7000' },
+        { min: 2000, max: 5000, label: '2000-5000' },
+        { min: 500, max: 2000, label: '500-2000' },
+        { min: 100, max: 500, label: '100-500' },
+        { min: 1, max: 100, label: '1-100' }
+    ];
+    
+    for (const range of ranges) {
+        if (y >= range.min && y <= range.max) {
+            return range;
         }
     }
-    return arr;
+    
+    return '超出范围';
 }
 
-// 加载 type
+// 传入y
+function createArea(y,direct) {
+    switch (direct) {
+     case 'left':
+         
+         break;
+    
+     case 'right':
+ 
+         break;
+     
+     case 'up':
+ 
+         break;
+ 
+     case 'down':
+ 
+         break;
 
+     default:
+        console.log(getRange(y),'y')
+        break;
+    }
+ }
 
-  // 使用示例
-  const arr = generateArray(5, 9, 5); // 使用默认参数
-
-  // 生成 1-5 的随机整数
-const randomNum = Math.floor(Math.random() * 5) + 1;
-
-  console.log(arr,arr.length);
+ createArea(100)
