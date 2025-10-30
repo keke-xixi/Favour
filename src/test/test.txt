@@ -1,80 +1,75 @@
+MaintenanceDialog 保存参数
 
-//  打印 添加自定义样式
-state.hiprintTemplate.print(
-    state.printData,
-    {},
+{
+  "name": "",
+  "workTeam": "cnyC000001PUjf7njsNE",
+  "professional": "cswq000001PUjf7nAg76",
+  "orgUnit": "cASe000001PIp40of4VM",
+  "workTeamName": "通信网管工班",
+  "professionalName": "通信专业",
+  "orgUnitName": "通号中心",
+  "belonging": "通信专业-通信网管工班-通号中心",
+  "maintenanceEquipmentList": [
     {
-        callback: () => {
-            state.waitShowPrinter = false;
-        },
-        styleHandler: () => {
-            // 这里拼接成放html->head标签内的css/style
-            let css = '<style>div{font-size: 20px !important;}</style>'
-            return css
+      "seq": 1,
+      "equipment": "GWDHSB",
+      "equipmentName": "公务系统主设备（含机柜）",
+      "maintenanceStandardList": [
+        {
+          "seq": 1,
+          "repairCycle": "2",
+          "name": "1",
+          "contentId": "mh8jwvcaxlq6bajf6ki",
+          "maintenanceStandardDetailList": [
+            {
+              "seq": 1,
+              "name": "1",
+              "required": false,
+              "input": true,
+              "parameterConfig": "{\"attachedTable\":false,\"isSeparately\":false,\"sceneStatus\":[\"正常\",\"异常\"],\"attachedParams\":false,\"isSetStatus\":true,\"parameter\":[],\"contentId\":\"mh8jwvcaxlq6bajf6ki\"}",
+              "contentId": "mh8jwvcaxlq6bajf6ki"
+            }
+          ]
         }
+      ]
     }
-);
-
-多报表预览
-const newHtml = hiprintTemplate.getHtml(reportData);
-newDiv.innerHTML = newHtml[0].outerHTML  + newHtml[0].outerHTML;
-templateRef?.appendChild(newDiv);
-
-
-模板格式：
-// 模板json对象, 这是个对象
-var template = { 
-  panels: [ // 面板数组
-    { // 面板对象
-      index: 0,
-      name: "面板的名称",
-      height: 100, // 面板的宽高 单位mm
-      width: 100,
-      paperHeader: 0, // 页眉线位置  单位pt
-      paperFooter: 222, // 页脚线位置  单位pt
-      printElements: [ // 实际打印元素存放的位置
-        {
-          options: {
-            left: 24, // 距离面板 左边 距离 单位pt
-            top: 24, // 距离面板 顶部 距离 单位pt
-            height: 17, // 元素的宽高
-            width: 120,
-            testData: "测试数据", // 设计时的测试数据
-            field: "name", // 打印/预览时填充传的打印数据的 name 的值
-            title: "元素标题"// 相比下面的标题，这个可以修改
-          },
-          printElementType: {
-            title: "元素标题", // 如果没有上面的标题，取这个
-            type: "text"// 打印元素的类型
-          }
-        },
-      ], 
-    },
-    { // 面板对象
-      index: 1,
-      name: "这是第二个面板",
-      height: 100, // 面板的宽高 单位mm
-      width: 100,
-      paperHeader: 0, // 页眉线位置  单位pt
-      paperFooter: 222, // 页脚线位置  单位pt
-      printElements: [ // 实际打印元素存放的位置
-        {
-          options: {
-            left: 24, // 距离面板 左边 距离 单位pt
-            top: 24, // 距离面板 顶部 距离 单位pt
-            height: 17, // 元素的宽高
-            width: 120,
-            testData: "测试数据 2", // 设计时的测试数据
-            field: "name", // 打印/预览时填充传的打印数据的 name 的值
-            title: "元素标题2"// 相比下面的标题，这个可以修改
-          },
-          printElementType: {
-            title: "元素标题", // 如果没有上面的标题，取这个
-            type: "text"// 打印元素的类型
-          }
-        },
-      ], 
-    }
-    // ...更多面板
   ]
 }
+
+查询作业对象
+queryAssignmentObject  根据专业关联
+
+表格数据  comData
+[
+    {
+        "workObject": "GWDHSB",
+        "workObjectName": "公务系统主设备（含机柜）",
+        "sort": 1,
+        "workType": "1",
+        "workTypeName": "日巡视",
+        "contentId": "mh8qdy85hmz634jw7f6",
+        "cardControl": false,
+        "isSetStatus": true,
+        "workStandard": "",
+        "workContent": "",
+        "drawerShow": false,
+        "attachedTable": false,
+        "isSeparately": false,
+        "sceneStatus": [
+            "正常",
+            "异常"
+        ],
+        "attachedParams": false,
+        "parameter": [],
+        "separatelyList": [
+            {
+                "columnName": "",
+                "statusList": [
+                    "正常",
+                    "异常"
+                ],
+                "parameter": []
+            }
+        ]
+    }
+]
