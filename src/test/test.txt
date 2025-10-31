@@ -1,80 +1,200 @@
-
-//  打印 添加自定义样式
-state.hiprintTemplate.print(
-    state.printData,
-    {},
+{
+  "resCode": "0",
+  "resMsg": "成功",
+  "result": [
     {
-        callback: () => {
-            state.waitShowPrinter = false;
-        },
-        styleHandler: () => {
-            // 这里拼接成放html->head标签内的css/style
-            let css = '<style>div{font-size: 20px !important;}</style>'
-            return css
-        }
-    }
-);
-
-多报表预览
-const newHtml = hiprintTemplate.getHtml(reportData);
-newDiv.innerHTML = newHtml[0].outerHTML  + newHtml[0].outerHTML;
-templateRef?.appendChild(newDiv);
-
-
-模板格式：
-// 模板json对象, 这是个对象
-var template = { 
-  panels: [ // 面板数组
-    { // 面板对象
-      index: 0,
-      name: "面板的名称",
-      height: 100, // 面板的宽高 单位mm
-      width: 100,
-      paperHeader: 0, // 页眉线位置  单位pt
-      paperFooter: 222, // 页脚线位置  单位pt
-      printElements: [ // 实际打印元素存放的位置
-        {
-          options: {
-            left: 24, // 距离面板 左边 距离 单位pt
-            top: 24, // 距离面板 顶部 距离 单位pt
-            height: 17, // 元素的宽高
-            width: 120,
-            testData: "测试数据", // 设计时的测试数据
-            field: "name", // 打印/预览时填充传的打印数据的 name 的值
-            title: "元素标题"// 相比下面的标题，这个可以修改
-          },
-          printElementType: {
-            title: "元素标题", // 如果没有上面的标题，取这个
-            type: "text"// 打印元素的类型
-          }
-        },
-      ], 
+      "name": "2025/",
+      "isDir": true
     },
-    { // 面板对象
-      index: 1,
-      name: "这是第二个面板",
-      height: 100, // 面板的宽高 单位mm
-      width: 100,
-      paperHeader: 0, // 页眉线位置  单位pt
-      paperFooter: 222, // 页脚线位置  单位pt
-      printElements: [ // 实际打印元素存放的位置
-        {
-          options: {
-            left: 24, // 距离面板 左边 距离 单位pt
-            top: 24, // 距离面板 顶部 距离 单位pt
-            height: 17, // 元素的宽高
-            width: 120,
-            testData: "测试数据 2", // 设计时的测试数据
-            field: "name", // 打印/预览时填充传的打印数据的 name 的值
-            title: "元素标题2"// 相比下面的标题，这个可以修改
-          },
-          printElementType: {
-            title: "元素标题", // 如果没有上面的标题，取这个
-            type: "text"// 打印元素的类型
-          }
-        },
-      ], 
+    {
+      "name": "1.png",
+      "isDir": false,
+      "size": 83865
+    },
+    {
+      "name": "1.txt",
+      "isDir": false,
+      "size": 0
+    },
+    {
+      "name": "111111111",
+      "isDir": false,
+      "size": 0
+    },
+    {
+      "name": "1657843600092.jpg",
+      "isDir": false,
+      "size": 141344
+    },
+    {
+      "name": "2.png",
+      "isDir": false,
+      "size": 566904
+    },
+    {
+      "name": "2ff39947589ff3d2a23b4a7224ccaa89.jpg",
+      "isDir": false,
+      "size": 600564
+    },
+    {
+      "name": "3.png",
+      "isDir": false,
+      "size": 841679
+    },
+    {
+      "name": "302dc5d4512b5cb90477edf2a918da1.png",
+      "isDir": false,
+      "size": 706207
+    },
+    {
+      "name": "5.png",
+      "isDir": false,
+      "size": 146289
+    },
+    {
+      "name": "54aabefd08bc73bddee36b84d17d5ed5.jpeg",
+      "isDir": false,
+      "size": 66190
+    },
+    {
+      "name": "ISDP 开发中心.pdf",
+      "isDir": false,
+      "size": 26111865
+    },
+    {
+      "name": "WMS_2.0.3.png",
+      "isDir": false,
+      "size": 4691
+    },
+    {
+      "name": "allgsT7_xz.png",
+      "isDir": false,
+      "size": 15341
+    },
+    {
+      "name": "arrow.png",
+      "isDir": false,
+      "size": 14526
+    },
+    {
+      "name": "carpic2.png",
+      "isDir": false,
+      "size": 2
+    },
+    {
+      "name": "danginsp.png",
+      "isDir": false,
+      "size": 10376
+    },
+    {
+      "name": "edit.png",
+      "isDir": false,
+      "size": 999
+    },
+    {
+      "name": "inxrig5.png",
+      "isDir": false,
+      "size": 2
+    },
+    {
+      "name": "jump.png",
+      "isDir": false,
+      "size": 589
+    },
+    {
+      "name": "lbtn1.png",
+      "isDir": false,
+      "size": 2
+    },
+    {
+      "name": "lbtn3.png",
+      "isDir": false,
+      "size": 2
+    },
+    {
+      "name": "out.png",
+      "isDir": false,
+      "size": 332
+    },
+    {
+      "name": "paused.png",
+      "isDir": false,
+      "size": 597
+    },
+    {
+      "name": "test.txt",
+      "isDir": false,
+      "size": 0
+    },
+    {
+      "name": "trian.png",
+      "isDir": false,
+      "size": 165
+    },
+    {
+      "name": "txt测试.txt",
+      "isDir": false,
+      "size": 5
+    },
+    {
+      "name": "walk.png",
+      "isDir": false,
+      "size": 840
+    },
+    {
+      "name": "副本测试计划.xlsx",
+      "isDir": false,
+      "size": 85128
+    },
+    {
+      "name": "图片17.png",
+      "isDir": false,
+      "size": 2569609
+    },
+    {
+      "name": "屏幕截图 2024-11-26 171613.png",
+      "isDir": false,
+      "size": 2310266
+    },
+    {
+      "name": "屏幕截图 2025-08-22 154443.png",
+      "isDir": false,
+      "size": 163550
+    },
+    {
+      "name": "应用icon(2).png",
+      "isDir": false,
+      "size": 3898
+    },
+    {
+      "name": "新建 Microsoft Excel 工作表.xlsx",
+      "isDir": false,
+      "size": 6976
+    },
+    {
+      "name": "测试计划.xlsx",
+      "isDir": false,
+      "size": 84614
+    },
+    {
+      "name": "牢大.png",
+      "isDir": false,
+      "size": 529282
+    },
+    {
+      "name": "计划导入-测试.xlsx",
+      "isDir": false,
+      "size": 14543
+    },
+    {
+      "name": "通号中心信号专业2025年6月份检修计划.xlsx",
+      "isDir": false,
+      "size": 364204
+    },
+    {
+      "name": "龙猫.jpg",
+      "isDir": false,
+      "size": 190090
     }
-    // ...更多面板
   ]
 }

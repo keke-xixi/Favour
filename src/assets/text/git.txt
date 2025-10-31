@@ -123,3 +123,4 @@ git branch -a   查看所有分支
 git push -u origin master   如果显示的是 master 而非 main  就直接推送到 master
 
  
+git status -s  查看未提交文件
