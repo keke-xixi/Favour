@@ -1,2 +1,37 @@
 elementPlus：
 pagination={{ position: ['bottomRight'],pageSize:5 }}  表格分页
+
+
+objSpanMethod({ row, column, rowIndex, columnIndex }) {
+  // 参数说明：
+  // - row: 当前行数据
+  // - column: 当前列信息  
+  // - rowIndex: 当前行索引
+  // - columnIndex: 当前列索引
+}
+
+
+return { rowspan: 0, colspan: 0 };  // 隐藏当前单元格（被合并）
+return { rowspan: 2, colspan: 1 };  // 合并2行，保持1列
+return { rowspan: 1, colspan: 1 };  // 正常显示，不合并
+
+
+// 让某一列的相同字段合并
+let tableData = this.comData;  
+if (columnIndex === 0) {
+    const current = tableData[rowIndex]?.workObject;
+    const prev = tableData[rowIndex - 1]?.workObject;
+    if (current === prev) {
+    return { rowspan: 0, colspan: 0 }; // 合并时隐藏当前单元格
+    } else {
+    let rowspan = 1;
+    for (let i = rowIndex + 1; i < tableData.length; i++) {
+        if (tableData[i].workObject === current) {
+        rowspan++;
+        } else {
+        break;
+        }
+    }
+    return { rowspan, colspan: 1 };
+    }
+}

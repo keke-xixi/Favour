@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 {
   "resCode": "0",
   "resMsg": "成功",
@@ -195,6 +196,80 @@
       "name": "龙猫.jpg",
       "isDir": false,
       "size": 190090
+=======
+MaintenanceDialog 保存参数
+
+{
+  "name": "",
+  "workTeam": "cnyC000001PUjf7njsNE",
+  "professional": "cswq000001PUjf7nAg76",
+  "orgUnit": "cASe000001PIp40of4VM",
+  "workTeamName": "通信网管工班",
+  "professionalName": "通信专业",
+  "orgUnitName": "通号中心",
+  "belonging": "通信专业-通信网管工班-通号中心",
+  "maintenanceEquipmentList": [
+    {
+      "seq": 1,
+      "equipment": "GWDHSB",
+      "equipmentName": "公务系统主设备（含机柜）",
+      "maintenanceStandardList": [
+        {
+          "seq": 1,
+          "repairCycle": "2",
+          "name": "1",
+          "contentId": "mh8jwvcaxlq6bajf6ki",
+          "maintenanceStandardDetailList": [
+            {
+              "seq": 1,
+              "name": "1",
+              "required": false,
+              "input": true,
+              "parameterConfig": "{\"attachedTable\":false,\"isSeparately\":false,\"sceneStatus\":[\"正常\",\"异常\"],\"attachedParams\":false,\"isSetStatus\":true,\"parameter\":[],\"contentId\":\"mh8jwvcaxlq6bajf6ki\"}",
+              "contentId": "mh8jwvcaxlq6bajf6ki"
+            }
+          ]
+        }
+      ]
+>>>>>>> 31d9af3e90c5fef19b19d2317dd444309f0fb9a2
     }
   ]
 }
+
+查询作业对象
+queryAssignmentObject  根据专业关联
+
+表格数据  comData
+[
+    {
+        "workObject": "GWDHSB",
+        "workObjectName": "公务系统主设备（含机柜）",
+        "sort": 1,
+        "workType": "1",
+        "workTypeName": "日巡视",
+        "contentId": "mh8qdy85hmz634jw7f6",
+        "cardControl": false,
+        "isSetStatus": true,
+        "workStandard": "",
+        "workContent": "",
+        "drawerShow": false,
+        "attachedTable": false,
+        "isSeparately": false,
+        "sceneStatus": [
+            "正常",
+            "异常"
+        ],
+        "attachedParams": false,
+        "parameter": [],
+        "separatelyList": [
+            {
+                "columnName": "",
+                "statusList": [
+                    "正常",
+                    "异常"
+                ],
+                "parameter": []
+            }
+        ]
+    }
+]
