@@ -13,3 +13,7 @@ export default defineConfig({
     extensions: ['.js', '.vue', '.json','.ts','.css']
   },
 });
+
+
+// 指定端口号运行
+npm run dev -- --port 3001 --host 127.0.0.1

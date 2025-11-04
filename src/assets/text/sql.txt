@@ -51,10 +51,16 @@ DATE_FORMAT(ih.updated, '%Y-%m-%d')  前端得到的是 2001-01-01这种格式
 DATE_FORMAT(ih.updated, '%Y-%m-%d %H:%i:%s')  前端得到的是 2001-01-01 00:00:00这种格式
 ih.updated  前端得到的是 2024-11-05T10:54:00.000Z这种格式
 
-select * form user_table where url = 'https://www.fufugal.com/ || https://inarigal.com/'
+select * form user_table where url = 'https://www.fufugal.com/ || https://inarigal.com/ || https://www.ssmacg123.com/'
 
 let txt = `
   https://acgyyg.ru/2025/05/27/%e3%80%90%e7%88%86%e6%ac%be%e7%b2%be%e5%93%81rpg-%e4%b8%ad%e6%96%87-%e5%85%a8cv%e3%80%91%e5%8b%83%e8%b5%b7%e5%8b%87%e8%80%85%e4%b8%8e%e5%93%88%e5%b0%94%e6%b3%95%e6%96%af%e7%9a%84%e6%81%b6%e9%ad%94-v1/
 
   https://acgyyg.ru/2025/02/13/%e3%80%90%e7%bb%bf%e8%89%b2rpg-%e6%b1%89%e5%8c%96-%e5%85%a8cv%e3%80%91%e9%87%8d%e7%94%9f%e4%b9%8b%e5%b2%9b%ef%bd%9e%e5%af%9d%e5%8f%96%e6%b8%b8%e6%88%8f%e4%b8%8e%e7%9c%9f%e7%88%b1%e4%b9%8b%e5%bd%a2/
 `
+
+https://www.fufugal.com/detail?id=3719   i
+
+https://www.fufugal.com/rpgDetail?id=1633
+
+https://moegirl.uk/index.php?title=%E6%96%B0%E5%A0%82%E5%BD%A9%E9%9F%B3&variant=zh-hans
