@@ -9,17 +9,7 @@
   const containerRef = ref(null)
 
   const text = ref(`
-      设置请求头（传参方式）：
-       request({
-            url: Api.CustomerApi,
-            headers: {
-            'Content-Type': 'multipart/form-data', // 设置请求头为 multipart/form-data
-            },
-            method: 'post',
-            data
-        });
-
-        npm run dev -- --port 3001 --host 127.0.0.1  指定端口启动项目
+      onLoad、onReady 等是页面生命周期函数，只在页面组件中有效  在自定义组件中无效
   `)
 
    //将属性或者函数暴露给父组件

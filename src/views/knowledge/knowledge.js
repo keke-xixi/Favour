@@ -117,5 +117,16 @@ export const Knowledge_List = [
             { name: '知识点9', url: "./components/study/9",level: 2, children: [], active: false,id: 89, description: '' },
             { name: '知识点10', url: "./components/study/10",level: 2, children: [], active: false,id: 90, description: '' },
         ],
-    }
+    },
+    {
+        id: 9,
+        name: 'uniapp',
+        url: "/uniapp",
+        level: 1,
+        active: false,
+        children: [
+            { name: '基础常识', url: "./components/uniapp/1",level: 2, children: [], active: false,id: 91, description: '' },
+            { name: 'uview', url: "./components/uniapp/2",level: 2, children: [], active: false,id: 92, description: '' },
+        ],
+    },
 ]
