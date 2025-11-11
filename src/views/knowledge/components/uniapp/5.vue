@@ -9,10 +9,7 @@
   const containerRef = ref(null)
 
   const text = ref(`
-      this.$refs.uForm.setRules(this.rules);  // 设置校验规则
-
-      <uni-data-select v-model="form.aaa" :localdata="range" style="width: 100%;" placeholder="请选择矿别" @change="changeCoalType"></uni-data-select> // 下拉选择框  校验暂不生效
-      range: [{"value": 1,"text": "A矿"	},{"value": 2,"text": "B矿"},{"value": 3,"text": "C矿"}],  
+      
   `)
 
    //将属性或者函数暴露给父组件

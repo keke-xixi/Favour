@@ -35,6 +35,7 @@ export const Knowledge_List = [
             { name: '字典', url: "./components/work/1",level: 2, children: [], active: false,id: 21 },
             { name: '请求', url: "./components/work/2",level: 2, children: [], active: false,id: 22 },
             { name: '常用笔记', url: "./components/work/3",level: 2, children: [], active: false,id: 23 },
+            { name: '常用开发技巧', url: "./components/work/4",level: 2, children: [], active: false,id: 24 },
         ],
     },
     {
@@ -96,7 +97,8 @@ export const Knowledge_List = [
         level: 1,
         active: false,
         children: [
-            { name: 'echart组件模板', url: "./components/echart/1",level: 2, children: [], active: false,id: 71, description: 'echart组件模板示例' },
+            { name: 'echart组件模板vue', url: "./components/echart/1",level: 2, children: [], active: false,id: 71, description: '功能多版本' },
+            { name: 'echart组件模板uniapp', url: "./components/echart/2",level: 2, children: [], active: false,id: 72, description: '' },
         ],
     },
     {
@@ -127,6 +129,10 @@ export const Knowledge_List = [
         children: [
             { name: '基础常识', url: "./components/uniapp/1",level: 2, children: [], active: false,id: 91, description: '' },
             { name: 'uview', url: "./components/uniapp/2",level: 2, children: [], active: false,id: 92, description: '' },
+            { name: '链接', url: "./components/uniapp/3",level: 2, children: [], active: false,id: 93, description: '' },
+            { name: 'methods', url: "./components/uniapp/4",level: 2, children: [], active: false,id: 94, description: '' },
+            { name: '', url: "./components/uniapp/5",level: 2, children: [], active: false,id: 95, description: '' },
+            { name: '', url: "./components/uniapp/6",level: 2, children: [], active: false,id: 96, description: '' },
         ],
     },
 ]

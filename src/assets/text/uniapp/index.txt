@@ -17,7 +17,7 @@ onTabItemTap	点击当前 tab 时触发（适用于 tabBar 页面）
 特殊生命周期	onShareAppMessage（小程序）, onBackPress（App/H5）
 
 预处理指令	说明
-// #ifdef H5	仅 Web 浏览器环境
+// #ifdef H5	仅 Web 浏览器环境   // #endif
 // #ifdef APP-PLUS	App 端（安卓 + iOS）
 // #ifdef MP-WEIXIN	微信小程序环境
 // #ifdef MP-ALIPAY	支付宝小程序环境

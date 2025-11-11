@@ -9,10 +9,11 @@
   const containerRef = ref(null)
 
   const text = ref(`
-      this.$refs.uForm.setRules(this.rules);  // 设置校验规则
+        微信公众平台：
+        https://mp.weixin.qq.com/   （发布流程，配置 Appid->上传->版本管理发布体验版->正式版）
 
-      <uni-data-select v-model="form.aaa" :localdata="range" style="width: 100%;" placeholder="请选择矿别" @change="changeCoalType"></uni-data-select> // 下拉选择框  校验暂不生效
-      range: [{"value": 1,"text": "A矿"	},{"value": 2,"text": "B矿"},{"value": 3,"text": "C矿"}],  
+        uCharts:
+        https://www.ucharts.cn/v2/#/demo/index
   `)
 
    //将属性或者函数暴露给父组件
