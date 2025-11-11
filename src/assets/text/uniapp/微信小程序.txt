@@ -1,0 +1,79 @@
+
+登录：
+// 以 Node.js + Express 为例    后端
+app.post('/api/wxlogin', async (req, res) => {
+  const { code } = req.body;
+  
+  if (!code) {
+    return res.json({ success: false, message: '缺少code参数' });
+  }
+  
+  try {
+    // 配置参数
+    const appid = '你的小程序AppID'; // 替换为你的AppID
+    const secret = '你的小程序AppSecret'; // 替换为你的AppSecret
+    const url = `https://api.weixin.qq.com/sns/jscode2session?appid=${appid}&secret=${secret}&js_code=${code}&grant_type=authorization_code`;
+    
+    // 请求微信接口
+    const response = await fetch(url);
+    const data = await response.json();
+    
+    if (data.errcode) {
+      // 微信接口返回错误
+      console.error('微信登录失败:', data);
+      return res.json({ 
+        success: false, 
+        message: `微信登录失败: ${data.errmsg}` 
+      });
+    }
+    
+    // 成功获取用户信息
+    const { openid, session_key } = data;
+    console.log(`用户OpenID: ${openid}`);
+    
+    // 这里你应该:
+    // 1. 检查openid是否在数据库中存在
+    // 2. 不存在则创建新用户记录
+    // 3. 生成自己的session或JWT token返回给前端
+    // 4. 将session_key安全存储（如果需要解密用户数据）
+    
+    // 示例：生成一个简单的token（实际应使用更安全的方法）
+    const token = generateUserToken(openid);
+    
+    // 返回成功信息和token
+    res.json({
+      success: true,
+      token: token,
+      openid: openid // 通常不返回给前端，这里仅为示例
+    });
+    
+  } catch (error) {
+    console.error('服务器错误:', error);
+    res.json({ success: false, message: '服务器内部错误' });
+  }
+});
+
+// 生成用户token的简单示例函数
+function generateUserToken(openid) {
+  // 实际项目中应使用JWT等标准方法
+  return `user_token_${openid}_${Date.now()}`;
+}
+
+前端：
+// 在您的登录按钮点击事件中
+export const getLoginCode = async () => {
+  return new Promise((resolve, reject) => {
+    uni.login({
+      provider: 'weixin', // 微信小程序无需显式指定 provider（默认就是微信），H5 需配置
+      success: (loginRes) => {
+        const code = loginRes.code;
+        console.log('获取微信登录 code 成功：', code);
+        resolve(code); // 成功时，把 code 传递出去
+      },
+      fail: (err) => {
+        console.error('获取登录 code 失败：', err);
+        reject(err); // 失败时，把错误信息传递出去
+      }
+    });
+  });
+};

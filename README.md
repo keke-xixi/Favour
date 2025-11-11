@@ -16,3 +16,6 @@
 /test  测试文件  （可删）
 /utils  一些组件js
 /views  页面
+
+// 指定端口号运行
+npm run dev -- --port 3001 --host 127.0.0.1
