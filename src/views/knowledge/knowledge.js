@@ -78,6 +78,7 @@ export const Knowledge_List = [
         children: [
             { name: '样式', url: "./components/vue/1",level: 2, children: [], active: false,id: 51 },
             { name: 'vue3 setup', url: "./components/vue/2",level: 2, children: [], active: false,id: 52 },
+            { name: '事件', url: "./components/vue/3",level: 2, children: [], active: false,id: 53 },
         ],
     },
     {

@@ -70,7 +70,7 @@ export function calculateLevelDistribution(total, levels, minProbability) {
 }
   
   // 使用示例
-  const distribution = calculateLevelDistribution(10, 7, 0.8);
+  const distribution = calculateLevelDistribution(10, 7, 0.1);
   console.log('等级分布:',distribution);
   distribution.forEach(item => {
     console.log(`等级 ${item.level}: 概率 ${item.probability.toFixed(2)}%, 数量 ${item.count}`);
