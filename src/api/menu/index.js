@@ -49,4 +49,9 @@ export default  [
         name: '个人中心',
         id: 70
     },
+    {
+        path: '/home/test',
+        name: '测试界面',
+        id: 80
+    },
 ]
