@@ -1,0 +1,131 @@
+接口地址：http://192.168.0.46:8033/  
+本地联调后端：192.168.0.69:8055
+superadmin  123456
+admin 1234
+二代：
+http://192.168.0.46:8014/Home/Index
+本地地址：D:\wjy\project\三德\SDICS_V3/Web
+ai: 
+https://chat18.aichatos68.com/#/chat/1733279429506
+http://ai.xyzop.com    3次
+https://chat.deepseek.com/
+https://github.com/features/copilot   vpn
+
+远程仓库：http://113.240.251.154:8100/sundy/SDICS_V3
+
+公司工具：\\do-nas
+
+公司邮箱是: zhangguang@diligentone.cn
+三德项目git邮箱：xiaoyangxiaoen@diligentone.cn
+密码：xiaoyangxiaoen
+
+测试服务器地址：192.168.0.217
+账户：soft2
+密码：Sundyrg@199302
+
+员工ID是DO00085
+
+gitLab账号：
+1622868651@qq.com
+密码：
+814448926z
+
+智安蓝狐地址：
+https://lanhuapp.com/web/#/item/project/detailDetach?type=image&pid=c4ac6264-ef48-47f4-9a48-aef75380f085&teamId=b03e57d1-a74f-4d87-9c41-c580310d6839&project_id=c4ac6264-ef48-47f4-9a48-aef75380f085&image_id=fa0e9dce-50a5-40ea-8c74-a8d6af31d425&fromEditor=true&tid=b03e57d1-a74f-4d87-9c41-c580310d6839
+
+ yarn build:mp-weixin  小程序打包
+ yarn dev:mp-weixin  小程序启动
+
+https://hy.motradesite.com:32010/  智安测试
+https://ql.hnym.cn/#/safety/SafetyEdu/edu-task-list  正式版
+
+bug清单:
+https://www.kdocs.cn/l/cpMbbVNJJJgE?from=docs&startTime=1738718534994  化验室、采集
+https://www.kdocs.cn/l/cszWZhon0Ao1   数字化煤场
+
+新项目原型图
+https://ez43le.axshare.com/
+
+三德UI:
+https://pixso.cn/app/editor/XViFkqsIVnHDPpyZXxxuaQ?showQuickFrame=true&icon_type=1&page-id=0%3A1
+
+http://hiprint.io/demo/demo3  报表的文档
+
+ping 192.168.13.254 -t
+
+https://kdocs.cn/l/cdhDPsiAiVwU  工时
+
+https://www.kdocs.cn/l/cbq05X0ohWhi   结算bug
+
+https://www.kdocs.cn/l/chBJVB00GqhT  织金项目bug 、 提测验证地方
+
+https://www.kdocs.cn/l/cs6EYeGHJw9h   视频门禁
+
+
+http://192.168.13.78:8091/Home/Index   榆林
+
+
+http://192.168.0.217:8182/Home/Index  二代
+
+https://isdpcloud.huawei.com/one/#/portal/index  ISDP
+
+https://www.kdocs.cn/l/co85vm5Tp3WF  苏龙自测报告地址
+
+信息系统
+
+git地址：
+http://113.240.251.154:3000/SundyRanguan/SDICS_V3
+
+c   燃料集中管控平台
+admin 123
+
+
+苏龙项目
+svn地址：
+http://113.240.251.156:1200/!/#sundy.u4/view/head/%E8%AE%A2%E5%8D%95%E9%A1%B9%E7%9B%AE/2020%E5%B9%B4%E8%AE%A2%E5%8D%95%E9%A1%B9%E7%9B%AE/SDRB2020-GC009%20%E6%B1%9F%E9%98%B4%E8%8B%8F%E9%BE%99%E7%83%AD%E7%94%B5%E6%9C%89%E9%99%90%E5%85%AC%E5%8F%B8/%E5%BC%80%E5%8F%91%E4%B8%AD/2.%E4%BB%A3%E7%A0%81%E5%BA%93/Code
+http://113.240.251.156:1200/svn/sundy.u4/订单项目/2020年订单项目/SDRB2020-GC009 江阴苏龙热电有限公司/开发中/2.代码库/Code
+
+用户名：sundy
+密码：sundy199302@
+
+192.168.0.46 sa 123456
+
+svn账号：
+zhangguang
+666666
+
+
+
+// 葡萄城
+C:\ProgramData\Microsoft\Windows\Start Menu\Programs\GrapeCity\ActiveReports 11
+
+米冬小程序：
+远程IP：47.99.181.94
+账户：administrator
+密码：Mdrdgs!2025
+
+git 地址：
+http://192.168.0.178:3000/SundyRanguan/MiDongMiniProgram.git
+http://113.240.251.154:3000/SundyRanguan/MiDongMiniProgram.git
+
+后端：
+https://www.mdrlgk.xin/
+https://47.99.181.94
+
+uview: (uK)
+https://vkuviewdoc.fsq.pub/components/calendar.html
+
+uview:
+https://uviewui.com/components/install.html
+
+剩余功能开发：
+1、小程序具有三个角色：矿方人员，司机人员，电厂人员
+2、司机人员具有选矿组件
+3、矿方人员具有设置车辆所属矿的功能
+4、电厂人员具有审核功能：审核角色，审核选矿（司机选矿之后不立即生成二维码，而是等电厂人员审核之后再显示二维码，选矿完成之后在二维码界面添加一个跑马灯：二维码审核中；审核通过后显示：二维码已生成，请入厂；通过signalR实现及时通信）
+
+
+
+
+
+
