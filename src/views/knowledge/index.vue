@@ -186,6 +186,11 @@ onMounted(async () => {
       const module:any = await modules9[path]()
       components.value[path.slice(0, -4)] = module.default
     }
+    const modules10 = import.meta.glob('./components/netMvc/*.vue');  // uniapp
+    for (const path in modules10) {
+      const module:any = await modules10[path]()
+      components.value[path.slice(0, -4)] = module.default
+    }
 })
 
 // 所有分类

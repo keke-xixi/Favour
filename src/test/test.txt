@@ -1,275 +1,682 @@
-<<<<<<< HEAD
-{
-  "resCode": "0",
-  "resMsg": "成功",
-  "result": [
-    {
-      "name": "2025/",
-      "isDir": true
-    },
-    {
-      "name": "1.png",
-      "isDir": false,
-      "size": 83865
-    },
-    {
-      "name": "1.txt",
-      "isDir": false,
-      "size": 0
-    },
-    {
-      "name": "111111111",
-      "isDir": false,
-      "size": 0
-    },
-    {
-      "name": "1657843600092.jpg",
-      "isDir": false,
-      "size": 141344
-    },
-    {
-      "name": "2.png",
-      "isDir": false,
-      "size": 566904
-    },
-    {
-      "name": "2ff39947589ff3d2a23b4a7224ccaa89.jpg",
-      "isDir": false,
-      "size": 600564
-    },
-    {
-      "name": "3.png",
-      "isDir": false,
-      "size": 841679
-    },
-    {
-      "name": "302dc5d4512b5cb90477edf2a918da1.png",
-      "isDir": false,
-      "size": 706207
-    },
-    {
-      "name": "5.png",
-      "isDir": false,
-      "size": 146289
-    },
-    {
-      "name": "54aabefd08bc73bddee36b84d17d5ed5.jpeg",
-      "isDir": false,
-      "size": 66190
-    },
-    {
-      "name": "ISDP 开发中心.pdf",
-      "isDir": false,
-      "size": 26111865
-    },
-    {
-      "name": "WMS_2.0.3.png",
-      "isDir": false,
-      "size": 4691
-    },
-    {
-      "name": "allgsT7_xz.png",
-      "isDir": false,
-      "size": 15341
-    },
-    {
-      "name": "arrow.png",
-      "isDir": false,
-      "size": 14526
-    },
-    {
-      "name": "carpic2.png",
-      "isDir": false,
-      "size": 2
-    },
-    {
-      "name": "danginsp.png",
-      "isDir": false,
-      "size": 10376
-    },
-    {
-      "name": "edit.png",
-      "isDir": false,
-      "size": 999
-    },
-    {
-      "name": "inxrig5.png",
-      "isDir": false,
-      "size": 2
-    },
-    {
-      "name": "jump.png",
-      "isDir": false,
-      "size": 589
-    },
-    {
-      "name": "lbtn1.png",
-      "isDir": false,
-      "size": 2
-    },
-    {
-      "name": "lbtn3.png",
-      "isDir": false,
-      "size": 2
-    },
-    {
-      "name": "out.png",
-      "isDir": false,
-      "size": 332
-    },
-    {
-      "name": "paused.png",
-      "isDir": false,
-      "size": 597
-    },
-    {
-      "name": "test.txt",
-      "isDir": false,
-      "size": 0
-    },
-    {
-      "name": "trian.png",
-      "isDir": false,
-      "size": 165
-    },
-    {
-      "name": "txt测试.txt",
-      "isDir": false,
-      "size": 5
-    },
-    {
-      "name": "walk.png",
-      "isDir": false,
-      "size": 840
-    },
-    {
-      "name": "副本测试计划.xlsx",
-      "isDir": false,
-      "size": 85128
-    },
-    {
-      "name": "图片17.png",
-      "isDir": false,
-      "size": 2569609
-    },
-    {
-      "name": "屏幕截图 2024-11-26 171613.png",
-      "isDir": false,
-      "size": 2310266
-    },
-    {
-      "name": "屏幕截图 2025-08-22 154443.png",
-      "isDir": false,
-      "size": 163550
-    },
-    {
-      "name": "应用icon(2).png",
-      "isDir": false,
-      "size": 3898
-    },
-    {
-      "name": "新建 Microsoft Excel 工作表.xlsx",
-      "isDir": false,
-      "size": 6976
-    },
-    {
-      "name": "测试计划.xlsx",
-      "isDir": false,
-      "size": 84614
-    },
-    {
-      "name": "牢大.png",
-      "isDir": false,
-      "size": 529282
-    },
-    {
-      "name": "计划导入-测试.xlsx",
-      "isDir": false,
-      "size": 14543
-    },
-    {
-      "name": "通号中心信号专业2025年6月份检修计划.xlsx",
-      "isDir": false,
-      "size": 364204
-    },
-    {
-      "name": "龙猫.jpg",
-      "isDir": false,
-      "size": 190090
-=======
-MaintenanceDialog 保存参数
+<template>
+  <view class="mine-car-config">
+    <!-- 日期选择器 -->
+    <u-calendar 
+      ref="calendar"
+      v-model="showDate"
+      mode="date" 
+      @change="changeDate" 
+      @close="closeDate" 
+      :defaultDate="defaultDateMultiple" 
+    ></u-calendar>
+    
+    <!-- 页面标题 -->
+    <view class="page-title">矿车关联配置</view>
 
-{
-  "name": "",
-  "workTeam": "cnyC000001PUjf7njsNE",
-  "professional": "cswq000001PUjf7nAg76",
-  "orgUnit": "cASe000001PIp40of4VM",
-  "workTeamName": "通信网管工班",
-  "professionalName": "通信专业",
-  "orgUnitName": "通号中心",
-  "belonging": "通信专业-通信网管工班-通号中心",
-  "maintenanceEquipmentList": [
-    {
-      "seq": 1,
-      "equipment": "GWDHSB",
-      "equipmentName": "公务系统主设备（含机柜）",
-      "maintenanceStandardList": [
-        {
-          "seq": 1,
-          "repairCycle": "2",
-          "name": "1",
-          "contentId": "mh8jwvcaxlq6bajf6ki",
-          "maintenanceStandardDetailList": [
+    <!-- 矿场卡片列表 -->
+    <view class="card-list">
+      <view class="config-card" v-for="mine in mineList" :key="mine.mineId">
+        <!-- 日期和车牌配置区域 -->
+        <view class="card-body">
+          <!-- 日期配置区域 -->
+          <view class="date-section">
+            <view class="section-header">
+              <!-- 矿的名称放在这里 -->
+              <text class="mine-title">{{ mine.mineShortName }}</text>
+              <view class="add-date-btn-right" @click="addDate(mine.mineId)">
+                <view class="add-btn-content">
+                  <view class="add-icon">+</view>
+                  <text class="add-text">添加日期</text>
+                </view>
+              </view>
+            </view>
+            
+            <!-- 日期列表 -->
+            <view class="date-list">
+              <view 
+                class="date-item" 
+                v-for="(dateConfig, dateIndex) in mine.dateConfigs" 
+                :key="dateIndex"
+              >
+                <!-- 日期标题 -->
+                <view class="date-header">
+                  <view class="date-tag">
+                    <text class="date-text">{{ dateConfig.date }}</text>
+                  </view>
+                  <button 
+                    @click.stop="handleDeleteDate(mine, dateIndex)" 
+                    class="delete-btn"
+                  >×</button>
+                </view>
+                
+                <!-- 该日期下的车牌 -->
+                <view class="car-list">
+                  <view 
+                    class="tag" 
+                    v-for="(car, carIndex) in dateConfig.cars" 
+                    :key="carIndex"
+                  >
+                    <text class="tag-text">{{ car.carNo }}</text>
+                    <button 
+                      @click.stop="handleDeleteCar(mine, dateIndex, carIndex)" 
+                      class="delete-btn"
+                    >×</button>
+                  </view>
+                  
+                  <view 
+                    class="tag add-tag" 
+                    @click="handleOpenCarPopup(mine.mineId, dateIndex)"
+                  >
+                    <text class="tag-text">添加车牌</text>
+                    <view class="add-increase-btn">+</view>
+                  </view>
+                </view>
+              </view>
+            </view>
+          </view>
+        </view>
+
+        <!-- 保存按钮 -->
+        <view class="card-footer">
+          <u-button 
+            type="primary"
+            @click="handleSave(mine)"
+            style="height: 80rpx; width: 100%;"
+          >
+            保存配置
+          </u-button>
+        </view>
+      </view>
+    </view>
+
+    <!-- 车牌选择弹出层 -->
+    <view class="popup-mask" v-show="showCarPopup" @click="showCarPopup = false"></view>
+    <view 
+      class="popup-container car-popup" 
+      v-show="showCarPopup"
+      :class="{ 'popup-show': showCarPopup }"
+    >
+      <view class="popup-header">
+        <text class="popup-title">选择车牌</text>
+        <view>
+          <button type="primary" @click="completeSelect" class="add-btn">完成</button>
+        </view>
+      </view>
+
+      <!-- 搜索框 -->
+      <view class="popup-search">
+        <view class="icon-search"></view>
+        <input
+          v-model="carSearchVal"
+          placeholder="搜索车牌（如：湘A、123）"
+          class="search-input"
+          @input="filterCarList"
+        />
+        <button 
+          @click="carSearchVal = ''" 
+          class="clear-btn"
+          v-if="carSearchVal"
+        >
+          <view class="icon-close"></view>
+        </button>
+      </view>
+
+      <!-- 车牌列表 -->
+      <scroll-view class="popup-list car-list" scroll-y>
+        <view class="no-result" v-if="filteredCarList.length === 0">
+          暂无匹配车牌
+        </view>
+        <view 
+          class="popup-item car-item" 
+          v-for="car in filteredCarList" 
+          :key="car.id"
+          @click="handleSelectCar(car.carNo)"
+        >
+          <text class="item-text">{{ car.carNo }}</text>
+          <view class="icon-check" v-if="tempSelectedCars.includes(car.carNo)"></view>
+        </view>
+      </scroll-view>
+    </view>
+  </view>
+</template>
+
+<script>
+export default {
+  name: 'MineCarConfig',
+  data() {
+    return {
+      showDate: false,
+      mode: 'multiple',
+      defaultDateMultiple: [],
+      
+      // 矿场列表数据
+      mineList: [
+        { 
+          mineId: '1',
+          mineNo: 'K007',
+          mineShortName: 'A矿',
+          mineFullName: 'A矿',
+          dateConfigs: [
             {
-              "seq": 1,
-              "name": "1",
-              "required": false,
-              "input": true,
-              "parameterConfig": "{\"attachedTable\":false,\"isSeparately\":false,\"sceneStatus\":[\"正常\",\"异常\"],\"attachedParams\":false,\"isSetStatus\":true,\"parameter\":[],\"contentId\":\"mh8jwvcaxlq6bajf6ki\"}",
-              "contentId": "mh8jwvcaxlq6bajf6ki"
+              date: '2025-01-02',
+              cars: [
+                { carID: '1', carNo: '湘A12345' },
+                { carID: '2', carNo: '湘A99999' }
+              ]
+            },
+            {
+              date: '2025-01-03',
+              cars: [
+                { carID: '3', carNo: '粤B56789' }
+              ]
+            }
+          ]
+        },
+        { 
+          mineId: '2',
+          mineNo: 'K008',
+          mineShortName: 'B矿',
+          mineFullName: 'B矿',
+          dateConfigs: [
+            {
+              date: '2025-01-02',
+              cars: [
+                { carID: '4', carNo: '鄂A11223' }
+              ]
             }
           ]
         }
-      ]
->>>>>>> 31d9af3e90c5fef19b19d2317dd444309f0fb9a2
+      ],
+      
+      // 车牌库
+      allCarList: [
+        { carID: '1', carNo: '湘A12345' },
+        { carID: '2', carNo: '湘A99999' },
+        { carID: '3', carNo: '粤B56789' },
+        { carID: '4', carNo: '鄂A11223' },
+        { carID: '5', carNo: '湘A33445' },
+        { carID: '6', carNo: '粤B67890' },
+        { carID: '7', carNo: '鄂A55667' },
+        { carID: '8', carNo: '湘A77889' },
+        { carID: '9', carNo: '粤B90123' },
+        { carID: '10', carNo: '鄂A23456' }
+      ],
+      
+      showCarPopup: false,
+      carSearchVal: '',
+      filteredCarList: [],
+      currentMineId: '',
+      currentDateIndex: -1,
+      tempSelectedCars: [] // 临时存储当前选中的车牌
+    };
+  },
+  created() {
+    // 初始化过滤车牌列表
+    this.filteredCarList = [...this.allCarList];
+  },
+  watch: {
+    carSearchVal(val) {
+      if (!val) {
+        this.filteredCarList = [...this.allCarList];
+      }
     }
-  ]
+  },
+  methods: {
+    // 确认日期选择
+    changeDate(e) {
+      const { result } = e;
+      const mine = this.mineList.find(i => i.mineId === this.currentMineId);
+      
+      // 检查该日期是否已存在
+      const dateExists = mine.dateConfigs.some(config => config.date === result);
+      
+      if (!dateExists) {
+        // 添加新日期配置
+        mine.dateConfigs.push({
+          date: result,
+          cars: []
+        });
+      }
+      
+      this.showDate = false;
+    },
+    
+    // 关闭日期选择器
+    closeDate() {
+      this.showDate = false;
+    },
+    
+    // 添加日期
+    addDate(mineId) {
+      this.currentMineId = mineId;
+      this.showDate = true;
+    },
+    
+    // 打开车牌选择弹出层
+    handleOpenCarPopup(mineId, dateIndex) {
+      this.currentMineId = mineId;
+      this.currentDateIndex = dateIndex;
+      this.carSearchVal = '';
+      this.filteredCarList = [...this.allCarList];
+      
+      // 初始化临时选中的车牌
+      const mine = this.mineList.find(i => i.mineId === mineId);
+      this.tempSelectedCars = mine.dateConfigs[dateIndex].cars.map(car => car.carNo);
+      
+      this.showCarPopup = true;
+    },
+    
+    // 模糊搜索过滤车牌
+    filterCarList() {
+      const keyword = this.carSearchVal.trim().toLowerCase();
+      this.filteredCarList = this.allCarList.filter(car => 
+        car.carNo.toLowerCase().includes(keyword)
+      );
+    },
+    
+    // 选择/取消车牌
+    handleSelectCar(carNo) {
+      const index = this.tempSelectedCars.indexOf(carNo);
+      if (index > -1) {
+        this.tempSelectedCars.splice(index, 1); // 取消选择
+      } else {
+        this.tempSelectedCars.push(carNo); // 新增选择
+      }
+    },
+    
+    // 完成车牌选择
+    completeSelect() {
+      const mine = this.mineList.find(i => i.mineId === this.currentMineId);
+      
+      // 更新该日期下的车牌
+      mine.dateConfigs[this.currentDateIndex].cars = this.tempSelectedCars.map(carNo => {
+        // 从车牌库中找到对应的车牌对象
+        return this.allCarList.find(car => car.carNo === carNo);
+      }).filter(car => car); // 过滤掉未找到的车牌
+      
+      this.showCarPopup = false;
+    },
+    
+    // 删除车牌
+    handleDeleteCar(mine, dateIndex, carIndex) {
+      mine.dateConfigs[dateIndex].cars.splice(carIndex, 1);
+    },
+    
+    // 删除日期配置
+    handleDeleteDate(mine, dateIndex) {
+      mine.dateConfigs.splice(dateIndex, 1);
+    },
+    
+    // 保存配置
+    handleSave(mine) {
+      console.log('保存矿场配置:', mine);
+      uni.showToast({
+        title: "保存成功",
+        icon: 'success'
+      });
+    }
+  }
+};
+</script>
+
+<style scoped>
+/* 全局样式 */
+.mine-car-config {
+  padding: 20rpx;
+  background-color: #f5f5f5;
+  min-height: 100vh;
+  box-sizing: border-box;
 }
 
-查询作业对象
-queryAssignmentObject  根据专业关联
+.page-title {
+  font-size: 34rpx;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 24rpx;
+  text-align: center;
+}
 
-表格数据  comData
-[
-    {
-        "workObject": "GWDHSB",
-        "workObjectName": "公务系统主设备（含机柜）",
-        "sort": 1,
-        "workType": "1",
-        "workTypeName": "日巡视",
-        "contentId": "mh8qdy85hmz634jw7f6",
-        "cardControl": false,
-        "isSetStatus": true,
-        "workStandard": "",
-        "workContent": "",
-        "drawerShow": false,
-        "attachedTable": false,
-        "isSeparately": false,
-        "sceneStatus": [
-            "正常",
-            "异常"
-        ],
-        "attachedParams": false,
-        "parameter": [],
-        "separatelyList": [
-            {
-                "columnName": "",
-                "statusList": [
-                    "正常",
-                    "异常"
-                ],
-                "parameter": []
-            }
-        ]
-    }
-]
+/* 矿场卡片列表 */
+.card-list {
+  display: flex;
+  flex-direction: column;
+  gap: 20rpx;
+}
+
+/* 配置卡片 */
+.config-card {
+  background-color: #fff;
+  border-radius: 20rpx;
+  box-shadow: 0 2rpx 12rpx rgba(0, 0, 0, 0.05);
+  overflow: hidden;
+}
+
+/* 卡片主体 */
+.card-body {
+  padding: 24rpx;
+}
+
+/* 日期配置区域 */
+.date-section {
+  margin-bottom: 20rpx;
+}
+
+.section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24rpx;
+}
+
+/* 矿名称样式 */
+.mine-title {
+  font-size: 28rpx;
+  font-weight: 600;
+  color: #333;
+}
+
+/* 添加日期按钮（右侧） */
+.add-date-btn-right {
+  display: flex;
+  align-items: center;
+  padding: 12rpx 20rpx;
+  border: 1rpx dashed #07c160;
+  border-radius: 32rpx;
+  background-color: rgba(7, 193, 96, 0.05);
+}
+
+.add-btn-content {
+  display: flex;
+  align-items: center;
+}
+
+.add-icon {
+  width: 28rpx;
+  height: 28rpx;
+  line-height: 28rpx;
+  text-align: center;
+  border-radius: 50%;
+  background-color: #07c160;
+  color: #fff;
+  font-size: 20rpx;
+  margin-right: 8rpx;
+}
+
+.add-text {
+  font-size: 24rpx;
+  color: #07c160;
+}
+
+/* 日期列表 */
+.date-list {
+  display: flex;
+  flex-direction: column;
+  gap: 30rpx; /* 增加日期之间的间距 */
+}
+
+/* 日期项 */
+.date-item {
+  padding: 24rpx;
+  background-color: #f9f9f9;
+  border-radius: 12rpx;
+  border: 1rpx solid #0a74c5;
+}
+
+.date-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20rpx; /* 增加日期和车牌之间的间距 */
+}
+
+/* 日期标签样式（绿色） */
+.date-tag {
+  background-color: #07c160;
+  color: #fff;
+  padding: 10rpx 20rpx;
+  border-radius: 32rpx;
+  font-size: 24rpx;
+  font-weight: 500;
+}
+
+.date-text {
+  font-size: 24rpx;
+  color: #fff;
+}
+
+/* 车牌列表 */
+.car-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16rpx; /* 增加车牌之间的间距 */
+}
+
+/* 车牌标签样式 - 优化车牌号显示效果 */
+.tag {
+  display: flex;
+  align-items: center;
+  background-color: #1a7bf2; /* 更深的蓝色背景 */
+  color: #fff; /* 白色文字 */
+  padding: 14rpx 24rpx; /* 增加内边距 */
+  border-radius: 32rpx;
+  font-size: 28rpx; /* 增大字体 */
+  font-weight: 600; /* 加粗字体 */
+  box-shadow: 0 2rpx 8rpx rgba(26, 123, 242, 0.3); /* 添加阴影增强立体感 */
+  border: 1rpx solid #0d5cb6; /* 添加边框 */
+}
+
+.add-tag {
+  background-color: #fff;
+  border: 2rpx dashed #1a7bf2; /* 更粗的虚线边框 */
+  color: #1a7bf2; /* 蓝色文字 */
+}
+
+.tag-text {
+  font-size: 28rpx; /* 增大字体 */
+  font-weight: 600; /* 加粗字体 */
+}
+
+.add-increase-btn {
+  width: 32rpx; /* 增大按钮 */
+  height: 32rpx;
+  line-height: 32rpx;
+  text-align: center;
+  margin-left: 10rpx; /* 增加左边距 */
+  color: #1a7bf2; /* 蓝色图标 */
+  font-size: 24rpx; /* 增大图标 */
+  font-weight: bold;
+}
+
+.delete-btn {
+  width: 32rpx; /* 增大删除按钮 */
+  height: 32rpx;
+  line-height: 32rpx;
+  padding: 0;
+  margin-left: 10rpx; /* 增加左边距 */
+  color: #ff4d4f;
+  background-color: transparent;
+  font-size: 24rpx; /* 增大图标 */
+  font-weight: bold;
+  border: none;
+}
+
+/* 卡片底部 - 保存按钮铺满 */
+.card-footer {
+  padding: 24rpx;
+  border-top: 1rpx solid #f5f5f5;
+  background-color: #fafafa;
+}
+
+/* 弹出层样式 */
+.popup-mask {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 998;
+  transition: opacity 0.3s;
+}
+
+.popup-container {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: #fff;
+  border-top-left-radius: 20rpx;
+  border-top-right-radius: 20rpx;
+  z-index: 999;
+  transform: translateY(100%);
+  transition: transform 0.3s ease;
+  max-height: 80vh;
+}
+
+.popup-show {
+  transform: translateY(0);
+}
+
+.popup-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20rpx 24rpx;
+  border-bottom: 1rpx solid #f5f5f5;
+}
+
+.popup-title {
+  font-size: 28rpx;
+  font-weight: 600;
+  color: #333;
+}
+
+.add-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 120rpx;
+  height: 64rpx;
+  line-height: 64rpx;
+  background-color: #1989fa;
+  color: #fff;
+  font-size: 24rpx;
+  border-radius: 12rpx;
+  padding: 0;
+}
+
+.popup-list {
+  height: 450rpx;
+  overflow-y: auto;
+}
+
+/* 车牌列表项样式 - 优化显示效果 */
+.popup-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 24rpx;
+  height: 90rpx; /* 增加高度 */
+  font-size: 28rpx; /* 增大字体 */
+  color: #333;
+  border-bottom: 1rpx solid #f5f5f5;
+}
+
+.popup-item:active {
+  background-color: #f5f5f5;
+}
+
+.item-text {
+  font-size: 28rpx; /* 增大字体 */
+  font-weight: 500; /* 中等粗细 */
+  color: #1a1a1a; /* 更深的黑色 */
+}
+
+.icon-check {
+  width: 28rpx; /* 增大图标 */
+  height: 16rpx;
+  border: 2rpx solid #07c160;
+  border-top: none;
+  border-right: none;
+  transform: rotate(-45deg);
+}
+
+.car-popup .popup-search {
+  display: flex;
+  align-items: center;
+  padding: 16rpx 24rpx;
+  border-bottom: 1rpx solid #f5f5f5;
+}
+
+.icon-search {
+  width: 24rpx;
+  height: 24rpx;
+  border: 2rpx solid #999;
+  border-radius: 50%;
+  position: relative;
+  margin-right: 16rpx;
+}
+
+.icon-search::after {
+  content: '';
+  position: absolute;
+  width: 8rpx;
+  height: 2rpx;
+  background-color: #999;
+  right: -4rpx;
+  bottom: -2rpx;
+  transform: rotate(45deg);
+}
+
+.search-input {
+  flex: 1;
+  height: 56rpx;
+  font-size: 26rpx;
+  color: #333;
+}
+
+.search-input::placeholder {
+  color: #999;
+  font-size: 24rpx;
+}
+
+.clear-btn {
+  background-color: transparent;
+  padding: 0;
+  width: 40rpx;
+  height: 40rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.icon-close {
+  width: 20rpx;
+  height: 20rpx;
+  position: relative;
+}
+
+.icon-close::before,
+.icon-close::after {
+  content: '';
+  position: absolute;
+  width: 2rpx;
+  height: 20rpx;
+  background-color: #999;
+}
+
+.icon-close::before {
+  transform: rotate(45deg);
+}
+
+.icon-close::after {
+  transform: rotate(-45deg);
+}
+
+.no-result {
+  padding: 40rpx;
+  text-align: center;
+  font-size: 24rpx;
+  color: #999;
+}
+</style>

@@ -136,4 +136,15 @@ export const Knowledge_List = [
             { name: '', url: "./components/uniapp/6",level: 2, children: [], active: false,id: 96, description: '' },
         ],
     },
+    {
+        id: 10,
+        name: 'ASP.NET MVC',
+        url: "/netMvc",
+        level: 1,
+        active: false,
+        children: [
+            { name: '基础常识', url: "./components/netMvc/1",level: 2, children: [], active: false,id: 101, description: '' },
+            { name: 'JQuery', url: "./components/netMvc/2",level: 2, children: [], active: false,id: 102, description: '' },
+        ]
+    },
 ]
