@@ -14,6 +14,9 @@
 
         uCharts:
         https://www.ucharts.cn/v2/#/demo/index
+
+        开发者中心（打包apk）
+        https://dev.dcloud.net.cn/pages/app/list
   `)
 
    //将属性或者函数暴露给父组件
