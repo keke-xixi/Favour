@@ -1,1040 +1,682 @@
+<template>
+	<view class="container">
+	   <view class="header">
+		   <text class="title">我的车辆</text>
+		   <view class="status-summary">
+			   <text class="subtitle">车辆状态概览</text>
+			   <view class="status-tags">
+				   <view class="status-tag" v-for="(tag, idx) in statusTags" :key="idx" :style="{background: tag.color}">
+					   <text class="tag-text">{{tag.label}}</text>
+					   <text class="tag-count">{{tag.count}}</text>
+				   </view>
+			   </view>
+		   </view>
+	   </view>
+	   
+	   <!-- 状态筛选Tabs -->
+	   <view class="status-tabs">
+		   <scroll-view class="tabs-scroll" scroll-x="true" show-scrollbar="false">
+			   <view class="tabs-container">
+				   <view 
+					   class="tab-item" 
+					   :class="{'active': activeTab === 'all'}" 
+					   @tap="switchTab('all')"
+				   >
+					   <text class="tab-text">全部车辆</text>
+					   <view class="tab-count">{{list.length}}</view>
+				   </view>
+				   <view 
+					   v-for="tab in filterTabs" 
+					   :key="tab.status" 
+					   class="tab-item" 
+					   :class="{'active': activeTab === tab.status}" 
+					   @tap="switchTab(tab.status)"
+					   :style="{borderLeftColor: tab.color}"
+				   >
+					   <text class="tab-text">{{tab.label}}</text>
+					   <view class="tab-count">{{tab.count}}</view>
+				   </view>
+			   </view>
+		   </scroll-view>
+	   </view>
+	   
+	   <!-- 车辆列表 -->
+	   <view class="list">
+		   <view v-if="filteredList.length === 0" class="empty-state">
+			   <image src="/static/imgs/empty-car.png" class="empty-image"></image>
+			   <text class="empty-text">暂无车辆数据</text>
+		   </view>
+		   
+		   <view class="car-card" v-for="(item, index) in filteredList" :key="item.id" @tap="clickBox(item)">
+				<uni-swipe-action-item class="item" 
+					:auto-close="false" 
+					:show="item.show" 
+					:right-options="options" 
+					@click="onClick($event, item)" 
+					@change="swipeChange($event, item)">
+				    <view class="card-content">
+						<view class="card-left">
+							   <view class="car-icon" :style="{background: getStatusColor(item).light}">
+								   <image src="/static/imgs/truck.png" class="icon"></image>
+								   <view class="status-dot" :style="{background: getStatusColor(item).primary}"></view>
+							   </view>
+							   <view class="car-info">
+								   <text class="plate-number">{{ item.carNo }}</text>
+								   <view class="car-details">
+									   <text class="car-model">{{ item.model || '货车' }}</text>
+									   <text class="car-owner">车主：{{ item.owner || '未登记' }}</text>
+								   </view>
+								   <text class="car-date">绑定时间：{{ item.bindDate || '2023-10-15' }}</text>
+							   </view>
+						</view>
+						<view class="card-right">
+							  <view class="status-badge" :style="getStatusStyle(item)">
+								  <text class="status-text">{{ getStatusText(item) }}</text>
+							  </view>
+							  <u-icon name="arrow-right" color="#999" size="26"></u-icon>
+						</view>
+					</view>
+				</uni-swipe-action-item>
+		   </view>
+		   
+		   <!-- 添加新车按钮 -->
+		   <view class="add-card" @tap="addCar">
+			   <view class="add-content">
+				   <u-icon name="plus-circle" color="#1aad19" size="60"></u-icon>
+				   <text class="add-text">添加新车</text>
+			   </view>
+		   </view>
+	   </view>
+	   
+	   <!-- 状态说明卡片 -->
+	   <view class="legend-card">
+		   <text class="legend-title">状态说明</text>
+		   <view class="legend-items">
+			   <view class="legend-item" v-for="legend in statusLegends" :key="legend.status">
+				   <view class="legend-color" :style="{background: legend.color}"></view>
+				   <text class="legend-text">{{legend.label}}</text>
+				   <text class="legend-desc">- {{legend.desc}}</text>
+			   </view>
+		   </view>
+	   </view>
+	   
+	   <!-- 新增车牌弹窗 -->
+	   <uni-popup ref="popup" type="top" border-radius="10px 10px 0 0">
+	   		<addCarDialog @cancel="cancel" @submit="submit" ref="addCarDialogRef"/>
+	   </uni-popup>
+	   
+	   <!-- 绑定矿弹窗 -->
+	   <uni-popup ref="popupCoal" type="top" border-radius="10px 10px 0 0">
+	   		<chooseCoalDialog @cancel="cancelCoal" @submit="submitCoal" :row="editRow" ref="chooseCoalDialogRef"/>
+	   </uni-popup>
+	   
+	</view>
+</template>
 
-@{
-  ViewBag.Title = "Index";
-  Layout = "~/Views/Shared/_Index.cshtml";
-}
-<link href="~/Content/css/theme-cosmo.css" rel="stylesheet">
-<link href="~/Content/css/GrapeCity.ActiveReports.Viewer.Html.css" rel="stylesheet">
-
-<script src="~/Scripts/knockout-2.3.0.js"></script>
-<script src="~/Scripts/GrapeCity.ActiveReports.Viewer.Html.js"></script>
-
-
-<style>
-  #viewerContainer {
-      width: 110%;
-      height: 600px;
-      padding-left: 20%;
-      padding-right: 20%;
-      /*border: 1px solid gray;*/
-  }
-
-  #settingsContainer {
-      padding-top: 10px;
-      padding-bottom: 10px;
-  }
-
-  #reportContainer {
-      position: absolute;
-      left: 25%;
-  }
-
-  .settings-row {
-      padding-bottom: 5px;
-  }
-</style>
-
-<script type="text/javascript">
-  $(function () {
-      // 获取参数
-      var testNo = getUrlParam('testNo');
-      console.log(testNo,'testNo');
-      initControl();
-      $(".yesship").hide();   //输入年、月
-      $(".notship").hide();   //选择时间区间
-      $(".notship2").hide();  //选择指定日期
-      $(".hys").hide();       //输入化验编码
-      $(".hys2").hide();      //选择矿别
-      $(".hys3").hide();      //选择班组、机组
-      $(".hys5").hide();      //选择卸煤地点
-      $(".Zhoukou").hide();   //周口个性化
-      $("#sel_GoodsName").hide();
-  })
-
-  // 方式1: 直接从URL获取参数
-  function getUrlParam(name) {
-      var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
-      var r = window.location.search.substr(1).match(reg);
-      if (r != null) return decodeURIComponent(r[2]); return null;
-  }
-
-  function initControl() {
-      //时间区间初始化
-      $("#testStartTime").val(getDay(0));
-      $("#testEndTime").val(getDay(1));
-      //报表类型
-      $('#sel_reporttype').select2({
-          ajax: {
-              url: '/CDM/Code/GetSelectJson',
-              data: function (params) {
-                  var query = {
-                      codeType: "0012",
-                      search: params.term
-                  }
-                  return query;
-              },
-              processResults: function (data) {
-                  var result = $.parseJSON(data);
-                  return {
-                      results: result
-                  };
-              }
-          },
-          allowClear: true,
-          placeholder: '请选择报表类型',
-
-      });
-      //yangyang update
-      //判断如果为化验室人员登录 只让其看化验室的表
-      $.ajax({
-          url: '/CDM/Code/GetSelectJsonForLab',
-          success: function (data) {
-              if (data == "true") {
-                  $('#sel_reporttype').select2();
-                  var option = new Option("化验室分析报表", "11", true, true);
-                  $('#sel_reporttype').append(option).trigger('change');
-              }
-          }
-      });
-      //报表名称
-      $('#sel_reportname').select2({
-          ajax: {
-              url: '/CDM/ReportSetting/GetReportJson',
-              data: function (params) {
-                  var query = {
-                      reportType: $("#sel_reporttype").val(),
-                      search: params.term
-                  }
-                  return query;
-              },
-              processResults: function (data) {
-                  var result = $.parseJSON(data);
-                  return {
-                      results: result
-                  };
-              }
-          },
-          allowClear: true,
-          placeholder: '报表名称'
-      });
-      //班组
-      $('#txt_Class').select2({
-          ajax: {
-              url: '/CDM/Code/GetSelectJson',
-              data: function (params) {
-                  var query = {
-                      codeType: "0022",
-                      search: params.term
-                  }
-                  return query;
-              },
-              processResults: function (data) {
-                  var result = $.parseJSON(data);
-                  return {
-                      results: result
-                  };
-              }
-          },
-          allowClear: true,
-          placeholder: '班组',
-
-      });
-      //机组
-      $('#txt_Machine').select2({
-          ajax: {
-              url: '/CDM/Code/GetSelectJson',
-              data: function (params) {
-                  var query = {
-                      codeType: "0061",
-                      search: params.term
-                  }
-                  return query;
-              },
-              processResults: function (data) {
-                  var result = $.parseJSON(data);
-                  return {
-                      results: result
-                  };
-              }
-          },
-          allowClear: true,
-          placeholder: '机组',
-
-      });
-      //卸煤地点
-      $('#txt_keyword').select2({
-          ajax: {
-              url: "/FCM/Node/GetSelectJsonText",
-              data: function (params) {
-                  var query = {
-                      search: params.term,
-                      nodeType: '煤场'
-                  }
-                  return query;
-              },
-              processResults: function (data) {
-                  var result = $.parseJSON(data);
-                  return {
-                      results: result
-                  };
-              }
-          },
-          allowClear: true,
-          placeholder: '卸煤地点'
-      });
-      //矿别
-      $('#txt_MineNo').select2({
-          ajax: {
-              url: "/SFM/EvalSum/GetSelectJson",
-              processResults: function (data) {
-                  var result = $.parseJSON(data);
-                  return {
-                      results: result
-                  };
-              }
-          },
-          allowClear: true,
-          placeholder: '矿别'
-      });
-      //物资类别
-      $("#sel_GoodsType").select2();
-      //物资名称
-      $("#sel_GoodsType").change(function () {
-          $("#sel_GoodsName").show();
-          $("#sel_GoodsName").empty();
-          var code = "";
-          if ($("#sel_GoodsType").val() == "电煤") {
-              code = "0015";
-          }
-          else {
-              code = "0028";
-          }
-
-          $("#sel_GoodsName").select2({
-              ajax: {
-                  url: '/CDM/Code/GetSelectJson',
-                  data: function (params) {
-                      var query = {
-                          codeType: code,
-                          search: params.term
-                      }
-                      return query;
-                  },
-                  processResults: function (data) {
-                      var result = $.parseJSON(data);
-                      return {
-                          results: result
-                      };
-                  }
-              },
-              allowClear: true,
-              placeholder: '物资名称',
-          });
-      });
-      //运输单位
-      $("#sel_TranUnitNo").select2({
-          ajax: {
-              url: '/FCM/TranUnit/GetSelectJson',
-              data: function (params) {
-                  var query = {
-                      search: params.term
-                  }
-                  return query;
-              },
-              processResults: function (data) {
-                  var result = $.parseJSON(data);
-                  return {
-                      results: result
-                  };
-              }
-          },
-          placeholder: '请选择运输单位',
-          allowClear: true
-      });
-
-      var height = $(window).height() - 85;
-      $("#viewerContainer").height(height);
-
-      $("#btn_search").click(function () {
-          searchClick();
-      });
-      $("#sel_reporttype").on("change", function (e) {
-          $('#sel_reportname').select2({
-              ajax: {
-                  url: '/CDM/ReportSetting/GetReportJson',
-                  data: function (params) {
-                      var query = {
-                          reportType: $("#sel_reporttype").val(),
-                          search: params.term
-                      }
-                      return query;
-                  },
-                  processResults: function (data) {
-                      var result = $.parseJSON(data);
-                      return {
-                          results: result
-                      };
-                  }
-              },
-              allowClear: true,
-              placeholder: '报表名称'
-          });
-      });
-
-      $("#sel_reportname").on("change", function (e) {
-          if ($("#sel_reportname  option:selected").text() === '装船') {
-              $(".yesship").show();
-              $(".notship").hide();
-              $(".hys").hide();
-              $(".notship2").hide();
-              $(".hys2").hide();
-              $(".hys3").hide();
-              $(".hys5").hide();
-              $(".Zhoukou").hide();
-          }
-          else if ($("#sel_reporttype  option:selected").val() === '100') {
-              $(".yesship").hide();
-              $(".notship").show();
-              $(".hys").show();
-              $(".notship2").hide();
-              $(".hys2").hide();
-              $(".hys3").hide();
-              $(".hys5").hide();
-              $(".Zhoukou").hide();
-          }
-          else if ($("#sel_reportname  option:selected").text() === '卸车') {
-              $(".yesship").hide();
-              $(".notship").show();
-              $(".hys").hide();
-              $(".notship2").hide();
-              $(".hys2").hide();
-              $(".hys3").hide();
-              $(".hys5").hide();
-              $(".Zhoukou").hide();
-          }
-          else if ($("#sel_reportname  option:selected").text() === '入厂煤日报表') {
-              $(".yesship").hide();
-              $(".notship").hide();
-              $(".notship2").show();
-              $(".hys").hide();
-              $(".hys2").show();
-              $(".hys3").hide();
-              $(".hys5").hide();
-              $(".Zhoukou").hide();
-          }
-          else if ($("#sel_reportname  option:selected").text() === '入炉煤煤质检测月报表' || $("#sel_reportname  option:selected").text() === '入厂煤煤质检测月报表') {
-              $(".yesship").show();
-              $(".notship").hide();
-              $(".notship2").hide();
-              $(".hys").hide();
-              $(".hys2").hide();
-              $(".hys3").hide();
-              $(".hys5").hide();
-              $(".Zhoukou").hide();
-          }
-          else if ($("#sel_reportname  option:selected").text() === '苏龙热电入炉煤煤质检测报告') {
-              $(".yesship").hide();
-              $(".notship").hide();
-              $(".notship2").hide();
-              $(".hys").show();
-              $(".hys2").hide();
-              $(".hys3").hide();
-              $(".hys5").hide();
-              $(".Zhoukou").hide();
-          }
-          else if ($("#sel_reportname  option:selected").text() === '入厂煤煤质检验报告' || $("#sel_reportname  option:selected").text() === '煤粉细度分析报告汇总表'
-              || $("#sel_reportname  option:selected").text() === '飞灰可燃物分析报告'
-              || $("#sel_reportname  option:selected").text() === '炉渣可燃物分析报告' || $("#sel_reportname  option:selected").text() === '煤粉细度分析报告'
-              || $("#sel_reportname  option:selected").text() === '入炉煤检验报告' || $("#sel_reportname  option:selected").text() === '进煤日报表' || $("#sel_reportname  option:selected").text() === '粉煤灰检验记录') {
-              $(".yesship").hide();
-              $(".notship").hide();
-              $(".notship2").show();
-              $(".hys").hide();
-              $(".hys2").hide();
-              $(".hys3").hide();
-              $(".hys5").hide();
-              $(".Zhoukou").hide();
-          }
-          else if ($("#sel_reportname  option:selected").text() === '入炉煤日报表') {
-              $(".yesship").hide();
-              $(".notship").hide();
-              $(".notship2").show();
-              $(".hys").hide();
-              $(".hys2").hide();
-              $(".hys3").show();
-              $(".hys5").hide();
-              $(".Zhoukou").hide();
-          }
-          else if ($("#sel_reportname  option:selected").text() === '入厂煤月报表') {
-              $(".yesship").show();
-              $(".notship").hide();
-              $(".notship2").hide();
-              $(".hys").hide();
-              $(".hys2").show();
-              $(".hys3").hide();
-              $(".hys5").hide();
-              $(".Zhoukou").hide();
-          }
-          else if ($("#sel_reportname  option:selected").text() === '入炉煤月报表') {
-              $(".yesship").show();
-              $(".notship").hide();
-              $(".notship2").hide();
-              $(".hys").hide();
-              $(".hys2").hide();
-              $(".hys3").show();
-              $(".hys5").hide();
-              $(".Zhoukou").hide();
-          }
-          else if ($("#sel_reportname  option:selected").text() === '入厂煤化验统计表' || $("#sel_reportname  option:selected").text() === '入炉煤化验统计表') {
-              $(".yesship").hide();
-              $(".notship").show();
-              $(".notship2").hide();
-              $(".hys").hide();
-              $(".hys2").hide();
-              $(".hys3").hide();
-              $(".hys5").hide();
-          }
-          //原始记录报表
-          else if ($("#sel_reportname  option:selected").text() === '分析水检测原始记录表' || $("#sel_reportname  option:selected").text() === '挥发分检测原始记录表' || $("#sel_reportname  option:selected").text() === '灰分检测原始记录表'
-              || $("#sel_reportname  option:selected").text() === '全硫检测原始记录表' || $("#sel_reportname  option:selected").text() === '全水分检测原始记录表' || $("#sel_reportname  option:selected").text() === '发热量检测原始记录表'
-              || $("#sel_reportname  option:selected").text() === '氮元素检测原始记录表' || $("#sel_reportname  option:selected").text() === '氢元素检测原始记录表' || $("#sel_reportname  option:selected").text() === '碳元素检测原始记录表'
-              || $("#sel_reportname  option:selected").text() === '可DIY测原始记录' || $("#sel_reportname  option:selected").text() === '检测报告单'
-              || $("#sel_reportname  option:selected").text() === '煤质分析原始记录表') {
-              $(".yesship").hide();   //输入年、月
-              $(".notship").hide();   //选择时间区间
-              $(".notship2").show();  //选择指定日期
-              $(".hys").show();       //输入化验编码
-              $(".hys2").hide();      //选择矿别
-              $(".hys3").hide();      //选择班组、机组
-              $(".hys5").hide();      //选择卸煤地点
-              $(".Zhoukou").hide();
-          }
-          else if ($("#sel_reportname  option:selected").text() === '煤质检测报告单' || $("#sel_reportname  option:selected").text() === '苏龙热电煤质检测原始记录'
-              ) {
-              $(".yesship").hide();   //输入年、月
-              $(".notship").hide();   //选择时间区间
-              $(".notship2").show();  //选择指定日期
-              $(".hys").show();       //输入化验编码
-              $(".hys2").hide();      //选择矿别
-              $(".hys3").hide();      //选择班组、机组
-              $(".hys5").hide();      //选择卸煤地点
-              $(".Zhoukou").hide();
-          }
-          else if ($("#sel_reportname  option:selected").text() === '苏龙热电入厂煤煤质检测报告' || $("#sel_reportname  option:selected").text() === '苏龙热电煤质检测报告') {
-              $(".yesship").hide();   //输入年、月
-              $(".notship").hide();   //选择时间区间
-              $(".notship2").show();  //选择指定日期
-              $(".hys").show();       //输入化验编码
-              $(".hys2").hide();      //选择矿别
-              $(".hys3").hide();      //选择班组、机组
-              $(".hys5").hide();      //选择卸煤地点
-              $(".Zhoukou").hide();
-          }
-          else if ($("#sel_reportname  option:selected").text() === '煤质检测日报表') {
-              $(".yesship").hide();   //输入年、月
-              $(".notship").hide();   //选择时间区间
-              $(".notship2").show();  //选择指定日期
-              $(".hys").hide();       //输入化验编码
-              $(".hys2").hide();      //选择矿别
-              $(".hys3").hide();      //选择班组、机组
-              $(".hys5").hide();      //选择卸煤地点
-              $(".Zhoukou").hide();
-          }
-          else if ($("#sel_reportname  option:selected").text() === '汽车衡计量单') {
-              $(".yesship").hide();   //输入年、月
-              $(".notship").show();   //选择时间区间
-              $(".notship2").hide();  //选择指定日期
-              $(".hys").hide();       //输入化验编码
-              $(".hys2").show();      //选择矿别
-              $(".hys3").hide();      //选择班组、机组
-              $(".hys5").hide();      //选择卸煤地点
-              $(".Zhoukou").show();
-          }
-          else if ($("#sel_reportname  option:selected").text() === '入炉煤煤样存取样记录表') {
-              $(".yesship").hide();   //输入年、月
-              $(".notship").show();   //选择时间区间
-              $(".notship2").hide();  //选择指定日期
-              $(".hys").show();       //输入化验编码
-              $(".hys2").hide();      //选择矿别
-              $(".hys3").hide();      //选择班组、机组
-              $(".hys5").hide();      //选择卸煤地点
-              $(".Zhoukou").hide();
-          }
-          else if ($("#sel_reportname  option:selected").text() === '入厂原煤煤样存取样记录表') {
-              $(".yesship").hide();   //输入年、月
-              $(".notship").show();   //选择时间区间
-              $(".notship2").hide();  //选择指定日期
-              $(".hys").show();       //输入化验编码
-              $(".hys2").hide();      //选择矿别
-              $(".hys3").hide();      //选择班组、机组
-              $(".hys5").hide();      //选择卸煤地点
-              $(".Zhoukou").hide();
-          }
-          else if ($("#sel_reportname  option:selected").text() === '入厂煤泥煤样存取样记录表') {
-              $(".yesship").hide();   //输入年、月
-              $(".notship").show();   //选择时间区间
-              $(".notship2").hide();  //选择指定日期
-              $(".hys").show();       //输入化验编码
-              $(".hys2").hide();      //选择矿别
-              $(".hys3").hide();      //选择班组、机组
-              $(".hys5").hide();      //选择卸煤地点
-              $(".Zhoukou").hide();
-          }
-          else if ($("#sel_reportname  option:selected").text() === '销售样煤样存取样记录表') {
-              $(".yesship").hide();   //输入年、月
-              $(".notship").show();   //选择时间区间
-              $(".notship2").hide();  //选择指定日期
-              $(".hys").show();       //输入化验编码
-              $(".hys2").hide();      //选择矿别
-              $(".hys3").hide();      //选择班组、机组
-              $(".hys5").hide();      //选择卸煤地点
-              $(".Zhoukou").hide();
-          }
-          else if ($("#sel_reportname  option:selected").text() === '抽查样对比报告') {
-              $(".yesship").show();   //输入年、月
-              $(".notship").hide();   //选择时间区间
-              $(".notship2").hide();  //选择指定日期
-              $(".hys").show();       //输入化验编码
-              $(".hys2").hide();      //选择矿别
-              $(".hys3").hide();      //选择班组、机组
-              $(".hys5").hide();      //选择卸煤地点
-              $(".Zhoukou").hide();
-          }
-          else {
-              $(".yesship").hide();   //输入年、月
-              $(".notship").hide();   //选择时间区间
-              $(".notship2").hide();  //选择指定日期
-              $(".hys").hide();       //输入化验编码
-              $(".hys2").hide();      //选择矿别
-              $(".hys3").hide();      //选择班组、机组
-              $(".hys5").hide();      //选择卸煤地点
-              $(".Zhoukou").hide();
-          }
-      });
-
-  }
-
-  function getDay(day) {//当前时间加day
-      //var today = new Date();
-      //var targetday_milliseconds = today.getTime() + 1000 * 60 * 60 * 24 * day;
-      //today.setTime(targetday_milliseconds); //注意，这行是关键代码
-      //var tYear = today.getFullYear();
-      //var tMonth = today.getMonth();
-      //var tDate = today.getDate();
-      //tMonth = (tMonth + 1) < 10 ? "0" + (tMonth + 1) : (tMonth + 1);
-      //tDate = tDate < 10 ? "0" + tDate : tDate;
-      //return tYear + "-" + tMonth + "-" + tDate;
-
-      /* 将时间设置为 0.00.00 - 23.59.59 方便查询 */
-      var today = new Date();
-      var targetday_milliseconds = today.getTime();//+ 1000 * 60 * 60 * 24 * day
-      today.setTime(targetday_milliseconds); //注意，这行是关键代码
-      var tYear = today.getFullYear();
-      var tMonth = today.getMonth();
-      var tDate = today.getDate();
-      if (day == 0) {
-          var tHours = "00";
-          var tMinutes = "00";
-          var tSeconds = "00";
-      }
-      else if (day == 1) {
-          var tHours = "23";
-          var tMinutes = "59";
-          var tSeconds = "59";
-      }
-      tMonth = (tMonth + 1) < 10 ? "0" + (tMonth + 1) : (tMonth + 1);
-      tDate = tDate < 10 ? "0" + tDate : tDate;
-      return tYear + "-" + tMonth + "-" + tDate + " " + tHours + ":" + tMinutes + ":" + tSeconds;
-  }
-
-  function PrefixInteger(num, length) {
-      return (Array(length).join('0') + num).slice(-length);
-  }
-
-  function searchClick() {
-      var ReportType = $("#sel_reporttype").val();
-      var ReportID = $("#sel_reportname").val();
-
-      if (ReportID == null || ReportID == "") {
-          $.modalAlert("请先选择一种报表！", "warning");
-          return;
-      }
-      $.ajax({
-          url: ReportType == '100' ? '/CDM/DIYReportSetting/GetFormJson?keyValue=' + ReportID : '/CDM/ReportSetting/GetFormJson?keyValue=' + ReportID,
-          success: function (d) {
-              var reportName = JSON.parse(d).model.REPORTNAME;
-              var reportTypeName = JSON.parse(d).REPORT;
-
-              var TestNo = $("#txt_testNo").val();            //化验编码
-              var testStartTime = $("#testStartTime").val();  //开始时间
-              var testEndTime = $("#testEndTime").val();      //结束时间
-              var startTime = $("#TestTime").val();           //化验时间
-              var Vtxt_keyword = $('#txt_keyword').val();     //卸煤地点
-              var Vtxt_MineNo = $('#txt_MineNo').val();       //矿别
-              var Vtxt_Class = $('#txt_Class').val();         //班次
-              var Vtxt_Machine = $('#txt_Machine').val();     //机组
-              var Year = $("#txt_Year").val();                //年份
-              var Month = $("#txt_Month").val();              //月份
-
-              if (reportName == "装船") {
-                  if (Year == "") {
-                      $.modalAlert("请填入统计年份！", "warning");
-                      return;
-                  }
-                  if (Month == "") {
-                      var viewer = GrapeCity.ActiveReports.Viewer({
-                          element: '#viewerContainer',
-                          report: {
-                              id: 'ReportPage/' + reportTypeName + '/' + reportName + '-年.rdlx',
-                              parameters: [
-                                  {
-                                      name: 'Year',
-                                      value: Year
-                                  }
-                              ]
-                          },
-                          reportService: {
-                              url: '/ActiveReports.ReportService.asmx'
-                          },
-                          uiType: 'Desktop',
-                          localeUri: '../../Scripts/i18n/Localeuri.txt',
-                      });
-                  } else {
-                      var mon = PrefixInteger(Month, 2);
-                      var viewer = GrapeCity.ActiveReports.Viewer({
-                          element: '#viewerContainer',
-                          report: {
-                              id: 'ReportPage/' + reportTypeName + '/' + reportName + '-月.rdlx',
-                              parameters: [
-                                  {
-                                      name: 'Year',
-                                      value: Year
-                                  }, {
-                                      name: 'Month',
-                                      value: mon
-                                  }, {
-                                      name: 'Time',
-                                      value: Year + '/' + mon
-                                  }
-                              ]
-                          },
-                          reportService: {
-                              url: '/ActiveReports.ReportService.asmx'
-                          },
-                          uiType: 'Desktop',
-                          localeUri: '../../Scripts/i18n/Localeuri.txt',
-                      });
-                  }
-              }
-              else if (ReportType == "100") {
-                  reportName = JSON.parse(d).model.ReportName;
-                  var mons = ReportType + '|' + ReportID + '|' + reportName + '|' + TestNo + '|' + testStartTime + '|' + testEndTime;
-                  var viewer = GrapeCity.ActiveReports.Viewer({
-                      element: '#viewerContainer', report: {
-                          id: mons,
-                      },
-                      reportService: {
-                          url: '/ActiveReportsService.asmx'
-                      },
-                      uiType: 'Desktop',
-                      localeUri: '../../Scripts/i18n/Localeuri.txt',
-                  });
-              }
-              else if (reportName == '入炉煤煤质检测月报表' || reportName == '入厂煤煤质检测月报表') {
-
-                  var mons = reportName + '|' + Year + '|' + Month;
-                  var viewer = GrapeCity.ActiveReports.Viewer({
-                      element: '#viewerContainer', report: {
-                          id: mons,
-                      },
-                      reportService: {
-                          url: '/ActiveReportsService.asmx'
-                      },
-                      uiType: 'Desktop',
-                      localeUri: '../../Scripts/i18n/Localeuri.txt',
-                  });
-              }
-              else if (reportName == '苏龙热电入炉煤煤质检测报告') {
-
-                  var mons = reportName + '|' + TestNo;
-                  var viewer = GrapeCity.ActiveReports.Viewer({
-                      element: '#viewerContainer', report: {
-                          id: mons,
-                      },
-                      reportService: {
-                          url: '/ActiveReportsService.asmx'
-                      },
-                      uiType: 'Desktop',
-                      localeUri: '../../Scripts/i18n/Localeuri.txt',
-                  });
-              }
-              else if (reportName == "入厂煤日报表") {
-                  //var mons = reportName + '|' + startTime + '|' +  Vtxt_keyword + '|' + Vtxt_MineNo + '|' +Vtxt_CarModel;
-                  var viewer = GrapeCity.ActiveReports.Viewer({
-                      element: '#viewerContainer',
-                      report: {
-                          id: 'ReportPage/' + reportTypeName + '/' + reportName + '.rdlx',
-                          parameters: [
-                              {
-                                  name: 'ReportName',
-                                  value: startTime
-                              }, {
-                                  name: 'NodeNo',
-                                  value: Vtxt_Class
-                              }, {
-                                  name: 'MineralNo',
-                                  value: Vtxt_MineNo
-                              }
-                          ]
-                      },
-                      reportService: {
-                          url: '/ActiveReports.ReportService.asmx'
-                      },
-                      uiType: 'Desktop',
-                      localeUri: '../../Scripts/i18n/Localeuri.txt',
-                  });
-              }
-              else if (reportName == "入厂煤煤质检验报告" || reportName == "煤粉细度分析报告汇总表" || reportName == "飞灰可燃物分析报告"
-                  || reportName == "炉渣可燃物分析报告" || reportName == "煤粉细度分析报告"
-                  || reportName == "入炉煤检验报告" || reportName == "进煤日报表" || reportName == "粉煤灰检验记录") {
-                  var mons = reportName + '|' + startTime;
-                  var viewer = GrapeCity.ActiveReports.Viewer({
-                      element: '#viewerContainer', report: {
-                          id: mons,
-                      },
-                      reportService: {
-                          url: '/ActiveReportsService.asmx'
-                      },
-                      uiType: 'Desktop',
-                      localeUri: '../../Scripts/i18n/Localeuri.txt',
-                  });
-              }
-              else if (reportName == "入厂煤化验统计表" || reportName == "入炉煤化验统计表") {
-                  var mons = reportName + '|' + testStartTime + '|' + testEndTime;
-                  var viewer = GrapeCity.ActiveReports.Viewer({
-                      element: '#viewerContainer', report: {
-                          id: mons,
-                      },
-                      reportService: {
-                          url: '/ActiveReportsService.asmx'
-                      },
-                      uiType: 'Desktop',
-                      localeUri: '../../Scripts/i18n/Localeuri.txt',
-                  });
-              }
-              else if (reportName == "入厂煤月报表") {
-                  var mon = PrefixInteger(Month, 2);
-                  var viewer = GrapeCity.ActiveReports.Viewer({
-                      element: '#viewerContainer',
-                      report: {
-                          id: 'ReportPage/' + reportTypeName + '/' + reportName + '.rdlx',
-                          parameters: [
-                              {
-                                  name: 'Year',
-                                  value: Year
-                              },
-                              {
-                                  name: 'Month',
-                                  value: Month
-                              }, {
-                                  name: 'NodeNo',
-                                  value: $('#txt_keyword').val()
-                              }, {
-                                  name: 'MineralNo',
-                                  value: $('#txt_MineNo').val()
-                              }
-                          ]
-                      },
-                      reportService: {
-                          url: '/ActiveReports.ReportService.asmx'
-                      },
-                      uiType: 'Desktop',
-                      localeUri: '../../Scripts/i18n/Localeuri.txt',
-                  });
-              }
-              else if (reportName == "入炉煤日报表") {
-                  var viewer = GrapeCity.ActiveReports.Viewer({
-                      element: '#viewerContainer',
-                      report: {
-                          id: 'ReportPage/' + reportTypeName + '/' + reportName + '.rdlx',
-                          parameters: [
-                              {
-                                  name: 'ReportName',
-                                  value: startTime
-                              }, {
-                                  name: 'NodeNo',
-                                  value: Vtxt_Class
-                              }, {
-                                  name: 'MineralNo',
-                                  value: Vtxt_Machine
-                              }
-                          ]
-                      },
-                      reportService: {
-                          url: '/ActiveReports.ReportService.asmx'
-                      },
-                      uiType: 'Desktop',
-                      localeUri: '../../Scripts/i18n/Localeuri.txt',
-                  });
-              }
-              else if (reportName == "入炉煤月报表") {
-                  var mon = PrefixInteger(Month, 2);
-                  var viewer = GrapeCity.ActiveReports.Viewer({
-                      element: '#viewerContainer',
-                      report: {
-                          id: 'ReportPage/' + reportTypeName + '/' + reportName + '.rdlx',
-                          parameters: [
-                              {
-                                  name: 'Year',
-                                  value: Year
-                              },
-                              {
-                                  name: 'Month',
-                                  value: Month
-                              }, {
-                                  name: 'NodeNo',
-                                  value: Vtxt_Class
-                              }, {
-                                  name: 'MineralNo',
-                                  value: Vtxt_Machine
-                              }
-                          ]
-                      },
-                      reportService: {
-                          url: '/ActiveReports.ReportService.asmx'
-                      },
-                      uiType: 'Desktop',
-                      localeUri: '../../Scripts/i18n/Localeuri.txt',
-                  });
-              }
-              else if (reportName == "分析水检测原始记录表" || reportName == "挥发分检测原始记录表" || reportName == '灰分检测原始记录表' || reportName == '全硫检测原始记录表'
-                  || reportName == '全水分检测原始记录表' || reportName == '发热量检测原始记录表' || reportName == '氮元素检测原始记录表' || reportName == '氢元素检测原始记录表' || reportName == '碳元素检测原始记录表'
-                  || reportName == '可DIY测原始记录' || reportName == '煤质分析原始记录表' || reportName == '检测报告单'
-              ) {
-                  if (!TestNo) {
-                      $.modalAlert("请输入化验编码！", "warning");
-                      return;
-                  }
-                  var mons = reportName + '|' + TestNo + '|' + startTime;
-                  var viewer = GrapeCity.ActiveReports.Viewer({
-                      element: '#viewerContainer', report: {
-                          id: mons,
-                      },
-                      reportService: {
-                          url: '/ActiveReportsService.asmx'
-                      },
-                      uiType: 'Desktop',
-                      localeUri: '../../Scripts/i18n/Localeuri.txt',
-                  });
-              }
-              else if (reportName == '煤质检测报告单' || reportName == '苏龙热电煤质检测原始记录' || "苏龙热电入厂煤煤质检测报告" == reportName || "苏龙热电煤质检测报告" == reportName) {
-                  if (!TestNo && !startTime) { 
-                      $.modalAlert("请输入化验编码或选择化验日期！", "warning");
-                      return;
-                  }
-                  var mons;
-                  if ("苏龙热电入厂煤煤质检测报告" != reportName || "苏龙热电煤质检测报告" != reportName)
-                      mons = reportName + '|' + TestNo + '|' + startTime;
-                  else
-                      mons = reportName + '|' + TestNo + '|' + startTime + '|' + '入厂';
-                  var viewer = GrapeCity.ActiveReports.Viewer({
-                      element: '#viewerContainer', report: {
-                          id: mons,
-                      },
-                      reportService: {
-                          url: '/ActiveReportsService.asmx'
-                      },
-                      uiType: 'Desktop',
-                      localeUri: '../../Scripts/i18n/Localeuri.txt',
-                  });
-              }
-              else if (reportName == '煤质检测日报表') {
-                  if (!startTime) {
-                      $.modalAlert("请输入化验日期！", "warning");
-                      return;
-                  }
-                  var mons = reportName + '|' + startTime;
-                  var viewer = GrapeCity.ActiveReports.Viewer({
-                      element: '#viewerContainer', report: {
-                          id: mons,
-                      },
-                      reportService: {
-                          url: '/ActiveReportsService.asmx'
-                      },
-                      uiType: 'Desktop',
-                      localeUri: '../../Scripts/i18n/Localeuri.txt',
-                  });
-              }
-              else if (reportName == '汽车衡计量单') {
-                  var trainNo = $("#sel_TranUnitNo").val();
-                  var goostype = $("#sel_GoodsType").val();
-                  var goosname = $("#sel_GoodsName").text();
-                  var mons = reportName + '|' + testStartTime + '|' + testEndTime + '|' + Vtxt_MineNo + '|' + trainNo + '|' + goostype + '|' + goosname;
-                  var viewer = GrapeCity.ActiveReports.Viewer({
-                      element: '#viewerContainer', report: {
-                          id: mons,
-                      },
-                      reportService: {
-                          url: '/ActiveReportsService.asmx'
-                      },
-                      uiType: 'Desktop',
-                      localeUri: '../../Scripts/i18n/Localeuri.txt',
-                  });
-                  $("#sel_GoodsName").empty();//清空text
-              }
-              else if (reportName == '抽查样对比报告') {
-                  var txt_Year = $("#txt_Year").val();
-                  var txt_Month = $("#txt_Month").val();
-                  var mons = reportName + '|' + TestNo + '|' + txt_Year + '|' + txt_Month;
-                  var viewer = GrapeCity.ActiveReports.Viewer({
-                      element: '#viewerContainer', report: {
-                          id: mons,
-                      },
-                      reportService: {
-                          url: '/ActiveReportsService.asmx'
-                      },
-                      uiType: 'Desktop',
-                      localeUri: '../../Scripts/i18n/Localeuri.txt',
-                  });
-              }
-              else {
-                  var mons = reportName + '|' + TestNo + '|' + testStartTime + '|' + testEndTime;
-                  var viewer = GrapeCity.ActiveReports.Viewer({
-                      element: '#viewerContainer',
-                      report: {
-                          id: mons,
-                      },
-                      reportService: {
-                          url: '/ActiveReportsService.asmx'
-                      },
-                      uiType: 'Desktop',
-                      localeUri: '../../Scripts/i18n/Localeuri.txt',
-                  });
-              }
-
-          }
-      });
-  }
-
+<script>
+	import addCarDialog from './component/addCarDialog.vue';
+	import chooseCoalDialog from './component/chooseCoalDialog.vue';
+	import { myCarList,bindCar,unbindCar } from '@/api/driver/index.js';
+	import { CAR_CHECK_STATUS } from '@/utils/constant.js';
+	export default {
+	  name: 'driver',
+	  components: {
+		  addCarDialog,chooseCoalDialog
+	  },
+	  props: {},
+	  data() {
+	    return {
+			userInfo: {},
+			editRow: {}, // 当前选矿的车辆信息
+			activeTab: 'all', // 当前选中的标签
+			list: [],  // 车辆数据
+			carCheckStatus: CAR_CHECK_STATUS,
+			// 状态颜色配置（使用方案一）
+			statusColors: {
+				unchecked: { primary: '#999999', light: '#f5f5f5' },    // 未审核
+				rejected: { primary: '#FF6B6B', light: '#ffeaea' },     // 不通过
+				approved: { primary: '#4ECDC4', light: '#e8f6f5' },     // 已通过
+				unprocessed: { primary: '#FFA726', light: '#fff3e0' },  // 未选矿
+				processed: { primary: '#42A5F5', light: '#e3f2fd' }      // 已选矿
+			},
+			options: [
+				{
+					text: '解绑',
+					style: {
+						backgroundColor: '#dd524d'
+					}
+				},
+			]
+		}
+	  },
+	  computed: {
+	    // 状态标签统计
+		statusTags() {
+			return [
+				{ label: '未审核', color: '#999999', count: this.list.filter(item => item.verifyStatus === this.carCheckStatus.Unchecked).length },
+				{ label: '未通过', color: '#FF6B6B', count: this.list.filter(item => item.verifyStatus === this.carCheckStatus.Rejected).length },
+				{ label: '已通过', color: '#4ECDC4', count: this.list.filter(item => item.verifyStatus === this.carCheckStatus.Approved).length },
+				{ label: '未选矿', color: '#FFA726', count: this.list.filter(item => item.verifyStatus === this.carCheckStatus.Approved && !item.mineId).length },
+				{ label: '已选矿', color: '#42A5F5', count: this.list.filter(item => item.verifyStatus === this.carCheckStatus.Approved && item.mineId).length }
+			]
+		},
+		// 筛选标签
+		filterTabs() {
+			return [
+				{ status: 'unchecked', label: '未审核', color: '#999999', count: this.list.filter(item => item.verifyStatus === this.carCheckStatus.Unchecked).length },
+				{ status: 'rejected', label: '未通过', color: '#FF6B6B', count: this.list.filter(item => item.verifyStatus === this.carCheckStatus.Rejected).length },
+				{ status: 'unprocessed', label: '未选矿', color: '#FFA726', count: this.list.filter(item => item.verifyStatus === this.carCheckStatus.Approved && !item.mineId).length },
+				{ status: 'processed', label: '已选矿', color: '#42A5F5', count: this.list.filter(item => item.verifyStatus === this.carCheckStatus.Approved && item.mineId).length }
+			]
+		},
+		// 状态说明
+		statusLegends() {
+			return [
+				{ status: 'unchecked', label: '未审核', color: '#999999', desc: '等待管理员审核' },
+				{ status: 'rejected', label: '未通过', color: '#FF6B6B', desc: '审核未通过，请修改信息' },
+				{ status: 'approved', label: '已通过', color: '#4ECDC4', desc: '审核通过，等待选矿' },
+				{ status: 'unprocessed', label: '未选矿', color: '#FFA726', desc: '已通过审核，未选择矿山' },
+				{ status: 'processed', label: '已选矿', color: '#42A5F5', desc: '已选择矿山，可正常运输' }
+			]
+		},
+		// 筛选后的列表
+		filteredList() {
+			if (this.activeTab === 'all') return this.list;
+			
+			return this.list.filter(item => {
+				switch(this.activeTab) {
+					case 'unchecked':
+						return item.verifyStatus === this.carCheckStatus.Unchecked;
+					case 'rejected':
+						return item.verifyStatus === this.carCheckStatus.Rejected;
+					case 'unprocessed':
+						return item.verifyStatus === this.carCheckStatus.Approved && !item.mineId;
+					case 'processed':
+						return item.verifyStatus === this.carCheckStatus.Approved && item.mineId;
+					default:
+						return true;
+				}
+			});
+		}
+	  },
+	 mounted() {
+	  	let info = uni.getStorageSync("userInfo");
+	  	const { carList } = info;
+		this.userInfo = info;
+		this.getCarList();
+	  },
+	  methods: {
+		// 获取车辆信息
+		getCarList(){
+			// 模拟假数据
+			this.list = [
+				{ id: 1, carNo: '粤A·12345', verifyStatus: 0, mineId: null, model: '重型货车', owner: '张师傅', bindDate: '2023-10-15' },
+				{ id: 2, carNo: '粤B·67890', verifyStatus: 1, mineId: null, model: '中型货车', owner: '李师傅', bindDate: '2023-10-18' },
+				{ id: 3, carNo: '粤C·11223', verifyStatus: 2, mineId: null, model: '轻型货车', owner: '王师傅', bindDate: '2023-10-20' },
+				{ id: 4, carNo: '粤D·44556', verifyStatus: 2, mineId: '矿场A', model: '重型货车', owner: '赵师傅', bindDate: '2023-10-22' },
+				{ id: 5, carNo: '粤E·77889', verifyStatus: 2, mineId: '矿场B', model: '中型货车', owner: '刘师傅', bindDate: '2023-10-25' }
+			];
+			
+			// 实际接口调用
+			// myCarList().then(res =>{
+			// 	this.list = res.result;
+			// })
+		},
+		// 切换标签
+		switchTab(status) {
+			this.activeTab = status;
+		},
+		// 获取状态文本
+		getStatusText(item) {
+			if (item.verifyStatus === this.carCheckStatus.Unchecked) return '未审核';
+			if (item.verifyStatus === this.carCheckStatus.Rejected) return '未通过';
+			if (item.verifyStatus === this.carCheckStatus.Approved) {
+				return item.mineId ? '已选矿' : '未选矿';
+			}
+			return '未知状态';
+		},
+		// 获取状态颜色
+		getStatusColor(item) {
+			if (item.verifyStatus === this.carCheckStatus.Unchecked) return this.statusColors.unchecked;
+			if (item.verifyStatus === this.carCheckStatus.Rejected) return this.statusColors.rejected;
+			if (item.verifyStatus === this.carCheckStatus.Approved) {
+				return item.mineId ? this.statusColors.processed : this.statusColors.unprocessed;
+			}
+			return this.statusColors.unchecked;
+		},
+		// 获取状态样式
+		getStatusStyle(item) {
+			const color = this.getStatusColor(item);
+			return {
+				background: color.light,
+				color: color.primary,
+				border: `1rpx solid ${color.primary}`
+			};
+		},
+	     // 打开添加车辆弹窗
+		async addCar() {
+		  this.$refs.popup.open('top')
+		  this.$nextTick(()=>{
+		  	this.$refs.addCarDialogRef?.add();
+		  })
+		},
+		// 取消
+		cancel() {
+			this.$refs.popup.close()
+		},
+		// 确认
+		submit(info,type = 'add'){
+			console.log(info,'info')
+			this.$refs.popup.close()
+			if(type === 'add') {
+				bindCar(info).then(res =>{
+					uni.showToast({
+						title: "操作成功",
+						icon: 'sucess'
+					})
+					this.getCarList();
+				})
+			}else if(type === 'edit') {
+				this.list = this.list.map(item =>{
+					if(item.carNum === info.carNum) {
+						item = info
+					}
+					return item
+				})
+				this.userInfo.carList = this.list;
+				this.saveInfo();
+				this.getCarList()
+			}
+		},
+		// 点击滑动栏右边按钮
+		onClick(e , i) {
+			const { index } = e;
+			switch (index) {
+				case 0:  // 删除
+					uni.showModal({
+					  title: '提示',
+					  content: '确认解除该车辆绑定！',
+					  cancelText: '取消',
+					  confirmText: '确认',
+					  confirmColor: '#FF0000',
+					  cancelColor: '#999999',
+					  success: (res) => {
+						 if(res.confirm){
+							 unbindCar({ carID: i.id }).then(res =>{
+								 uni.showToast({
+									title: "操作成功",
+									icon: 'sucess'
+								 })
+								 this.getCarList();
+							 })
+						 }
+					  }
+					});
+					break;
+			}
+		},
+		// 保存信息
+		saveInfo(){
+			let userList = uni.getStorageSync("userList") || [];
+			userList = userList.map(item =>{
+				if(item.username === this.userInfo.username) {
+					item = this.userInfo
+				}
+				return item
+			})
+			uni.setStorageSync("userInfo", this.userInfo);
+			uni.setStorageSync("userList", userList);
+		},
+		swipeChange(e, i) {
+			if(e === 'right') {
+				i.show = "true"
+			}
+		},
+		// 点击盒子
+		clickBox(item){
+			this.editRow = item;
+			this.$refs.popupCoal.open('top')
+		},
+		// 取消选矿
+		cancelCoal(){
+			this.$refs.popupCoal.close()
+		},
+		submitCoal(info){
+			this.$refs.popupCoal.close()
+			this.list = this.list.map(item =>{
+				if(item.carNum === info.carNum) {
+					item = info
+				}
+				return item
+			})
+			this.userInfo.carList = this.list;
+			this.saveInfo();
+		},
+	  }
+	}
 </script>
 
-<div class="topPanel">
-  <!--@Html.RenderToolbar()-->
-  <div class="search">
-      <table>
-          <tr>
-              <td>
-                  <div class="input-group" style="width:170px;">
-                      <select id="sel_reporttype" class="form-control"></select><!--报表类型-->
-                  </div>
-              </td>
-              <td style="width:6px;"></td>
-              <td>
-                  <div class="input-group" style="width:200px;">
-                      <select id="sel_reportname" class="form-control"></select><!--报表名称-->
-                  </div>
-              </td>
-              <td style="width:6px;"></td>
-              <td class="hys">
-                  <div class="input-group">
-                      <input size="16" type="text" id="txt_testNo" class="form-control" placeholder="请输入化验编码">
-                  </div>
-              </td>
-              <td class="hys5">
-                  <div class="input-group" style="width:150px;">
-                      <select id="txt_keyword" class="form-control"></select>
-                  </div>
-              </td>
-              <td style="width:6px;"></td>
-              <td class="hys2">
-                  <div class="input-group">
-                      <select id="txt_MineNo" name="txt_MineNo" class="form-control" placeholder="矿别" style="width: 150px;">
-                          <option value="" selected="selected">全部</option>
-                      </select>
-                  </div>
-              </td>
-              <td style="width:6px;"></td>
-              <td class="hys3">
-                  <div class="input-group">
-                      <select id="txt_Class" name="txt_Class" class="form-control" placeholder="班组" style="width: 150px;"></select>
-                  </div>
-              </td>
-              <td style="width:6px;"></td>
-              <td class="hys3">
-                  <div class="input-group">
-                      <select id="txt_Machine" name="txt_Machine" class="form-control" placeholder="机组" style="width: 150px;"></select>
-                  </div>
-              </td>
-              <td style="width:6px;"></td>
-              <td class="notship2">
-                  <div class="input-group">
-                      <input size="16" type="text" id="TestTime" style="width:150px" autocomplete="off" class="Wdate form-control" onFocus="WdatePicker({ dateFmt: 'yyyy-MM-dd HH:mm:ss' ,lang:'zh-cn',dateFmt: 'yyyy/MM/dd',maxDate:'#F{$dp.$D(\'testEndTime\')}'})" placeholder="请选择日期">
-                  </div>
-              </td>
-              <td class="yesship">
-                  <div class="input-group">
-                      <input size="16" type="text" id="txt_Year" class="form-control" placeholder="请输入年">
-                  </div>
-              </td>
-              <td class="yesship">
-                  <div class="input-group">
-                      <input size="16" type="text" id="txt_Month" class="form-control" placeholder="请输入月">
-                  </div>
-              </td>
-              <td class="Zhoukou" style="width:6px;"></td>
-              <td class="Zhoukou">
-                  <div class="input-group">
-                      <select id="sel_TranUnitNo" class="form-control required" placeholder="请选择运输单位" style="width:154px;">
-                          <option value="" selected="selected">全部</option>
-                      </select>
-                  </div>
-              </td>
-              <td class="Zhoukou" style="width:6px;"></td>
-              <td class="Zhoukou">
-                  <div class="input-group">
-                      <select id="sel_GoodsType" class="form-control required" placeholder="请选择物资类别" style="width:104px;">
-                          <option value="" selected="selected">全部</option>
-                          <option value="电煤">电煤</option>
-                          <option value="非煤物资">非煤物资</option>
-                      </select>
-                  </div>
-              </td>
-              <td class="Zhoukou" style="width:6px;"></td>
-              <td class="Zhoukou">
-                  <div class="input-group">
-                      <select id="sel_GoodsName" class="form-control required" placeholder="请选择物资名称" style="width:104px;"></select>
-                  </div>
-              </td>
-              <td style="width:6px;"></td>
-              <td class="notship">
-                  <div class="input-group">
-                      <input size="16" type="text" style="width:150px;" autocomplete="off" id="testStartTime" class="Wdate form-control" onFocus="WdatePicker({dateFmt: 'yyyy-MM-dd HH:mm:ss', lang:'zh-cn',maxDate:'#F{$dp.$D(\'testEndTime\')}'})" placeholder="请选择开始日期">
-                  </div>
-              </td>
-              <td class="notship">
-                  <div class="input-group">
-                      至
-                  </div>
-              </td>
-              <td style="width:6px;"></td>
-              <td class="notship">
-                  <div class="input-group" style="width:140px;">
-                      <input size="16" type="text" autocomplete="off" style="width:150px;" id="testEndTime" class="Wdate form-control" onFocus="WdatePicker({ dateFmt: 'yyyy-MM-dd HH:mm:ss',lang:'zh-cn',minDate:'#F{$dp.$D(\'testStartTime\')}'})" placeholder="请选择结束日期">
-                  </div>
-              </td>
-              <td>
-                  <div class="input-group">
-                      <span class="input-group-btn">
-                          <button id="btn_search" type="button" class="btn  btn-primary"><i class="fa fa-search"></i></button>
-                      </span>
-                  </div>
-              </td>
-          </tr>
-      </table>
-  </div>
-</div>
+<style scoped lang="scss">
+.container {
+    height: 100vh;
+	background: linear-gradient(180deg, #f8f9fa 0%, #f1f3f5 100%);
+	padding: 20rpx;
+	overflow-y: scroll;
+}
 
-<div id="viewerContainer">
-</div>
+.header {
+	padding: 30rpx 20rpx;
+	.title {
+		font-size: 44rpx;
+		font-weight: bold;
+		color: #1a1a1a;
+		display: block;
+		margin-bottom: 20rpx;
+	}
+	.subtitle {
+		font-size: 28rpx;
+		color: #666;
+		margin-bottom: 20rpx;
+		display: block;
+	}
+	.status-summary {
+		background: #fff;
+		border-radius: 16rpx;
+		padding: 24rpx;
+		box-shadow: 0 2rpx 12rpx rgba(0, 0, 0, 0.05);
+	}
+	.status-tags {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 16rpx;
+		margin-top: 16rpx;
+		.status-tag {
+			padding: 8rpx 20rpx;
+			border-radius: 20rpx;
+			display: flex;
+			align-items: center;
+			gap: 8rpx;
+			.tag-text {
+				font-size: 24rpx;
+				color: white;
+				font-weight: 500;
+			}
+			.tag-count {
+				font-size: 22rpx;
+				color: white;
+				background: rgba(255, 255, 255, 0.3);
+				padding: 2rpx 8rpx;
+				border-radius: 12rpx;
+			}
+		}
+	}
+}
 
+.status-tabs {
+	background: #fff;
+	border-radius: 16rpx;
+	margin: 0 20rpx 24rpx;
+	padding: 20rpx;
+	box-shadow: 0 2rpx 12rpx rgba(0, 0, 0, 0.05);
+	.tabs-scroll {
+		width: 100%;
+		white-space: nowrap;
+	}
+	.tabs-container {
+		display: inline-flex;
+		align-items: center;
+		gap: 16rpx;
+		.tab-item {
+			display: inline-flex;
+			align-items: center;
+			padding: 16rpx 24rpx;
+			border-radius: 12rpx;
+			background: #f8f9fa;
+			border-left: 4rpx solid transparent;
+			transition: all 0.3s ease;
+			&.active {
+				background: #fff;
+				box-shadow: 0 2rpx 8rpx rgba(0, 0, 0, 0.1);
+				.tab-text {
+					color: #1a1a1a;
+					font-weight: 600;
+				}
+				.tab-count {
+					background: #1a1a1a;
+					color: #fff;
+				}
+			}
+			.tab-text {
+				font-size: 28rpx;
+				color: #666;
+				margin-right: 12rpx;
+			}
+			.tab-count {
+				font-size: 22rpx;
+				background: #e9ecef;
+				color: #666;
+				padding: 4rpx 12rpx;
+				border-radius: 12rpx;
+				min-width: 32rpx;
+				text-align: center;
+			}
+		}
+	}
+}
 
+.list {
+	display: flex;
+	flex-direction: column;
+	gap: 24rpx;
+	margin: 0 20rpx;
+}
+
+.empty-state {
+	text-align: center;
+	padding: 60rpx 0;
+	.empty-image {
+		width: 200rpx;
+		height: 200rpx;
+		margin-bottom: 32rpx;
+		opacity: 0.6;
+	}
+	.empty-text {
+		font-size: 28rpx;
+		color: #999;
+		display: block;
+	}
+}
+
+.car-card {
+	background: #fff;
+	border-radius: 20rpx;
+	padding: 30rpx;
+	box-shadow: 0 4rpx 20rpx rgba(0, 0, 0, 0.08);
+	transition: all 0.3s ease;
+	.item {
+		width: 100%;
+		height: 100%;
+		.card-content {
+			height: 100%;
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
+		}
+	}
+	
+	&:active {
+		transform: scale(0.98);
+		box-shadow: 0 2rpx 10rpx rgba(0, 0, 0, 0.1);
+	}
+}
+
+.card-left {
+	display: flex;
+	align-items: center;
+	flex: 1;
+}
+
+.car-icon {
+	width: 100rpx;
+	height: 100rpx;
+	border-radius: 50%;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	margin-right: 24rpx;
+	position: relative;
+	
+	.icon {
+		width: 50rpx;
+		height: 50rpx;
+	}
+	
+	.status-dot {
+		position: absolute;
+		bottom: 0;
+		right: 0;
+		width: 20rpx;
+		height: 20rpx;
+		border-radius: 50%;
+		border: 2rpx solid #fff;
+	}
+}
+
+.car-info {
+	flex: 1;
+	.plate-number {
+		font-size: 36rpx;
+		font-weight: bold;
+		color: #1a1a1a;
+		display: block;
+		margin-bottom: 8rpx;
+	}
+	
+	.car-details {
+		display: flex;
+		align-items: center;
+		gap: 16rpx;
+		margin-bottom: 8rpx;
+		
+		.car-model {
+			font-size: 26rpx;
+			color: #666;
+		}
+		
+		.car-owner {
+			font-size: 24rpx;
+			color: #888;
+			background: #f8f9fa;
+			padding: 4rpx 12rpx;
+			border-radius: 8rpx;
+		}
+	}
+	
+	.car-date {
+		font-size: 24rpx;
+		color: #999;
+		display: block;
+	}
+}
+
+.card-right {
+	display: flex;
+	align-items: center;
+	gap: 20rpx;
+	
+	.status-badge {
+		padding: 8rpx 20rpx;
+		border-radius: 20rpx;
+		font-size: 24rpx;
+		font-weight: 500;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		min-width: 100rpx;
+		
+		.status-text {
+			font-size: 24rpx;
+			font-weight: 500;
+		}
+	}
+}
+
+.add-card {
+	background: #fff;
+	border-radius: 20rpx;
+	padding: 40rpx 30rpx;
+	box-shadow: 0 4rpx 20rpx rgba(0, 0, 0, 0.08);
+	border: 2rpx dashed #e0e0e0;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	transition: all 0.3s ease;
+	
+	&:active {
+		background: #f9f9f9;
+		transform: scale(0.98);
+		border-color: #1aad19;
+	}
+}
+
+.add-content {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	
+	.add-text {
+		margin-top: 16rpx;
+		font-size: 28rpx;
+		color: #1aad19;
+		font-weight: 500;
+	}
+}
+
+.legend-card {
+	background: #fff;
+	border-radius: 16rpx;
+	margin: 24rpx 20rpx;
+	padding: 24rpx;
+	box-shadow: 0 2rpx 12rpx rgba(0, 0, 0, 0.05);
+	
+	.legend-title {
+		font-size: 28rpx;
+		font-weight: 600;
+		color: #1a1a1a;
+		display: block;
+		margin-bottom: 20rpx;
+	}
+	
+	.legend-items {
+		display: flex;
+		flex-direction: column;
+		gap: 16rpx;
+		
+		.legend-item {
+			display: flex;
+			align-items: center;
+			gap: 12rpx;
+			
+			.legend-color {
+				width: 20rpx;
+				height: 20rpx;
+				border-radius: 50%;
+				flex-shrink: 0;
+			}
+			
+			.legend-text {
+				font-size: 26rpx;
+				color: #333;
+				font-weight: 500;
+				min-width: 100rpx;
+			}
+			
+			.legend-desc {
+				font-size: 24rpx;
+				color: #666;
+				flex: 1;
+			}
+		}
+	}
+}
+</style>
