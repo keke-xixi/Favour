@@ -17,6 +17,10 @@
 
         开发者中心（打包apk）
         https://dev.dcloud.net.cn/pages/app/list
+
+        开发组件库：
+        https://uviewui.com/components/icon.html
+        https://vkuviewdoc.fsq.pub/components/calendar.html
   `)
 
    //将属性或者函数暴露给父组件
