@@ -1,0 +1,15 @@
+1.打包方式优化，ssr: false没必要，可以改成 vite 去打包，速度快，体积小
+
+2.sessionStorage.getItem  sessionStorage.setItem 问题，影响窗体切换导致数据为空（做成统一方法到utils）
+
+3.当前项目打包可用 nuxt generate  可直接用nginx部署
+
+4.注释问题-- 添加注释
+
+5.公共方法抽离，很多地方需要查询风机、子阵等数据，写在公共方法unitls里，获取JSON也分装统一方法
+
+6.Websoket 替代定时器，做大屏刷新数据
+
+7.JSON to TS 管理ts
+
+8.分离store， 尽量一个场景一个store库，  不要整个项目共用一个store库， 把每一个store的功能具体化
