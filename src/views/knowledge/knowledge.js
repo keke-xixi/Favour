@@ -116,7 +116,7 @@ export const Knowledge_List = [
             { name: '不规则文字', url: "./components/study/4",level: 2, children: [], active: false,id: 84, description: '' },
             { name: '同源策略和跨域处理', url: "./components/study/5",level: 2, children: [], active: false,id: 85, description: '' },
             { name: '常用技巧', url: "./components/study/6",level: 2, children: [], active: false,id: 86, description: '' },
-            { name: '知识点7', url: "./components/study/7",level: 2, children: [], active: false,id: 87, description: '' },
+            { name: '浏览器', url: "./components/study/7",level: 2, children: [], active: false,id: 87, description: '' },
             { name: '知识点8', url: "./components/study/8",level: 2, children: [], active: false,id: 88, description: '' },
             { name: '知识点9', url: "./components/study/9",level: 2, children: [], active: false,id: 89, description: '' },
             { name: '知识点10', url: "./components/study/10",level: 2, children: [], active: false,id: 90, description: '' },

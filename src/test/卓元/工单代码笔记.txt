@@ -1,0 +1,52 @@
+
+对应暂未开放，敬请期待
+<NoData title="我的收入"></NoData>    
+
+<!-- 功能卡片 -->  对应我的团队  我的报单 代客报单 工单查询
+<FunctionCardManage></FunctionCardManage>
+
+<!-- 消息通知 -->
+<Message v-if="msgInfo?.id" :info="msgInfo" @refreshMsg="refreshMsg"></Message>
+
+// 1 管理 2 保洁
+const clean = ref('1')
+onMounted(() => {
+  clean.value = uni.getStorageSync("clean");
+})
+
+查看工单详情
+function respondOrder(item, type)
+
+// 工单操作
+function viewOrderDetail(item) {
+  const { spaceOrderId, orderType, id, orderNumber } = item || {}
+  uni.navigateTo({
+    url: '/pages/orderExecution/info?spaceOrderId=' + spaceOrderId + '&orderType=' + orderType + '&id=' + id + '&orderNumber=' + orderNumber
+  });
+}
+
+function checkOrder(item, type = '') {
+  const { spaceOrderId, orderType, id, orderNumber } = item || {}
+  uni.navigateTo({
+    url: '/pages/orderExecution/check?spaceOrderId=' + spaceOrderId + '&orderType=' + orderType + '&id=' + id + '&orderNumber=' + orderNumber + '&type=' + type
+  });
+  // 实现转单功能
+}
+
+workHome  工单列表界面
+
+接口：
+/work-order/inspect/cleaner/getWorkOrderInfo?keyword=关键字   get
+
+
+// 开发小程序appid
+// wx852b1f10cc99c93a
+
+// 测试小程序appid
+// wx27351a31e78f0fb5
+
+// 生产小程序appid 卓小核
+// wx4bed832ea3b075bf
+
+// 生产小程序appid 卓小元
+// wxab8a8b72843ac59e

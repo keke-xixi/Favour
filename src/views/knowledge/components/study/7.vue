@@ -9,7 +9,7 @@
   const containerRef = ref(null)
 
   const text = ref(`
-      
+        Shift + Esc 查看内存占用情况
   `)
 
    //将属性或者函数暴露给父组件
