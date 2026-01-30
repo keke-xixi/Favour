@@ -148,4 +148,14 @@ export const Knowledge_List = [
             { name: 'JQuery', url: "./components/netMvc/2",level: 2, children: [], active: false,id: 102, description: '' },
         ]
     },
+    {
+        id: 11,
+        name: 'browser',
+        url: "/browser",
+        level: 1,
+        active: false,
+        children: [
+            { name: '基础常识', url: "./components/browser/1",level: 2, children: [], active: false,id: 101, description: '' },
+        ]
+    },
 ]
