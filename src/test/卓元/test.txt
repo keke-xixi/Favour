@@ -1,0 +1,663 @@
+import { get } from "./request";
+import { baseURL } from "./requestPackage";
+import { transformFromWGSToGCJ } from "./map";
+import qrcodeApi from '@/api/api.js'
+
+/**
+ * 随机生成Guid
+ * @returns {string}
+
+ */
+export const getGuid = () => {
+  const s = [];
+  const hexDigits = "0123456789abcdef";
+  for (let i = 0; i < 32; i++) {
+    s[i] = hexDigits.substr(Math.floor(Math.random() * 0x10), 1);
+  }
+  s[14] = ""; // bits 12-15 of the time_hi_and_version field to 0010
+  s[19] = hexDigits.substr((s[19] & 0x3) | 0x8, 1); // bits 6-7 of the clock_seq_hi_and_reserved to 01
+  s[8] = s[13] = s[18] = s[23];
+  return s.join("");
+};
+
+/**
+ *
+ * @param dic 字典值
+ */
+export const getDictType = async (dic) => {
+  const data = await get("/dict/queryByDictKind?dicKind=" + dic);
+  const option = data.map((item) => {
+    return {
+      text: item.text,
+      value: item.value,
+    };
+  });
+
+  return option;
+};
+
+/**
+ *
+ * 年月
+ */
+export function yearMonth() {
+  const years = [
+    2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022, 2023, 2024, 2025, 2026,
+    2027, 2028, 2029, 2030, 2031, 2032, 2033, 2034, 2035, 2036, 2037, 2038,
+    2039, 2040,
+  ];
+  const months = [
+    "01",
+    "02",
+    "03",
+    "04",
+    "05",
+    "06",
+    "07",
+    "08",
+    "09",
+    "10",
+    "11",
+    "12",
+  ];
+  const monthText = [
+    "1月",
+    "2月",
+    "3月",
+    "4月",
+    "5月",
+    "6月",
+    "7月",
+    "8月",
+    "9月",
+    "10月",
+    "11月",
+    "12月",
+  ];
+
+  let arr = [];
+  years.forEach((item) => {
+    arr.push({
+      value: item,
+      text: item + "年",
+      children: monthText.map((item2, index) => {
+        return {
+          value: `${item}-${months[index]}`,
+          text: item2,
+        };
+      }),
+    });
+  });
+  return arr;
+}
+
+// 上传
+// dataSource 1 拍照 2 录像 3 相册
+export const uploadFilePromise = (bizId = getGuid(), dataSource = "1") => {
+  return new Promise(async (resolve, reject) => {
+    uni.chooseImage({
+      success: (chooseImageRes) => {
+        const tempFilePaths = chooseImageRes.tempFilePaths;
+        let a = uni.uploadFile({
+          url: `${baseURL}/upload`,
+          header: {
+            Authorization: uni.getStorageSync("token"),
+          },
+          filePath: tempFilePaths[0],
+          name: "file",
+          formData: {
+            bizType: "contract",
+            bizId: bizId,
+            dataSource: dataSource,
+          },
+          success: (res) => {
+            resolve();
+          },
+        });
+      },
+    });
+  });
+};
+
+// 上传
+// dataSource 1 拍照 2 录像 3 相册
+export const uploadFile = (
+  bizId = getGuid(),
+  tempFilePaths,
+  dataSource = "1"
+) => {
+  return new Promise((resolve, reject) => {
+    const uploadTask = uni.uploadFile({
+      url: `${baseURL}/file/file/upload`,
+      header: {
+        Authorization: uni.getStorageSync("token"),
+      },
+      filePath: tempFilePaths,
+      name: "file",
+      formData: {
+        bizType: "contract",
+        bizId: bizId,
+        dataSource: dataSource,
+      },
+      success: (res) => {
+        const data = JSON.parse(res?.data || {})?.data
+        resolve(data);
+      },
+      fail: (err) => {
+        reject(err);
+        uni.hideLoading();
+      },
+    });
+  });
+};
+
+/**
+ * 递归遍历树形数据
+ * @param {Array} tree 树形数据
+ * @param {Function} callback 回调函数，参数为当前节点
+ * @param {String} childrenKey 子节点key，默认为'children'
+ */
+export const traverseTree = (tree, callback, childrenKey = "children") => {
+  if (!Array.isArray(tree)) return;
+
+  for (const node of tree) {
+    callback(node);
+    if (node[childrenKey] && node[childrenKey].length > 0) {
+      traverseTree(node[childrenKey], callback, childrenKey);
+    }
+  }
+};
+
+/**
+ * 根据传入的值返回对应的颜色状态
+ *
+ * @param value 要获取状态的值
+ * @returns 返回对应的状态颜色
+ */
+export const getStatus = (value) => {
+  switch (value) {
+    case "A001":
+      return "rgb(15, 137, 187)";
+    case "A006":
+      return "rgb(15, 137, 187)";
+    case "A005":
+      return "orange";
+    case "A010":
+      return "green";
+    case "A015":
+      return "red";
+    case "30":
+      return "red";
+    case "A020":
+      return "rgb(38, 116, 242)";
+    case "A999":
+      return "blue";
+    case "50":
+      return "blue";
+    case "80":
+      return "green";
+    case "A025":
+      return "blue";
+    case "A":
+      return "red";
+    case "B":
+      return "orange";
+    case "C":
+      return "blue";
+  }
+};
+
+export const getBarHeight = () => {
+  // #ifdef MP-WEIXIN
+  // 状态栏高度
+  const statusBarHeight = uni.getSystemInfoSync().statusBarHeight;
+  // 胶囊数据
+  const { top, height } = wx.getMenuButtonBoundingClientRect();
+  // 自定义导航栏高度 = 胶囊高度 + 胶囊的padding*2, 如果获取不到设置为38
+  const barHeight = height ? height + (top - statusBarHeight) * 2 : 38;
+  return barHeight;
+  // #endif
+  // #ifndef MP-WEIXIN
+  return 0;
+  // #endif
+};
+
+export const numberRule = [
+  {
+    required: true,
+    errorMessage: "请输入金额",
+  },
+  {
+    pattern: /^-?\d*\.?\d*$/,
+    errorMessage: "金额格式不正确，只能包含一个小数点",
+  },
+];
+
+// 十六进制转为base64
+export const hexToBase64 = (str) => {
+  const uint8Array = new Uint8Array(
+    unescape(encodeURIComponent(str))
+      .split("")
+      .map((c) => c.charCodeAt(0))
+  );
+  return uni.arrayBufferToBase64(uint8Array);
+};
+
+/**
+ * 数字金额转中文大写金额
+ * @param {Number|String} money - 数字金额（支持整数/小数，最大9位整数）
+ * @returns {String} 中文大写金额
+ */
+export function convertMoneyToChinese(money) {
+  // 1. 处理空值和非数字
+  if (money === null || money === undefined || isNaN(Number(money)))
+    return "零元整";
+
+  // 2. **处理正负号**
+  const num = Number(money);
+  const signStr = num < 0 ? "负" : ""; // **新增：符号位**
+
+  // 3. 去掉符号后再进行后续处理
+  const absMoney = Math.abs(num).toFixed(2); // **新增：取绝对值**
+  const [integerPart, decimalPart] = String(absMoney).split(".");
+
+  const digits = ["零", "壹", "贰", "叁", "肆", "伍", "陆", "柒", "捌", "玖"];
+  const intUnits = ["", "拾", "佰", "仟", "万", "拾", "佰", "仟", "亿"];
+  const decUnits = ["角", "分"];
+
+  // 处理整数部分
+  let chineseInt = "";
+  for (let i = 0; i < integerPart.length; i++) {
+    const digit = parseInt(integerPart[i]);
+    const position = integerPart.length - i - 1;
+    if (digit !== 0) {
+      chineseInt += digits[digit] + intUnits[position];
+    } else {
+      if (position % 4 !== 0 && chineseInt[chineseInt.length - 1] !== "零") {
+        chineseInt += "零";
+      }
+      if (
+        (position === 4 || position === 8) &&
+        chineseInt[chineseInt.length - 1] === "零"
+      ) {
+        chineseInt = chineseInt.slice(0, -1) + intUnits[position];
+      }
+    }
+  }
+
+  // 处理小数部分
+  let chineseDec = "";
+  if (parseInt(decimalPart) !== 0) {
+    for (let i = 0; i < decimalPart.length; i++) {
+      const digit = parseInt(decimalPart[i]);
+      if (digit !== 0) {
+        chineseDec += digits[digit] + decUnits[i];
+      }
+    }
+  }
+
+  if (chineseInt === "") chineseInt = "零";
+  let result = signStr + chineseInt + "元"; // **把符号位加到最前面**
+  result += chineseDec || "整";
+
+  return result
+    .replace(/零+/g, "零")
+    .replace(/零([亿|万])/g, "$1")
+    .replace(/零元/, "零元")
+    .replace(/零角/, "")
+    .replace(/零分/, "");
+}
+
+/**
+ * 获取完整的日期时间信息（年月日时分秒 + 星期几）
+ * @param {Date|string} date - 日期对象或日期字符串，默认为当前时间
+ * @param {Object} options - 配置选项
+ * @returns {Object} 包含完整日期时间信息的对象
+ */
+export function getFullDateTime(date = new Date(), options = {}) {
+  const d = new Date(date);
+
+  // 星期几的中文和英文映射
+  const weekdays = {
+    zh: ["星期日", "星期一", "星期二", "星期三", "星期四", "星期五", "星期六"],
+    en: [
+      "Sunday",
+      "Monday",
+      "Tuesday",
+      "Wednesday",
+      "Thursday",
+      "Friday",
+      "Saturday",
+    ],
+    enShort: ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"],
+  };
+
+  const year = d.getFullYear();
+  const month = d.getMonth() + 1;
+  const day = d.getDate();
+  const hours = d.getHours();
+  const minutes = d.getMinutes();
+  const seconds = d.getSeconds();
+  const weekday = d.getDay(); // 0-6，0代表星期日
+
+  // 补零函数
+  const padZero = (num) => num.toString().padStart(2, "0");
+
+  return {
+    // 基本字段
+    year,
+    month,
+    day,
+    hours,
+    minutes,
+    seconds,
+    weekday, // 数字 0-6
+
+    // 格式化字段
+    yearStr: year.toString(),
+    monthStr: padZero(month),
+    dayStr: padZero(day),
+    hoursStr: padZero(hours),
+    minutesStr: padZero(minutes),
+    secondsStr: padZero(seconds),
+
+    // 星期几
+    weekdayZh: weekdays.zh[weekday],
+    weekdayEn: weekdays.en[weekday],
+    weekdayEnShort: weekdays.enShort[weekday],
+
+    // 常用格式
+    date: `${year}-${padZero(month)}-${padZero(day)}`,
+    time: `${padZero(hours)}:${padZero(minutes)}:${padZero(seconds)}`,
+    datetime: `${year}-${padZero(month)}-${padZero(day)} ${padZero(
+      hours
+    )}:${padZero(minutes)}:${padZero(seconds)}`,
+
+    // 完整显示
+    fullZh: `${year}年${month}月${day}日 ${weekdays.zh[weekday]} ${padZero(
+      hours
+    )}:${padZero(minutes)}:${padZero(seconds)}`,
+    fullEn: `${weekdays.en[weekday]}, ${year}-${padZero(month)}-${padZero(
+      day
+    )} ${padZero(hours)}:${padZero(minutes)}:${padZero(seconds)}`,
+
+    // 时间戳
+    timestamp: d.getTime(),
+    timestampSeconds: Math.floor(d.getTime() / 1000),
+  };
+}
+
+export const getLocation = () => {
+  return new Promise((resolve, reject) => {
+    let location = "";
+    let locationName = "";
+    let dateTime = "";
+    // #ifdef H5
+    // H5平台默认地址
+    locationName = "";
+    resolve({
+      location,
+      locationName,
+      dateTime,
+    });
+    // #endif
+    uni.getSetting({
+      success(res) {
+        console.log(res, "res");
+      },
+    });
+    // #ifdef APP-PLUS || MP-WEIXIN
+    uni.getLocation({
+      type: "gcj02", // 标准
+      geocode: true, //设置该参数为true可直接获取经纬度及城市信息，只有gcj02标准才可以用
+      success: (res) => {
+        // const { latitude, longitude } = transformFromWGSToGCJ(
+        //   res.latitude,
+        //   res.longitude
+        // );
+        location = res.latitude + "," + res.longitude;
+        let key = "3fc78264d8a538ac9a9cff962a66bd2d"; //高德地图key
+        uni.request({
+          // 高德
+          url:
+            "https://restapi.amap.com/v3/geocode/regeo?output=json&location=" +
+            res.longitude +
+            "," +
+            res.latitude +
+            "&key=" +
+            key +
+            "&radius=100&extensions=all",
+          data: {},
+          method: "GET",
+          header: {
+            "Content-Type": "application/json",
+            "Access-Control-Allow-Origin": "*",
+            "Access-Control-Allow-Methods": "GET,POST,OPTIONS",
+          },
+          success: function (res) {
+            locationName = res?.data?.regeocode?.formatted_address
+            resolve({
+              location,
+              locationName,
+              dateTime,
+            });
+          },
+          fail: function (e) {
+            uni.showToast({
+              title: "当前拍照暂时获取不到定位哦~",
+              icon: "none",
+              duration: 5000
+            });
+            // 获取地址失败时设置默认地址
+            locationName = "";
+            resolve({
+              location,
+              locationName,
+              dateTime,
+            });
+          },
+        });
+      },
+      fail: function (e) {
+        uni.showToast({
+          title: "您的位置信息权限没开启，请联系相关同事帮你开启授权~",
+          icon: "none",
+          duration: 5000
+        });
+        // 获取地址失败时设置默认地址
+        locationName = "";
+        resolve({
+          location,
+          locationName,
+          dateTime,
+        });
+      },
+    });
+    // #endif
+  });
+};
+
+// 清理HTML内容中的转义符和不必要的字符，并为img标签添加样式
+export function cleanHtmlContent(htmlContent) {
+  if (!htmlContent) return "";
+
+  try {
+    // 处理HTML字符串中的转义符和特殊字符
+    let cleaned = htmlContent
+      // 移除多余的反斜杠
+      .replace(/\\/g, "")
+      // 移除不必要的反引号
+      .replace(/`/g, "")
+      // 处理可能的其他转义字符
+      .replace(/\u0026/g, "&")
+      .replace(/\u003c/g, "<")
+      .replace(/\u003e/g, ">")
+      // 为img标签添加style属性，设置最大宽度为100%
+      .replace(/<img/g, '<img style="max-width: 100%; height: auto;"')
+      // 如果img标签已经有style属性，则修改它
+      .replace(
+        /<img\s+style="([^"]*)"/g,
+        '<img style="max-width: 100%; height: auto; $1"'
+      );
+
+    return cleaned;
+  } catch (error) {
+    console.error("清理HTML内容失败:", error);
+    return htmlContent;
+  }
+}
+
+// 预览图片
+export function previewImage(current, urls) {
+  if (!current || !urls || urls.length === 0) return;
+  uni.previewImage({
+    current,
+    urls,
+  });
+}
+
+// 将 HTML 按图片和视频分段：返回 [{type: 'html', content}, {type: 'img', src}, {type: 'video', src}, ...]
+export function htmlToSegments(html) {
+  try {
+    if (!html) return [{ type: "html", content: "" }];
+    const segments = [];
+
+    // 先清理HTML中的反引号和其他特殊字符
+    let cleanedHtml = html.replace(/`/g, "").replace(/\\/g, "");
+
+    // 匹配a标签中的MP4链接
+    const videoRegex =
+      /<a[^>]*href=["']?([^"'>\s]*\.mp4)["']?[^>]*>(.*?)<\/a>/g;
+    // 匹配img标签
+    const imgRegex = /<img[^>]*src=["']?([^"'>\s]+)["']?[^>]*>/g;
+    // 匹配普通a标签
+    const linkRegex = /<a[^>]*href=["']?([^"'>\s]+)["']?[^>]*>(.*?)<\/a>/g;
+
+    // 先处理video标签
+    let lastIndex = 0;
+    let match;
+    while ((match = videoRegex.exec(cleanedHtml)) !== null) {
+      const idx = match.index;
+      if (idx > lastIndex) {
+        const textPart = cleanedHtml.slice(lastIndex, idx);
+        if (textPart.trim()) segments.push({ type: "html", content: textPart });
+      }
+      segments.push({ type: "video", src: match[1] });
+      lastIndex = videoRegex.lastIndex;
+    }
+
+    // 再处理普通a标签（在img标签之前处理）
+    cleanedHtml = cleanedHtml.slice(lastIndex);
+    lastIndex = 0;
+    while ((match = linkRegex.exec(cleanedHtml)) !== null) {
+      const idx = match.index;
+      if (idx > lastIndex) {
+        const textPart = cleanedHtml.slice(lastIndex, idx);
+        if (textPart.trim()) segments.push({ type: "html", content: textPart });
+      }
+      // 检查是否为视频链接，如果是则跳过（因为已经处理过video标签）
+      if (!match[1].endsWith(".mp4")) {
+        segments.push({
+          type: "link",
+          href: match[1],
+          text: match[2],
+          content: match[0], // 保留原始HTML内容
+        });
+      }
+      lastIndex = linkRegex.lastIndex;
+    }
+
+    // 最后处理img标签
+    cleanedHtml = cleanedHtml.slice(lastIndex);
+    lastIndex = 0;
+    while ((match = imgRegex.exec(cleanedHtml)) !== null) {
+      const idx = match.index;
+      if (idx > lastIndex) {
+        const textPart = cleanedHtml.slice(lastIndex, idx);
+        if (textPart.trim()) segments.push({ type: "html", content: textPart });
+      }
+      segments.push({ type: "img", src: match[1] });
+      lastIndex = imgRegex.lastIndex;
+    }
+
+    if (lastIndex < cleanedHtml.length) {
+      const tail = cleanedHtml.slice(lastIndex);
+      if (tail.trim()) segments.push({ type: "html", content: tail });
+    }
+
+    return segments;
+  } catch (e) {
+    console.error("htmlToSegments error:", e);
+    return [{ type: "html", content: html }];
+  }
+}
+
+// 提取 HTML 中的 img 链接
+export function extractImageUrls(html) {
+  try {
+    if (!html) return [];
+    const urls = [];
+    const imgRegex = /<img[^>]*src=["']?([^"'>\s]+)["']?[^>]*>/g;
+    let match = null;
+    while ((match = imgRegex.exec(html)) !== null) {
+      urls.push(match[1]);
+    }
+    return urls;
+  } catch (e) {
+    return [];
+  }
+}
+
+// 打开链接
+export function openLink(url) {
+  if (!url) return;
+
+  // 检查是否为有效的URL
+  if (!url.startsWith("http://") && !url.startsWith("https://")) {
+    // 如果不是完整的URL，尝试添加协议
+    url = "https://" + url;
+  }
+
+  // 使用uni-app的API打开外部链接
+  uni
+    .navigateTo({
+      url: `/pages/webview/webview?url=${encodeURIComponent(url)}`,
+    })
+    .catch(() => {
+      // 如果webview页面不存在，尝试直接打开外部浏览器
+      uni.setClipboardData({
+        data: url,
+        success: () => {
+          uni.showModal({
+            title: "提示",
+            content: "链接已复制到剪贴板，请在浏览器中打开",
+            showCancel: false,
+          });
+        },
+      });
+    });
+}
+
+// 扫一扫保存图片
+export const handleScanQRCode = async (res, orderInfo) => {
+  try {
+    const imgId = getGuid()
+    const uploadResult = await uploadFile(imgId, res.tempFilePath, '1')
+    console.log(uploadResult, 'uploadResult')
+    const { projectId, description, workCategoryId, orderNumber, orderId, orderExecute, spaceManageId, createTime } = orderInfo
+    const result = await qrcodeApi.workOrderQrPhotoSave({
+      "projectId": projectId,
+      "description": description,
+      "workCategoryId": workCategoryId,
+      "orderNumber": orderNumber,
+      "orderId": orderId,
+      "imgId": imgId,
+      "orderExecute": orderExecute,
+      "spaceManageId": spaceManageId,
+      "orderCreateTime": createTime,
+      "imgUrl": uploadResult.url,
+    })
+  } catch (error) {
+    console.error(error)
+  }
+}
