@@ -133,7 +133,7 @@ export const Knowledge_List = [
             { name: 'uview', url: "./components/uniapp/2",level: 2, children: [], active: false,id: 92, description: '' },
             { name: '链接', url: "./components/uniapp/3",level: 2, children: [], active: false,id: 93, description: '' },
             { name: 'methods', url: "./components/uniapp/4",level: 2, children: [], active: false,id: 94, description: '' },
-            { name: '', url: "./components/uniapp/5",level: 2, children: [], active: false,id: 95, description: '' },
+            { name: '弹窗', url: "./components/uniapp/5",level: 2, children: [], active: false,id: 95, description: '' },
             { name: '', url: "./components/uniapp/6",level: 2, children: [], active: false,id: 96, description: '' },
         ],
     },

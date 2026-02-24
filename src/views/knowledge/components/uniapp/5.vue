@@ -9,6 +9,14 @@
   const containerRef = ref(null)
 
   const text = ref(`
+    // 原生效果弹窗
+    <uni-popup ref="scanResultPopup" type="center" :mask-click="false">
+        
+    </uni-popup>
+
+    scanResultPopup.value.open()
+
+    scanResultPopup.value.close()
       
   `)
 
