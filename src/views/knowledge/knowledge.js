@@ -155,7 +155,17 @@ export const Knowledge_List = [
         level: 1,
         active: false,
         children: [
-            { name: '基础常识', url: "./components/browser/1",level: 2, children: [], active: false,id: 101, description: '' },
+            { name: '基础常识', url: "./components/browser/1",level: 2, children: [], active: false,id: 111, description: '' },
+        ]
+    },
+    {
+        id: 12,
+        name: 'ai',
+        url: "/ai",
+        level: 1,
+        active: false,
+        children: [
+            { name: '基础常识', url: "./components/ai/1",level: 2, children: [], active: false,id: 121, description: '' },
         ]
     },
 ]
