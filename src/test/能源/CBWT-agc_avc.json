@@ -1,0 +1,131 @@
+{
+  "AGC": {
+    "YC": [
+      {
+        "tagId": "HN_CBWT_GF.431125CBWTGFSYZ01YCAGCAVC979929CDM003",
+        "tagName": "全站有功总指令(MW)"
+      },
+      {
+        "tagId": "HN_CBWT_GF.431125CBWTGFSYZ01YCAGCAVC979929CDM003",
+        "tagName": "本地目标有功(MW)"
+      },
+      {
+        "tagId": "HN_CBWT_GF.431125CBWTGFSYZ01YCAGCAVC979929CDM003",
+        "tagName": "全站执行目标有功(MW)"
+      },
+      {
+        "tagId": "HN_CBWT_GF.431125CBWTGFSYZ01YCAGCAVC979929CDM013",
+        "tagName": "全站实发有功(MW)"
+      },
+      {
+        "tagId": "HN_CBWT_GF.431125CBWTGFSYZ01YCAGCAVC979929CDM001",
+        "tagName": "全站最大可调出力(MW)"
+      },
+      {
+        "tagId": "HN_CBWT_GF.431125CBWTGFSYZ01YCAGCAVC979929CDM002",
+        "tagName": "全站最小可调出力(MW)"
+      },
+      {
+        "tagId": "HN_CBWT_GF.431125CBWTGFSYZ01YXAGCAVC979931CDM006",
+        "tagName": "AGC远方投入"
+      },
+      {
+        "tagId": "HN_CBWT_GF.431125CBWTGFSYZ01YXAGCAVC979931CDM007",
+        "tagName": "AGC全厂投入运行"
+      },
+      {
+        "tagId": "HN_CBWT_GF.431125CBWTGFSYZ01YTAGCAVC979901CDM001",
+        "tagName": "本地目标有功(MV)"
+      }
+    ],
+    "YX": [
+      {
+        "tagId": "HN_CBWT_GF.431125CBWTGFSYZ01YXAGCAVC979931CDM003",
+        "tagName": "AGC增闭锁"
+      },
+      {
+        "tagId": "HN_CBWT_GF.431125CBWTGFSYZ01YXAGCAVC979931CDM002",
+        "tagName": "AGC运行信号"
+      },
+      {
+        "tagId": "HN_CBWT_GF.431125CBWTGFSYZ01YXAGCAVC979931CDM004",
+        "tagName": "AGC减闭锁"
+      },
+      {
+        "tagId": "HN_CBWT_GF.431125CBWTGFSYZ01YXAGCAVC979931CDM005",
+        "tagName": "AGC接受调度指令"
+      },
+      {
+        "tagId": "HN_CBWT_GF.431125CBWTGFSYZ01YXAGCAVC979931CDM021",
+        "tagName": "AGC检修状态"
+      }
+    ]
+  },
+  "AVC": {
+    "YC": [
+      {
+        "tagId": "HN_CBWT_GF.431125CBWTGFSYZ01YCAGCAVC979929CDM011",
+        "tagName": "全站目标电压(kV)"
+      },
+      {
+        "tagId": "HN_CBWT_GF.431125CBWTGFSYZ01YCAGCAVC979929CDM010",
+        "tagName": "并网电压实时值(kV)"
+      },
+      {
+        "tagId": "HN_CBWT_GF.431125CBWTGFSYZ01YTAGCAVC979901CDM003",
+        "tagName": "全站目标无功值(MVar)"
+      },  {
+        "tagId": "HN_CBWT_GF.431125CBWTGFSYZ01YCAGCAVC979929CDM014",
+        "tagName": "并网无功实时值(MVar)"
+      },  {
+        "tagId": "HN_CBWT_GF.431125CBWTGFSYZ01YCAGCAVC979929CDM006",
+        "tagName": "全站可增无功(MVar)"
+      },  {
+        "tagId": "HN_CBWT_GF.431125CBWTGFSYZ01YCAGCAVC979929CDM007",
+        "tagName": "全站可减无功(MVar)"
+      },
+      {
+        "tagId": "HN_CBWT_GF.431125CBWTGFSYZ01YXAGCAVC979931CDM008",
+        "tagName": "AVC远方投入"
+      },
+      {
+        "tagId": "HN_CBWT_GF.431125CBWTGFSYZ01YXAGCAVC979931CDM013",
+        "tagName": "AVC全厂投入运行"
+      },
+      {
+        "tagId": "HN_CBWT_GF.431125CBWTGFSYZ01YTAGCAVC979901CDM003",
+        "tagName": "本地目标无功值(MVar)"
+      }
+    ],
+    "YX": [
+      {
+        "tagId": "HN_CBWT_GF.431125CBWTGFSYZ01YXAGCAVC979931CDM010",
+        "tagName": "AVC增闭锁"
+      },
+      {
+        "tagId": "HN_CBWT_GF.431125CBWTGFSYZ01YXAGCAVC979931CDM009",
+        "tagName": "AVC运行信号"
+      },
+      {
+        "tagId": "HN_CBWT_GF.431125CBWTGFSYZ01YXAGCAVC979931CDM011",
+        "tagName": "AVC减闭锁"
+      },
+      {
+        "tagId": "HN_CBWT_GF.431125CBWTGFSYZ01YXAGCAVC979931CDM012",
+        "tagName": "AVC接受调度指令"
+      },
+      {
+        "tagId": "HN_CBWT_GF.431125CBWTGFSYZ01YXAGCAVC979931CDM018",
+        "tagName": "网络状态1"
+      },
+      {
+        "tagId": "HN_CBWT_GF.431125CBWTGFSYZ01YXAGCAVC979931CDM019",
+        "tagName": "网络状态2"
+      },
+      {
+        "tagId": "HN_CBWT_GF.431125CBWTGFSYZ01YXAGCAVC979931CDM021",
+        "tagName": "AVC检修状态"
+      }
+    ]
+  }
+}
