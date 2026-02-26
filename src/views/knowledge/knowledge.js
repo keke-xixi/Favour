@@ -36,6 +36,7 @@ export const Knowledge_List = [
             { name: '请求', url: "./components/work/2",level: 2, children: [], active: false,id: 22 },
             { name: '常用笔记', url: "./components/work/3",level: 2, children: [], active: false,id: 23 },
             { name: '常用开发技巧', url: "./components/work/4",level: 2, children: [], active: false,id: 24 },
+            { name: 'git篇章1', url: "./components/work/5",level: 2, children: [], active: false,id: 25, description: '用于解决git拉取代码频繁失败问题' },
         ],
     },
     {
