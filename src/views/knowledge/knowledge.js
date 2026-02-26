@@ -170,4 +170,14 @@ export const Knowledge_List = [
             { name: '基础常识', url: "./components/ai/1",level: 2, children: [], active: false,id: 121, description: '' },
         ]
     },
+    {
+        id: 13,
+        name: 'css',
+        url: "/css",
+        level: 1,
+        active: false,
+        children: [
+            { name: '裁剪', url: "./components/css/1",level: 2, children: [], active: false,id: 131, description: '' },
+        ]
+    },
 ]
