@@ -90,6 +90,7 @@ export const Knowledge_List = [
         children: [
             { name: '数组和字符串转换', url: "./components/js/1",level: 2, children: [], active: false,id: 61 },
             { name: '遍历', url: "./components/js/2",level: 2, children: [], active: false,id: 62 },
+            { name: 'TS', url: "./components/js/3",level: 2, children: [], active: false,id: 63 },
         ],
     },
     {
