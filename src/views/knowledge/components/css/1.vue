@@ -13,7 +13,13 @@
        1. /* 裁剪 */
        clip-path
        
+       2. /* 滚动 */  （用于隐藏网页元素的滚动条，但保留滚动功能）
+        &::-webkit-scrollbar {
+            display: none;
+        }
 
+        3. /* 背景 */ （自定义渐进色变）
+        background: repeating-linear-gradient(135deg, transparent, transparent 0.1875rem, rgba(255, 255, 255, 0.5) 0.1875rem, rgba(255, 255, 255, 0.5) 0.4375rem), rgba(61, 146, 253, 0.5);
   `)
 
    //将属性或者函数暴露给父组件
