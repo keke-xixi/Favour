@@ -51,6 +51,9 @@
         git pull --tags origin dev
 
 
+      使用 git init + git remote add + git pull（推荐，效果等同 clone）
+
+
   `)
 
    //将属性或者函数暴露给父组件
