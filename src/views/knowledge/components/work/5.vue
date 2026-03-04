@@ -61,6 +61,8 @@
       git remote set-url origin http://你的用户名@113.240.68.17:29919/code/PVMonitor-web-cloud.git
       git fetch
 
+      # 基于远程的 dev 分支创建本地 dev 分支，并自动切换到 dev 分支
+      git checkout -b dev origin/dev
 
   `)
 
