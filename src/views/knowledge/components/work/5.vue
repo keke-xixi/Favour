@@ -51,7 +51,15 @@
         git pull --tags origin dev
 
 
+      clone失效场景
       使用 git init + git remote add + git pull（推荐，效果等同 clone）
+
+      # 方法A：直接在命令中包含用户名（替换成你的GitLab用户名）
+      git fetch http://你的用户名@113.240.68.17:29919/code/PVMonitor-web-cloud.git
+
+      # 或者设置远程地址时带上用户名
+      git remote set-url origin http://你的用户名@113.240.68.17:29919/code/PVMonitor-web-cloud.git
+      git fetch
 
 
   `)
