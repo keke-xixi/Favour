@@ -24,6 +24,9 @@
         console.log('键码:', event.keyCode);
         console.log('编码:', event.code);
     }
+
+    前端弹窗置于最高级：
+    <Teleport to="body"></Teleport>
   `)
 
    //将属性或者函数暴露给父组件
