@@ -181,4 +181,14 @@ export const Knowledge_List = [
             { name: '裁剪', url: "./components/css/1",level: 2, children: [], active: false,id: 131, description: '' },
         ]
     },
+    {
+        id: 14,
+        name: 'node',
+        url: "/node",
+        level: 1,
+        active: false,
+        children: [
+            { name: '配置前端跳转', url: "./components/node/1",level: 2, children: [], active: false,id: 141, description: '' },
+        ]
+    },
 ]
