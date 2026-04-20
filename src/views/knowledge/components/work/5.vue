@@ -67,6 +67,8 @@
       git config --global user.name "你的姓名"
       git config --global user.email "你的邮箱@example.com"
 
+      git remote add origin http://jw01@113.240.68.17:29919/web/datacapture-web.git
+
   `)
 
    //将属性或者函数暴露给父组件
