@@ -1,0 +1,356 @@
+<script setup lang="ts">
+import { getNbqStatus, getPhotovaltaicArr } from '@/utils/ReadInverterStatus'
+import { toRefs, ref, onMounted, onUnmounted, computed, watch } from 'vue'
+import { queryDeviceBoard } from '@/services/api/depot/index'
+import { useAppStore } from '@/store/modules/app'
+import { useNumberReserveTo3 } from '@/composables/useNumberTo3'
+
+import SvgIcon from '@/components/SvgIcon/index.vue'
+
+const props = withDefaults(
+    defineProps<{
+        row: any
+        title: string
+        initValues: any
+        area: string
+        code: string
+        nbqStatus: any
+        nbqArray: any
+    }>(),
+    {
+        row: {},
+        title: '',
+        initValues: {},
+        area: '',
+        code: '',
+        nbqStatus: [],
+        nbqArray: {},
+    }
+)
+const { row, title, initValues, nbqStatus } = toRefs(props)
+const emits = defineEmits(['down'])
+const store1 = useAppStore()
+const status: any = ref(false)
+// const documentName = route.params.param as string;
+
+const statistic: any = ref({
+    // 并网
+    grid: 0,
+    // 未并网
+    // notGridConnected: 0,
+    // 故障
+    failure: 0,
+    // 告警
+    // alarm: 0,
+    // 断电
+    power: 0,
+    // 限电
+    limitPower: 0,
+    // 通讯中断
+    interruption: 0,
+    // 闭锁
+    shutting: 0,
+    // 未接入
+    notConnected: 11,
+})
+const statusArr: any = ref([
+    '#909399',
+    '#909399',
+    '#909399',
+    '#909399',
+    '#909399',
+    '#909399',
+    '#909399',
+    '#909399',
+    '#909399',
+    '#909399',
+    '#909399',
+    '',
+])
+
+const getBoardStatus = () => {
+    queryDeviceBoard({ deviceCode: row.value.id }).then((res) => {
+        if (res.data?.status && res.data?.status.length) {
+            status.value = res.data?.status[0] === '1'
+        }
+    })
+}
+
+const getArr = () => {
+    const data: any = props.nbqStatus.filter((e: { parentId: string }) => e.parentId === row.value.id)
+    let num = 0
+    for (const key in props.nbqArray) {
+        if (props.nbqArray[key].parentId === row.value.id) {
+            num += 1
+        }
+    }
+    statistic.value = getNbqStatus(data)
+    statusArr.value = getPhotovaltaicArr(data, num)
+}
+
+// 订阅
+onMounted(() => {
+    getBoardStatus()
+})
+
+watch(
+    () => nbqStatus.value,
+    (val: any) => {
+        if (val.length) getArr()
+    },
+    { immediate: true, deep: true }
+)
+
+// watch(
+//     () => props.nbqArray,
+//     (val: any) => {
+//         if (Object.keys(val).length) getInitStatus()
+//     },
+//     { immediate: true, deep: true }
+// )
+
+watch(
+    () => store1.boardChange.status,
+    () => {
+        if (!store1.boardChange.id) return
+        if (store1.boardChange.id === row.value.id) {
+            getBoardStatus()
+        }
+    },
+    { immediate: true, deep: true }
+)
+
+onUnmounted(() => {})
+
+// 保留3位小数
+const calculatedValue = computed(() => (value: any) => {
+    const num = +(initValues.value[value] || 0)
+    if (num % 1 !== 0) return useNumberReserveTo3(num)
+    else return num
+})
+
+const showDown = (e: any, id: any) => {
+    e.preventDefault()
+    emits('down', { e, id })
+}
+</script>
+
+<template>
+    <div class="bigbox">
+        <label class="bigbox-title">{{ title }}</label>
+        <div class="bigbox-power">
+            <div class="bigbox-power-shrinkage">
+                <div class="row-columns-box">
+                    <div
+                        v-for="(item, index1) in statusArr"
+                        :key="index1"
+                        class="row-columns-box-row"
+                        :style="{ 'background-color': item || '#d2e4fe' }"
+                    >
+                        <!-- <svg-icon :name="item"></svg-icon> -->
+                    </div>
+                </div>
+                <div class="shrinkage">
+                    <div
+                        :tag-id="item.tagId"
+                        v-for="item in row.tags"
+                        v-show="['日发电量', '有功功率', '额定功率'].includes(item.tagName)"
+                        :key="item.tagId"
+                        class="bigbox-power-item"
+                    >
+                        <Trend :tag-id="item.tagId" class="bigbox-power-item-content">
+                            <span>{{ item.tagName }}</span>
+                        </Trend>
+                        <Trend :tag-id="item.tagId" as="label">{{ calculatedValue(item.tagId) }}</Trend>
+                    </div>
+                </div>
+            </div>
+            <!-- <div v-if="status" class="hint">
+                <span>禁止操作，</span>
+                <span>有人作业!</span>
+            </div> -->
+        </div>
+        <div v-if="status" class="hint">
+            <el-tooltip
+                v-for="e in 1"
+                :key="e"
+                class="box-item"
+                effect="customized"
+                content="2025年05月31日12：32 /n 操作检修挂牌"
+                placement="right-start"
+            >
+                <template #content
+                    >2025年05月31日12:32 <br />
+                    操作检修挂牌
+                </template>
+                <SvgIcon name="jx" style="font-size: 14px"></SvgIcon>
+            </el-tooltip>
+        </div>
+    </div>
+</template>
+
+<style scoped lang="scss">
+.hide {
+    display: none;
+}
+
+.bigbox {
+    padding: 10px;
+    cursor: pointer;
+    transition: box-shadow 0.3s;
+    position: relative;
+
+    // height: 117px;
+    background: #00000a;
+    box-shadow: inset 0px 0px 87px 0px rgba(1, 194, 255, 0.4);
+    padding: 5px;
+
+    &-title {
+        display: block;
+        font-size: 12px;
+        font-family:
+            Source Han Sans,
+            Source Han Sans;
+        font-weight: 400;
+        color: rgba(1, 194, 255, 0.87);
+        line-height: 16px;
+    }
+
+    &-power {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 16px;
+        margin-top: 5px;
+
+        &-shrinkage {
+            display: flex;
+            align-items: flex-start;
+            justify-content: flex-start;
+
+            .row-columns-box {
+                width: 54px;
+                // display: flex;
+                display: grid;
+                grid-template-columns: repeat(4, 1fr);
+                background: rgba(18, 155, 255, 0.6);
+                padding: 4px;
+                // flex-wrap: wrap;
+                justify-content: space-between;
+                gap: 2px;
+            }
+
+            .row-columns-box-row {
+                width: 10px;
+                height: 10px;
+                line-height: 10px;
+                font-size: 10px;
+
+                svg,
+                :deep(path) {
+                    font-size: 10px;
+                }
+            }
+
+            // .row-box {
+            //     display: grid;
+            //     grid-template-columns: repeat(4, 1fr);
+            //     gap: 4px;
+
+            //     .box {
+            //         width: 15px;
+            //         height: 15px;
+            //         line-height: 15px;
+            //         font-size: 15px;
+            //         border-radius: 2px 2px 2px 2px;
+            //     }
+            // }
+        }
+
+        &-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            font-size: 14px;
+            color: #515151;
+
+            &-content {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+
+                span {
+                    height: 24px;
+                    line-height: 24px;
+                }
+            }
+
+            label {
+                font-size: 14px;
+                height: 24px;
+                line-height: 24px;
+                font-weight: bold;
+            }
+        }
+    }
+
+    &:hover {
+        z-index: 99;
+    }
+}
+
+.hint {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    display: flex;
+    flex-direction: column;
+
+    span {
+        color: #f56c6c;
+    }
+}
+
+.shrinkage {
+    width: calc(100% - 60px);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-left: 5px;
+    height: 100%;
+
+    .bigbox-power-item {
+        width: 100%;
+        flex-direction: row;
+        justify-content: space-between;
+    }
+
+    .bigbox-power-item-content {
+        span {
+            height: 14px;
+            font-size: 11px;
+            font-family:
+                Source Han Sans,
+                Source Han Sans;
+            font-weight: 400;
+            color: #01a2ec;
+            line-height: 14px;
+        }
+    }
+
+    .bigbox-power-item label {
+        height: 14px;
+        line-height: 14px;
+        font-size: 11px;
+        font-family:
+            Source Han Sans,
+            Source Han Sans;
+        font-weight: 400;
+        color: #01a2ec;
+    }
+}
+
+::v-deep(.svg-icon) {
+    vertical-align: initial;
+}
+</style>

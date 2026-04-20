@@ -64,6 +64,9 @@
       # 基于远程的 dev 分支创建本地 dev 分支，并自动切换到 dev 分支
       git checkout -b dev origin/dev
 
+      git config --global user.name "你的姓名"
+      git config --global user.email "你的邮箱@example.com"
+
   `)
 
    //将属性或者函数暴露给父组件
